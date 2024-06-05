@@ -125,14 +125,40 @@ export const updateUsuario = async (req, res) => {
 };
 
 // Obtiene un usuario por ID
+/*export const getUsuario = async (req, res) => {
+  try {
+    const { id */
 export const getUsuario = async (req, res) => {
   try {
     const { id } = req.params;
-    const usuario = await Usuarios.findByPk(id);
+    const usuario = await Usuarios.findByPk(id, {
+      include: [
+        {
+          model: Administradores,
+          as: 'administrador', // Alias para la relación
+          required: false // Para incluir los usuarios que no son administradores
+        },
+        {
+          model: Nutricionista,
+          as: 'nutricionista', // Alias para la relación
+          required: false // Para incluir los usuarios que no son nutricionistas
+        }
+      ]
+    });
+
     if (!usuario) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
-    res.json(usuario);
+
+    // Eliminar keys con null
+    const usuarioFiltrado = { ...usuario.dataValues };
+    Object.keys(usuarioFiltrado).forEach(key => {
+      if (usuarioFiltrado[key] === null) {
+        delete usuarioFiltrado[key];
+      }
+    });
+
+    res.json(usuarioFiltrado);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
