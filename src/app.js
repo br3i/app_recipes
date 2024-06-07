@@ -1,8 +1,9 @@
 import express from "express";
 import usuariosRoutes from "./routes/usuarios.routes.js";
-import comentariosRoutes from "./routes/comentarios.routes.js"
-import ingredientesRoutes from "./routes/ingredientes.routes.js"
-import recetasRoutes from "./routes/recetas.routes.js"
+import comentariosRoutes from "./routes/comentarios.routes.js";
+import ingredientesRoutes from "./routes/ingredientes.routes.js";
+import recetasRoutes from "./routes/recetas.routes.js";
+import objetivosRoutes from "./routes/objetivos_nutricionales.routes.js";
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use(usuariosRoutes);
 app.use(comentariosRoutes);
 app.use(ingredientesRoutes);
 app.use(recetasRoutes);
+app.use(objetivosRoutes);
 
 export default app;
