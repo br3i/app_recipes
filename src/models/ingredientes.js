@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Recetas_Ingredientes } from "./recetas_ingredientes.js";
 
 export const Ingredientes = sequelize.define(
   "ingredientes",
@@ -42,3 +43,8 @@ export const Ingredientes = sequelize.define(
     timestamps: false,
   }
 );
+
+// Relaciones Ingredientes - Recetas_Ingredientes
+
+Ingredientes.hasMany(Recetas_Ingredientes, { foreignKey: "id_ingrediente", as: "recetas_ingredientes" });
+Recetas_Ingredientes.belongsTo(Ingredientes, { foreignKey: "id_ingrediente", as: "ingrediente" });

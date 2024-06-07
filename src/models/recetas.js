@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Objetivos_Nutricionales } from "./objetivos_nutricionales.js";
+import { Recetas_Ingredientes } from "./recetas_ingredientes.js";
 
 export const Recetas = sequelize.define(
   "recetas",
@@ -54,4 +55,12 @@ export const Recetas = sequelize.define(
   }
 );
 
-Recetas.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo" });
+// Relaciones Recetas - Objetivos_Nutricionales
+
+Recetas.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo", as: "objetivo" });
+Objetivos_Nutricionales.hasMany(Recetas, { foreignKey: "id_objetivo", as: "recetas" });
+
+// Relaciones Recetas - Recetas_Ingredientes
+
+Recetas.hasMany(Recetas_Ingredientes, {foreignKey: "id_receta", as: "recetas_ingredientes"})
+Recetas_Ingredientes.belongsTo(Recetas, { foreignKey: "id_receta", as: "receta" });

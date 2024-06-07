@@ -8,7 +8,50 @@ import { createNutricionista, deleteNutricionista, updateNutricionista } from ".
 // Consulta usuarios
 export const getUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuarios.findAll({
+    const usuarios = await Usuarios.findAll();
+
+    // Procesar cada usuario para agregar las relaciones correspondientes
+    const usuariosConRelaciones = await Promise.all(
+      usuarios.map(async (usuario) => {
+        let include = [];
+        
+        switch (usuario.tipo_usuario) {
+          case 'administrador':
+            include.push({
+              model: Administradores,
+              as: 'administrador',
+              required: true
+            });
+            break;
+          case 'nutricionista':
+            include.push({
+              model: Nutricionista,
+              as: 'nutricionista',
+              required: true
+            });
+            break;
+        }
+        
+        const usuarioConRelacion = await Usuarios.findByPk(usuario.id_usuario, {
+          include
+        });
+
+        return usuarioConRelacion;
+      })
+    );
+
+    res.json(usuariosConRelaciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Consulta usuarios por Id
+export const getUsuarioID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const usuario = await Usuarios.findOne({
+      where: { id_usuario: id },
       include: [
         {
           model: Administradores,
@@ -21,6 +64,58 @@ export const getUsuarios = async (req, res) => {
           required: false // Para incluir los usuarios que no son nutricionistas
         }
       ]
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    // Eliminar keys con null
+    const usuarioFiltrado = { ...usuario.dataValues };
+
+    // Filtrar keys
+    Object.keys(usuarioFiltrado).forEach(key => {
+      if (usuarioFiltrado[key] === null) {
+        delete usuarioFiltrado[key];
+      }
+    });
+
+    res.json(usuarioFiltrado);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Consulta usuarios por tipo_usuario
+export const getUsuariosTipo = async (req, res) => {
+  try {
+    const { tipo_usuario } = req.params; // Obtener el tipo de usuario de los parámetros de la solicitud
+    
+    let include = [];
+    
+    switch (tipo_usuario) {
+      case 'administrador':
+        include.push({
+          model: Administradores,
+          as: 'administrador',
+          required: true
+        });
+        break;
+      case 'nutricionista':
+        include.push({
+          model: Nutricionista,
+          as: 'nutricionista',
+          required: true
+        });
+        break;
+      default:
+        // Devolver un mensaje de error si el tipo de usuario no es reconocido
+        return res.status(400).json({ error: `Tipo de usuario no reconocido: ${tipo_usuario}` });
+    }
+
+    const usuarios = await Usuarios.findAll({
+      where: { tipo_usuario }, // Filtro por tipo de usuario
+      include
     });
 
     // Eliminar keys con null
@@ -42,6 +137,8 @@ export const getUsuarios = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
 
 // Crear un nuevo usuario
 export const createUsuario = async (req, res) => {

@@ -1,7 +1,15 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Recetas } from "./recetas.js";
-import { Ingredientes } from "./ingredientes.js";
+
+let Recetas;
+let Ingredientes
+
+(async () => {
+  const { Recetas: RecetasModule } = await import("./recetas.js");
+  const { Ingredientes: IngredientesModule } = await import("./ingredientes.js");
+  Recetas = RecetasModule;
+  Ingredientes = IngredientesModule;
+})();
 
 export const Recetas_Ingredientes = sequelize.define(
   "recetas_ingredientes",
@@ -35,6 +43,3 @@ export const Recetas_Ingredientes = sequelize.define(
     timestamps: false,
   }
 );
-
-Recetas_Ingredientes.belongsTo(Recetas, { foreignKey: "id_receta" });
-Recetas_Ingredientes.belongsTo(Ingredientes, { foreignKey: "id_ingrediente" });

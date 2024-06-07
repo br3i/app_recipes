@@ -15,8 +15,8 @@ const router = Router();
 // Routes
 router.get("/ingredientes", getIngredientes);
 router.get("/ingredientes/:id", getIngredienteId);
-router.get("/ingredientesNbr/:nombre", getIngredienteNbr);
-router.get("/ingredientesCtg/:categoria", getIngredienteCtg);
+router.get("/ingredientes/nombre/:nombre", getIngredienteNbr);
+router.get("/ingredientes/categoria/:categoria", getIngredienteCtg);
 router.post("/ingredientes", createIngrediente);
 router.put("/ingredientes/:id", updateIngrediente);
 router.delete("/ingredientes/:id", deleteIngrediente);
