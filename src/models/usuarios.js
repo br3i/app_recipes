@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Nutricionista } from "./nutricionistas.js";
 import { Administradores } from "./administradores.js";
+import { Comentarios } from "./comentarios.js";
 
 export const Usuarios = sequelize.define("usuarios", {
   id_usuario: {
@@ -34,12 +35,35 @@ export const Usuarios = sequelize.define("usuarios", {
   tableName: 'usuarios'
 });
 
+// Relaciones Usuarios - Administradores
+
 Usuarios.hasOne(Administradores, 
   { foreignKey: "id_usuario",
-    as: 'administrador' 
-  });
+  as: 'administrador' 
+});
+
+Administradores.belongsTo(Usuarios, {
+  foreignKey: "id_usuario"
+});
+
+// Relaciones Usuarios - Nutricionistas
 
 Usuarios.hasOne(Nutricionista,{
   foreignKey: "id_usuario",
   as: 'nutricionista'
-})
+});
+
+Nutricionista.belongsTo(Usuarios, {
+  foreignKey: "id_usuario"
+});
+
+// Relaciones Usuarios - Comentarios
+
+Usuarios.hasMany(Comentarios, {
+  foreignKey: "id_usuario",
+  as: 'comentarios'
+});
+
+Comentarios.belongsTo(Usuarios, {
+  foreignKey: "id_usuario"
+});

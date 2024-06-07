@@ -125,9 +125,6 @@ export const updateUsuario = async (req, res) => {
 };
 
 // Obtiene un usuario por ID
-/*export const getUsuario = async (req, res) => {
-  try {
-    const { id */
 export const getUsuario = async (req, res) => {
   try {
     const { id } = req.params;
