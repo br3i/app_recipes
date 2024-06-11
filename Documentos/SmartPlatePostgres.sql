@@ -1,100 +1,101 @@
--- Tabla usuarios
-CREATE TABLE usuarios (
-    id_usuario SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    contrasena VARCHAR(100) NOT NULL,
-    tipo_usuario VARCHAR(50) NOT NULL,
-    informacion_contacto TEXT
+CREATE TABLE "Usuarios" (
+  "id_usuario" SERIAL PRIMARY KEY,
+  "nombre" VARCHAR(100) NOT NULL,
+  "email" VARCHAR(100) UNIQUE NOT NULL,
+  "contrasena" VARCHAR(100) NOT NULL,
+  "tipo_usuario" VARCHAR(50) NOT NULL,
+  "informacion_contacto" TEXT
 );
 
--- Tabla administradores
-CREATE TABLE administradores (
-    id_administrador SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+CREATE TABLE "Administrador" (
+  "id_administrador" SERIAL PRIMARY KEY,
+  "id_usuario" INT NOT NULL
 );
 
--- Tabla nutricionistas
-CREATE TABLE nutricionistas(
-    id_nutricionista SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    especialista VARCHAR(100),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+CREATE TABLE "Nutricionista" (
+  "id_nutricionista" SERIAL PRIMARY KEY,
+  "id_usuario" INT NOT NULL,
+  "especialista" VARCHAR(100)
 );
 
--- Tabla ingredientes
-CREATE TABLE ingredientes(
-    id_ingrediente SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    categoria VARCHAR(100),
-    calorias DECIMAL,
-    proteinas DECIMAL,
-    carbohidratos DECIMAL,
-    grasas DECIMAL,
-    azucar DECIMAL,
-    fibra DECIMAL,
-    sodio DECIMAL
+CREATE TABLE "Ingredientes" (
+  "id_ingrediente" SERIAL PRIMARY KEY,
+  "nombre" VARCHAR(100) NOT NULL,
+  "categoria" VARCHAR(100),
+  "calorias" DECIMAL,
+  "proteinas" DECIMAL,
+  "carbohidratos" DECIMAL,
+  "grasas" DECIMAL,
+  "azucar" DECIMAL,
+  "fibra" DECIMAL,
+  "sodio" DECIMAL
 );
 
--- Tabla objetivos_nutricionales
-CREATE TABLE objetivos_nutricionales(
-    id_objetivo SERIAL PRIMARY KEY,
-    nombre_objetivo VARCHAR(100) NOT NULL,
-    descripcion TEXT
+CREATE TABLE "Objetivos_Nutricionales" (
+  "id_objetivo" SERIAL PRIMARY KEY,
+  "nombre_objetivo" VARCHAR(100) NOT NULL,
+  "descripcion" TEXT
 );
 
--- Tabla recetas
-CREATE TABLE recetas(
-    id_receta SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    instrucciones_prep TEXT,
-    tiempo_coccion INT,
-    calorias_totales DECIMAL,
-    proteinas_totales DECIMAL,
-    carbohidratos_totales DECIMAL,
-    grasas_totales DECIMAL,
-    azucares_totales DECIMAL,
-    fibra_total DECIMAL,
-    sodio_total DECIMAL,
-    id_objetivo INT,
-    FOREIGN KEY (id_objetivo) REFERENCES objetivos_nutricionales(id_objetivo)
+CREATE TABLE "Recetas" (
+  "id_receta" SERIAL PRIMARY KEY,
+  "nombre" VARCHAR(100) NOT NULL,
+  "instrucciones_prep" TEXT,
+  "tiempo_coccion" INT,
+  "calorias_totales" DECIMAL,
+  "proteinas_totales" DECIMAL,
+  "carbohidratos_totales" DECIMAL,
+  "grasas_totales" DECIMAL,
+  "azucares_totales" DECIMAL,
+  "fibra_total" DECIMAL,
+  "sodio_total" DECIMAL,
+  "id_objetivo" INT
 );
 
--- Tabla recetas_ingredientes
-CREATE TABLE recetas_ingredientes(
-    id_recetas_ingredientes SERIAL PRIMARY KEY,
-    id_receta INT NOT NULL,
-    id_ingrediente INT NOT NULL,
-    cantidad DECIMAL,
-    FOREIGN KEY (id_receta) REFERENCES recetas(id_receta),
-    FOREIGN KEY (id_ingrediente) REFERENCES ingredientes(id_ingrediente)
+CREATE TABLE "Recetas_Ingredientes" (
+  "id_recetas_ingredientes" SERIAL PRIMARY KEY,
+  "id_receta" INT NOT NULL,
+  "id_ingrediente" INT NOT NULL,
+  "cantidad" DECIMAL
 );
 
--- Tabla ingrediente_usuario
-CREATE TABLE ingrediente_usuario(
-    id_ingrediente_usuario SERIAL PRIMARY KEY,
-    nombre_usuario VARCHAR(100) NOT NULL,
-    codigo_usuario VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL,
-    nombre_ingrediente VARCHAR(100) NOT NULL,
-    cantidad_ingrediente DECIMAL
+CREATE TABLE "Clientes" (
+  "id_cliente" SERIAL PRIMARY KEY,
+  "id_usuario" INT NOT NULL,
+  "nombre_ingrediente" VARCHAR(100) NOT NULL,
+  "cantidad_ingrediente" DECIMAL
 );
 
--- Tabla historico_recomendaciones 
-CREATE TABLE historico_recomendaciones (
-    id_historico_recomendaciones SERIAL PRIMARY KEY,
-    id_objetivo INT NOT NULL,
-    id_recetas_ingredientes INT NOT NULL,
-    id_ingrediente_usuario INT NOT NULL,
-    FOREIGN KEY (id_objetivo) REFERENCES objetivos_nutricionales(id_objetivo),
-    FOREIGN KEY (id_recetas_ingredientes) REFERENCES recetas_ingredientes(id_recetas_ingredientes),
-    FOREIGN KEY (id_ingrediente_usuario) REFERENCES ingrediente_usuario(id_ingrediente_usuario)
+CREATE TABLE "Historico_Recomendaciones" (
+  "id_historico_recomendaciones" SERIAL PRIMARY KEY,
+  "id_objetivo" INT NOT NULL,
+  "id_recetas_ingredientes" INT NOT NULL,
+  "id_cliente" INT NOT NULL
 );
 
--- Tabla comentarios
-CREATE TABLE comentarios(
-    id_comentario SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT
+CREATE TABLE "Comentarios" (
+  "id_comentario" SERIAL PRIMARY KEY,
+  "id_usuario" INT NOT NULL,
+  "nombre" VARCHAR(100) NOT NULL,
+  "descripcion" TEXT
 );
+
+ALTER TABLE "Administrador" ADD FOREIGN KEY ("id_usuario") REFERENCES "Usuarios" ("id_usuario");
+
+ALTER TABLE "Nutricionista" ADD FOREIGN KEY ("id_usuario") REFERENCES "Usuarios" ("id_usuario");
+
+ALTER TABLE "Recetas" ADD FOREIGN KEY ("id_objetivo") REFERENCES "Objetivos_Nutricionales" ("id_objetivo");
+
+ALTER TABLE "Recetas_Ingredientes" ADD FOREIGN KEY ("id_receta") REFERENCES "Recetas" ("id_receta");
+
+ALTER TABLE "Recetas_Ingredientes" ADD FOREIGN KEY ("id_ingrediente") REFERENCES "Ingredientes" ("id_ingrediente");
+
+ALTER TABLE "Clientes" ADD FOREIGN KEY ("id_usuario") REFERENCES "Usuarios" ("id_usuario");
+
+ALTER TABLE "Historico_Recomendaciones" ADD FOREIGN KEY ("id_objetivo") REFERENCES "Objetivos_Nutricionales" ("id_objetivo");
+
+ALTER TABLE "Historico_Recomendaciones" ADD FOREIGN KEY ("id_recetas_ingredientes") REFERENCES "Recetas_Ingredientes" ("id_recetas_ingredientes");
+
+ALTER TABLE "Historico_Recomendaciones" ADD FOREIGN KEY ("id_cliente") REFERENCES "Clientes" ("id_cliente");
+
+ALTER TABLE "Comentarios" ADD FOREIGN KEY ("id_usuario") REFERENCES "Usuarios" ("id_usuario");
