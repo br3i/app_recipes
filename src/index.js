@@ -9,9 +9,10 @@ if(regenerarBD){
   import('./models/ingredientes.js');
   import('./models/comentarios.js');
   import('./models/historico_recomendaciones.js');
-  import('./models/ingrediente_usuario.js');
+  import('./models/clientes.js');
   import('./models/objetivos_nutricionales.js');
   import('./models/recetas_ingredientes.js');
+  import('./models/relaciones.js');
 }
 
 async function main() {
