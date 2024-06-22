@@ -1,9 +1,9 @@
 import { Nutricionista } from '../models/nutricionistas.js'
 
 // Crea un Nutricionista
-export const createNutricionista = async ({ id_usuario, especialista }, transaction) => {
+export const createNutricionista = async ({ id_usuario, especialidad }, transaction) => {
   try {
-    await Nutricionista.create({ id_usuario, especialista }, { transaction });
+    await Nutricionista.create({ id_usuario, especialidad }, { transaction });
   } catch (error) {
     throw new Error(`Error al crear nutricionista: ${error.message}`);
   }
