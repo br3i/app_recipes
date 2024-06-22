@@ -13,7 +13,7 @@ export const Nutricionista = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    especialista: {
+    especialidad: {
       type: DataTypes.STRING,
     },
   },

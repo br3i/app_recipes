@@ -5,6 +5,8 @@ import ingredientesRoutes from "./routes/ingredientes.routes.js";
 import recetasRoutes from "./routes/recetas.routes.js";
 import objetivosRoutes from "./routes/objetivos_nutricionales.routes.js";
 import ingredienteUsuarioRoutes from "./routes/clientes.routes.js"
+// Importar relaciones
+import './models/relaciones.js';
 
 const app = express();
 
@@ -25,5 +27,4 @@ app.use(ingredientesRoutes);
 app.use(recetasRoutes);
 app.use(objetivosRoutes);
 app.use(ingredienteUsuarioRoutes);
-
 export default app;

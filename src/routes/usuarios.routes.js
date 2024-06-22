@@ -5,7 +5,6 @@ import {
   getUsuariosTipo,
   createUsuario,
   updateUsuario,
-  getUsuario,
   deleteUsuario,
 } from "../controllers/usuarios.controller.js";
 
@@ -18,6 +17,5 @@ router.get("/usuarios/:id", getUsuarioID);
 router.get("/usuarios/tipo/:tipo_usuario", getUsuariosTipo);
 router.put("/usuarios/:id", updateUsuario);
 router.delete("/usuarios/:id", deleteUsuario);
-router.get("/usuarios/:id", getUsuario);
 
 export default router;
