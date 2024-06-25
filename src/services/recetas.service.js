@@ -1,17 +1,35 @@
 import { Recetas } from "../models/recetas.js";
+import { Ingredientes } from "../models/ingredientes.js";
 import { Recetas_Ingredientes } from "../models/recetas_ingredientes.js";
+import { recomendarRecetas } from "./recommendation.service.js"; // Importa la función recomendarRecetas
 
 class RecetasService {
   async getAllRecetas() {
     console.log('Fetching all recipes...');
-    const recetas = await Recetas.findAll();
-    console.log('Fetched recipes:', recetas);
+    const recetas = await Recetas.findAll({
+      include: [
+        {
+          model: Ingredientes,
+          as: 'ingredientes', // Especifica el alias utilizado en la asociación
+          through: { attributes: [] } // Excluir los atributos de la tabla de unión
+        }
+      ]
+    });
+    console.log('Fetched recipes with ingredients:', recetas);
     return recetas;
   }
 
   async getRecetaById(id) {
     console.log(`Fetching recipe with ID: ${id}`);
-    const receta = await Recetas.findByPk(id);
+    const receta = await Recetas.findByPk(id, {
+      include: [
+        {
+          model: Ingredientes,
+          as: 'ingredientes', // Especifica el alias utilizado en la asociación
+          through: { attributes: [] } // Excluir los atributos de la tabla de unión
+        }
+      ]
+    });
     if (!receta) {
       console.log(`Recipe with ID: ${id} not found`);
     } else {
@@ -59,9 +77,14 @@ class RecetasService {
     return { message: 'Receta eliminada' };
   }
 
-  async recommendRecetasByIngredientes(ingredientes) {
-    // Aquí implementarías la lógica para recomendar recetas basadas en los ingredientes
-    // usando el modelo de IA que entrenarás y la conexión con la base de datos.
+  async recommendRecetasByIngredientes(ingredientesUsuario, objetivoNutricional) {
+    try {
+      const recetasRecomendadas = await recomendarRecetas(ingredientesUsuario, objetivoNutricional);
+      return recetasRecomendadas;
+    } catch (error) {
+      console.error('Error recommending recipes:', error);
+      throw error;
+    }
   }
 }
 
