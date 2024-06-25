@@ -1,5 +1,6 @@
 import UsuariosService from "../services/usuarios.service.js";
 import { sequelize } from "../database/database.js";
+import bcrypt from "bcryptjs";
 
 // Consulta usuarios
 export const getUsuarios = async (req, res) => {
@@ -48,19 +49,20 @@ export const getUsuariosTipo = async (req, res) => {
   }
 };
 
-// Crear un nuevo usuario
+// Crear un nuevo usuario (Administrador o Nutricionista)
 export const createUsuario = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     const userData = req.body;
-    //imprimir con console.log el contenido de userData
-    console.log("Valores que llegan en el Json");
-    console.log(userData);
+    console.log("Valores que llegan en el Json:", userData);
+
+    // Hash de la contraseña
+    const hashedPassword = await bcrypt.hash(userData.contrasena, 10);
 
     const newUsuario = await UsuariosService.createUsuario({
       nombre: userData.nombre,
       email: userData.email,
-      contrasena: userData.contrasena,
+      contrasena: hashedPassword,
       tipo_usuario: userData.tipo_usuario,
       informacion_contacto: userData.informacion_contacto,
       especialidad: userData.especialidad,
@@ -98,7 +100,6 @@ export const updateUsuario = async (req, res) => {
   }
 };
 
-
 // Elimina un usuario
 export const deleteUsuario = async (req, res) => {
   const transaction = await sequelize.transaction();
@@ -108,6 +109,55 @@ export const deleteUsuario = async (req, res) => {
     const deleteResult = await UsuariosService.deleteUsuario(id, transaction);
     await transaction.commit();
     res.json(deleteResult);
+  } catch (error) {
+    await transaction.rollback();
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Autenticación (Login)
+export const login = async (req, res) => {
+  try {
+    const { email, contrasena } = req.body;
+    const usuario = await UsuariosService.getUsuarioByEmail(email);
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Contraseña incorrecta" });
+    }
+
+    res.json({ message: "Login exitoso", usuario });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Cambiar contraseña
+export const changePassword = async (req, res) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    const usuario = await UsuariosService.getUsuarioById(id);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, usuario.contrasena);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Contraseña actual incorrecta" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await UsuariosService.updateUsuario(id, { contrasena: hashedNewPassword }, transaction);
+
+    await transaction.commit();
+    res.json({ message: "Contraseña actualizada exitosamente" });
   } catch (error) {
     await transaction.rollback();
     res.status(500).json({ error: error.message });
