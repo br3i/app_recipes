@@ -1,3 +1,4 @@
+import { Ingredientes } from "../models/ingredientes.js";
 import { Recetas } from "../models/recetas.js";
 import { Recetas_Ingredientes } from "../models/recetas_ingredientes.js";
 
@@ -20,12 +21,26 @@ class RecetasService {
     return receta;
   }
 
-  async createReceta(recetaData, ingredientes) {
+  /*async createReceta(recetaData, ingredientes) {
     console.log('Creating new recipe with data:', recetaData);
     const receta = await Recetas.create(recetaData);
 
     if (ingredientes && ingredientes.length > 0) {
       await receta.setIngredientes(ingredientes);
+    }
+    console.log('Created recipe:', receta);
+    return receta;
+  }*/
+
+  async createReceta(recetaData, ingredientes) {
+    console.log('Creating new recipe with data:', recetaData);
+    const receta = await Recetas.create(recetaData);
+
+    if (ingredientes && ingredientes.length > 0) {
+      const ingredientesInstances = await Ingredientes.findAll({
+        where: { id: ingredientes }
+      });
+      await receta.setIngredientes(ingredientesInstances);
     }
     console.log('Created recipe:', receta);
     return receta;

@@ -34,7 +34,7 @@ Recetas.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo", as: "obj
 Objetivos_Nutricionales.hasMany(Recetas, { foreignKey: "id_objetivo", as: "recetas" });
 
 // Relaciones Recetas - Recetas_Ingredientes
-Recetas.hasMany(Recetas_Ingredientes, { foreignKey: "id_receta", as: "recetas_ingredientes" });
+Recetas.hasMany(Recetas_Ingredientes, { foreignKey: "id_receta", as: "recetaIngredientes" });
 Recetas_Ingredientes.belongsTo(Recetas, { foreignKey: "id_receta", as: "receta" });
 
 // Relaciones recetas ingredientes - historico recomendaciones
@@ -42,9 +42,13 @@ Recetas_Ingredientes.hasMany(Historico_Recomendaciones, { foreignKey: "id_receta
 Historico_Recomendaciones.belongsTo(Recetas_Ingredientes, { foreignKey: "id_recetas_ingredientes" });
 
 // Relaciones Ingredientes - Recetas_Ingredientes
-Ingredientes.hasMany(Recetas_Ingredientes, { foreignKey: "id_ingrediente", as: "recetas_ingredientes" });
+Ingredientes.hasMany(Recetas_Ingredientes, { foreignKey: "id_ingrediente", as: "ingredienteRecetas" });
 Recetas_Ingredientes.belongsTo(Ingredientes, { foreignKey: "id_ingrediente", as: "ingrediente" });
 
 // Relaciones Cliente - historico recomendaciones
 Cliente.hasMany(Historico_Recomendaciones, { foreignKey: "id_cliente", as: "historico_recomendaciones" });
 Historico_Recomendaciones.belongsTo(Cliente, { foreignKey: "id_cliente", as: "cliente" });
+
+// Relaciones Recetas - Ingredientes (many-to-many)
+Recetas.belongsToMany(Ingredientes, { through: Recetas_Ingredientes, foreignKey: "id_receta", as: "ingredientes" });
+Ingredientes.belongsToMany(Recetas, { through: Recetas_Ingredientes, foreignKey: "id_ingrediente", as: "recetas" });
