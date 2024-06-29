@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import { Sequelize } from "sequelize";
 
 export const sequelize = new Sequelize(
   "SmartPlate", // db name,
@@ -9,6 +9,8 @@ export const sequelize = new Sequelize(
     dialect: "postgres",
   }
 );
+
+export default sequelize;
 
 // True: se regenera toda la base de datos
 // False: se mantiene la base de datos actual

@@ -12,6 +12,7 @@ export const Ingredientes = sequelize.define(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     categoria: {
       type: DataTypes.STRING,
