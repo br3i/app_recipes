@@ -12,6 +12,7 @@ export const Objetivos_Nutricionales = sequelize.define(
     nombre_objetivo: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     descripcion: {
       type: DataTypes.TEXT,
