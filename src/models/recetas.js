@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Ingredientes } from "./ingredientes.js"; // Importa el modelo de Ingredientes
+import { Recetas_Ingredientes } from "./recetas_ingredientes.js"; // Importa el modelo de Recetas_Ingredientes
 
 export const Recetas = sequelize.define(
   "recetas",
@@ -48,3 +50,7 @@ export const Recetas = sequelize.define(
     timestamps: false,
   }
 );
+
+// Definir la relación muchos a muchos con el alias 'ingredientes'
+Recetas.belongsToMany(Ingredientes, { through: Recetas_Ingredientes, as: 'ingredientes', foreignKey: 'id_receta' });
+Ingredientes.belongsToMany(Recetas, { through: Recetas_Ingredientes, as: 'recetas', foreignKey: 'id_ingrediente' });
