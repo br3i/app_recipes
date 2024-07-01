@@ -1,6 +1,7 @@
 import { sequelize } from "../database/database.js";
 import { trim } from "../utilities/trim.js";
 import UsuariosService from "../services/usuarios.service.js";
+
 import bcrypt from "bcryptjs";
 
 // Crear un nuevo usuario
@@ -68,7 +69,7 @@ export const createUsuario = async (req, res) => {
   }
 };
 
-// Obtener todos los usuarios
+// Consulta usuarios
 export const getUsuarios = async (req, res) => {
   try {
     console.log("Iniciando getUsuarios");
@@ -279,6 +280,56 @@ export const deleteUsuarioByEmail = async (req, res) => {
     }
 
     res.json({ message: 'Usuario eliminado' });
+  } catch (error) {
+    await transaction.rollback();
+    console.error('Error deleting user by email:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Autenticación (Login)
+export const login = async (req, res) => {
+  try {
+    const { email, contrasena } = req.body;
+    const usuario = await UsuariosService.getUsuarioByEmail(email);
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Contraseña incorrecta" });
+    }
+
+    res.json({ message: "Login exitoso", usuario });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Cambiar contraseña
+export const changePassword = async (req, res) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    const usuario = await UsuariosService.getUsuarioById(id);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, usuario.contrasena);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Contraseña actual incorrecta" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await UsuariosService.updateUsuario(id, { contrasena: hashedNewPassword }, transaction);
+
+    await transaction.commit();
+    res.json({ message: "Contraseña actualizada exitosamente" });
   } catch (error) {
     await transaction.rollback();
     console.error('Error deleting user by email:', error);
