@@ -10,7 +10,7 @@ export const createNutricionista = async ({ id_usuario, especialidad }, transact
 };
 
 // Actualiza un Nutricionista
-export const updateNutricionista = async (id_usuario, especialista, transaction) => {
+export const updateNutricionistaId = async (id_usuario, especialista, transaction) => {
   try {
     const nutricionista = await Nutricionista.findOne({ where: { id_usuario }, transaction });
     if (!nutricionista) {
@@ -23,8 +23,28 @@ export const updateNutricionista = async (id_usuario, especialista, transaction)
   }
 };
 
+// Actualiza un nutricionista por email
+export const updateNutricionistaEmail = async (email, especialista, transaction) => {
+  try {
+    const usuario = await Usuarios.findOne({ where: { email }, transaction });
+    if (!usuario) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    const nutricionista = await Nutricionista.findOne({ where: { id_usuario: usuario.id_usuario }, transaction });
+    if (!nutricionista) {
+      throw new Error("Nutricionista no encontrado");
+    }
+
+    nutricionista.especialista = especialista;
+    await nutricionista.save({ transaction });
+  } catch (error) {
+    throw new Error("Error al actualizar nutricionista por email: " + error.message);
+  }
+};
+
 // Elimina un Nutricionista
-export const deleteNutricionista = async (id_usuario, transaction) => {
+export const deleteNutricionistaId = async (id_usuario, transaction) => {
   try {
     const nutricionista = await Nutricionista.findOne({ where: { id_usuario }, transaction });
     if (nutricionista) {
@@ -32,6 +52,23 @@ export const deleteNutricionista = async (id_usuario, transaction) => {
     }
   } catch (error) {
     throw new Error("Error al eliminar nutricionista: " + error.message);
+  }
+};
+
+//Elimina un nutricionista por email
+export const deleteNutricionistaEmail = async (email, transaction) => {
+  try {
+    const usuario = await Usuarios.findOne({ where: { email }, transaction });
+    if (!usuario) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    const nutricionista = await Nutricionista.findOne({ where: { id_usuario: usuario.id_usuario }, transaction });
+    if (nutricionista) {
+      await nutricionista.destroy({ transaction });
+    }
+  } catch (error) {
+    throw new Error("Error al eliminar nutricionista por email: " + error.message);
   }
 };
 
