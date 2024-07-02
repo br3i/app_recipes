@@ -1,11 +1,17 @@
 import { Router } from "express";
+
 import {
+  createUsuario,
   getUsuarios,
   getUsuarioID,
   getUsuariosTipo,
-  createUsuario,
-  updateUsuario,
-  deleteUsuario,
+  getUsuarioEmail,
+  getUsuarioNombre,
+  getUsuariosEspecialidad,
+  updateUsuarioId,
+  updateUsuarioEmail,
+  deleteUsuarioById,
+  deleteUsuarioByEmail
   login,
   changePassword,
 } from "../controllers/usuarios.controller.js";
@@ -13,12 +19,24 @@ import {
 const router = Router();
 
 // Routes
+//Crear
 router.post("/usuarios", createUsuario);
+
+//Leer
 router.get("/usuarios", getUsuarios);
-router.get("/usuarios/:id", getUsuarioID);
+router.get("/usuarios/id/:id", getUsuarioID);
+router.get("/usuarios/correo/:email", getUsuarioEmail);
+router.get("/usuarios/nombre/:nombre", getUsuarioNombre);
 router.get("/usuarios/tipo/:tipo_usuario", getUsuariosTipo);
-router.put("/usuarios/:id", updateUsuario);
-router.delete("/usuarios/:id", deleteUsuario);
+router.get("/usuarios/especialidad/:especialidad", getUsuariosEspecialidad);
+
+//Actualizar
+router.put("/usuarios/id/:id", updateUsuarioId);
+router.put("/usuarios/correo/:email", updateUsuarioEmail);
+
+//Eliminar
+router.delete("/usuarios/id/:id", deleteUsuarioById);
+router.delete("/usuarios/correo/:email", deleteUsuarioByEmail);
 
 // Authentication and Password Management
 router.post("/login", login);
