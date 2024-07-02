@@ -80,67 +80,96 @@ class ClientesService {
   }
 
   async updateCliente(id, clienteData, transaction) {
-  try {
-    console.log(`Updating client with ID: ${id}`);
-    
-    const cliente = await Cliente.findByPk(id, { transaction });
+    try {
+      console.log(`Updating client with ID: ${id}`);
+      
+      const cliente = await Cliente.findByPk(id, { transaction });
 
-    if (!cliente) {
-      throw new Error('Client not found');
-    }
-
-    // Verificar si el correo nuevo ya existe en la tabla usuarios
-    if (clienteData.correo) {
-      const existingUsuario = await Usuarios.findOne({
-        where: { email: clienteData.correo },
-        transaction
-      });
-      if (existingUsuario) {
-        throw new Error('El correo ya está en uso');
+      if (!cliente) {
+        throw new Error('Client not found');
       }
-    }
 
-    // Actualizar los campos del cliente
-    const { nombre_cliente, correo, ingredientes_cantidad, tipo_usuario } = clienteData;
+      // Verificar si el correo nuevo ya existe en la tabla usuarios
+      if (clienteData.correo) {
+        const existingUsuario = await Usuarios.findOne({
+          where: { email: clienteData.correo },
+          transaction
+        });
+        if (existingUsuario) {
+          throw new Error('El correo ya está en uso');
+        }
+      }
 
-    if (nombre_cliente) {
-      cliente.nombre_cliente = nombre_cliente;
-    }
-    if (correo) {
-      cliente.correo = correo;
-    }
-    if (ingredientes_cantidad) {
-      cliente.ingredientes_cantidad = ingredientes_cantidad;
-    }
+      // Actualizar los campos del cliente
+      const { nombre_cliente, correo, ingredientes_cantidad, tipo_usuario } = clienteData;
 
-    await cliente.save({ transaction });
+      if (nombre_cliente) {
+        cliente.nombre_cliente = nombre_cliente;
+      }
+      if (correo) {
+        cliente.correo = correo;
+      }
+      if (ingredientes_cantidad) {
+        cliente.ingredientes_cantidad = ingredientes_cantidad;
+      }
 
-    // Buscar y actualizar la tabla de usuarios si hay campos relevantes
-    const usuario = await Usuarios.findByPk(cliente.id_usuario, { transaction });
+      await cliente.save({ transaction });
 
-    if (!usuario) {
-      throw new Error('User associated with the client not found');
+      // Buscar y actualizar la tabla de usuarios si hay campos relevantes
+      const usuario = await Usuarios.findByPk(cliente.id_usuario, { transaction });
+
+      if (!usuario) {
+        throw new Error('User associated with the client not found');
+      }
+
+      if (correo) {
+        usuario.email = correo;
+      }
+      if (nombre_cliente) {
+        usuario.nombre = nombre_cliente;
+      }
+      if (tipo_usuario) {
+        usuario.tipo_usuario = tipo_usuario;
+      }
+
+      await usuario.save({ transaction });
+
+      console.log('Updated client:', cliente);
+      return cliente;
+    } catch (error) {
+      console.error('Error in updateClienteService:', error);
+      throw error;
     }
-
-    if (correo) {
-      usuario.email = correo;
-    }
-    if (nombre_cliente) {
-      usuario.nombre = nombre_cliente;
-    }
-    if (tipo_usuario) {
-      usuario.tipo_usuario = tipo_usuario;
-    }
-
-    await usuario.save({ transaction });
-
-    console.log('Updated client:', cliente);
-    return cliente;
-  } catch (error) {
-    console.error('Error in updateClienteService:', error);
-    throw error;
   }
-}
+
+  async deleteCliente(id, transaction) {
+    try {
+      console.log(`Deleting client with ID: ${id}`);
+
+      // Obtener el cliente por su ID
+      const cliente = await Cliente.findByPk(id, { transaction });
+
+      if (!cliente) {
+        throw new Error('Client not found');
+      }
+
+      // Obtener el usuario asociado al cliente
+      const usuario = await Usuarios.findByPk(cliente.id_usuario, { transaction });
+
+      if (!usuario) {
+        throw new Error('User associated with the client not found');
+      }
+
+      // Eliminar primero el cliente y luego el usuario
+      await cliente.destroy({ transaction });
+      await usuario.destroy({ transaction });
+
+      console.log('Deleted client and associated user');
+    } catch (error) {
+      console.error('Error in deleteClienteService:', error);
+      throw error;
+    }
+  }
 
   async loginClienteService(email, contrasena){
     try {
