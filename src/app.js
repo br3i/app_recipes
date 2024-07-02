@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import usuariosRoutes from "./routes/usuarios.routes.js";
 import comentariosRoutes from "./routes/comentarios.routes.js";
 import ingredientesRoutes from "./routes/ingredientes.routes.js";
@@ -14,6 +15,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
 // Middleware de registro para verificar los parámetros de la URL
 app.use((req, res, next) => {

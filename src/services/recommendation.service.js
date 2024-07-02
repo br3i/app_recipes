@@ -2,8 +2,8 @@ import RecetasService from './recetas.service.js'; // Importa el servicio de rec
 
 const calcularSimilitudIngredientes = (ingredientesUsuario, ingredientesReceta) => {
     const nombresIngredientesReceta = ingredientesReceta.map(ingrediente => ingrediente.nombre);
-    const interseccion = ingredientesUsuario.filter(ingrediente => nombresIngredientesReceta.includes(ingrediente));
-    const union = new Set([...ingredientesUsuario, ...nombresIngredientesReceta]);
+    const interseccion = ingredientesUsuario.map(iu => iu.nombre).filter(nombre => nombresIngredientesReceta.includes(nombre));
+    const union = new Set([...ingredientesUsuario.map(iu => iu.nombre), ...nombresIngredientesReceta]);
     return interseccion.length / union.size;
 };
 
@@ -22,6 +22,17 @@ const calcularAdecuacionNutricional = (objetivoNutricional, receta) => {
     }
 };
 
+const calcularSimilitudCantidad = (ingredientesUsuario, ingredientesReceta) => {
+    let puntuacionCantidad = 0;
+    ingredientesUsuario.forEach(ingredienteUsuario => {
+        const ingredienteReceta = ingredientesReceta.find(ing => ing.nombre === ingredienteUsuario.nombre);
+        if (ingredienteReceta) {
+            puntuacionCantidad += Math.min(ingredienteUsuario.cantidad, ingredienteReceta.cantidad) / Math.max(ingredienteUsuario.cantidad, ingredienteReceta.cantidad);
+        }
+    });
+    return puntuacionCantidad / ingredientesUsuario.length;
+};
+
 export const recomendarRecetas = async (ingredientesUsuario, objetivoNutricional) => {
     try {
         console.log('Inicio de recomendarRecetas');
@@ -33,15 +44,16 @@ export const recomendarRecetas = async (ingredientesUsuario, objetivoNutricional
 
         // Filtrar recetas que contienen al menos uno de los ingredientes proporcionados
         const recetasFiltradas = recetas.filter(receta => 
-            receta.ingredientes.some(ingrediente => ingredientesUsuario.includes(ingrediente.nombre))
+            receta.ingredientes.some(ingrediente => ingredientesUsuario.map(iu => iu.nombre).includes(ingrediente.nombre))
         );
         console.log('Recetas filtradas por similitud de ingredientes:', recetasFiltradas);
 
         // Calcular la puntuación de cada receta
         const recetasPuntuadas = recetasFiltradas.map(receta => ({
             receta,
-            puntuacion: calcularSimilitudIngredientes(ingredientesUsuario, receta.ingredientes) * 0.5 +
-                        calcularAdecuacionNutricional(objetivoNutricional, receta) * 0.5
+            puntuacion: (calcularSimilitudIngredientes(ingredientesUsuario, receta.ingredientes) * 0.3) +
+                        (calcularAdecuacionNutricional(objetivoNutricional, receta) * 0.3) +
+                        (calcularSimilitudCantidad(ingredientesUsuario, receta.ingredientes) * 0.4)
         }));
         console.log('Recetas puntuadas:', recetasPuntuadas);
 
@@ -50,18 +62,20 @@ export const recomendarRecetas = async (ingredientesUsuario, objetivoNutricional
 
         // Obtener las recetas que cumplen con todos los ingredientes ingresados primero
         const recetasCumplenTodos = recetasPuntuadas.filter(r => 
-            ingredientesUsuario.every(ingrediente => r.receta.ingredientes.map(ing => ing.nombre).includes(ingrediente))
+            ingredientesUsuario.every(iu => r.receta.ingredientes.map(ing => ing.nombre).includes(iu.nombre))
         );
 
         // Combinar recetas que cumplen todos los ingredientes y las que no pero tienen puntuación alta
         let topRecetas = [...recetasCumplenTodos, ...recetasPuntuadas].map(r => r.receta);
 
-        // Asegurar solo 3 recetas en la recomendación
-        topRecetas = topRecetas.slice(0, 3);
-        
-        // Si no hay suficientes recetas, rellenar con las recetas mejor puntuadas
+        // Verificar que las 3 recetas recomendadas sean diferentes
+        topRecetas = [...new Set(topRecetas)].slice(0, 3);
+
+        // Si no hay suficientes recetas, rellenar con las recetas mejor puntuadas del mismo objetivo nutricional
         if (topRecetas.length < 3) {
-            const adicionales = recetasPuntuadas.slice(0, 3 - topRecetas.length).map(r => r.receta);
+            const adicionales = recetas.filter(r => 
+                calcularAdecuacionNutricional(objetivoNutricional, r) > 0 && !topRecetas.includes(r)
+            ).slice(0, 3 - topRecetas.length);
             topRecetas.push(...adicionales);
         }
 

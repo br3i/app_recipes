@@ -291,19 +291,36 @@ export const deleteUsuarioByEmail = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, contrasena } = req.body;
-    const usuario = await UsuariosService.getUsuarioByEmail(email);
+    console.log(`Login attempt with email: ${email} y contraseña: ${contrasena}`);
+    
+    if (!email || !contrasena) {
+      console.log('Email or password not provided');
+      return res.status(400).json({ error: "Email y contraseña son requeridos" });
+    }
 
+    const usuario = await UsuariosService.getUsuarioByEmail(email);
     if (!usuario) {
+      console.log('Usuario no encontrado');
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
+    if (!usuario.contrasena) {
+      console.log('Contraseña no encontrada para el usuario');
+      return res.status(400).json({ error: "Contraseña no encontrada para el usuario" });
+    }
+
+    console.log('Fetched user:', usuario);
+    console.log('Comparing passwords:', contrasena, usuario.contrasena);
+
     const isMatch = await bcrypt.compare(contrasena, usuario.contrasena);
     if (!isMatch) {
+      console.log('Contraseña incorrecta');
       return res.status(400).json({ error: "Contraseña incorrecta" });
     }
 
     res.json({ message: "Login exitoso", usuario });
   } catch (error) {
+    console.error('Error during login:', error);
     res.status(500).json({ error: error.message });
   }
 };
