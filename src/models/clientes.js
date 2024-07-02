@@ -16,6 +16,7 @@ export const Cliente = sequelize.define(
     correo: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     ingredientes_cantidad: {
       type: DataTypes.JSONB,

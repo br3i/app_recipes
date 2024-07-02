@@ -4,7 +4,9 @@ import comentariosRoutes from "./routes/comentarios.routes.js";
 import ingredientesRoutes from "./routes/ingredientes.routes.js";
 import recetasRoutes from "./routes/recetas.routes.js";
 import objetivosRoutes from "./routes/objetivos_nutricionales.routes.js";
-import ingredienteUsuarioRoutes from "./routes/clientes.routes.js"
+import ingredienteUsuarioRoutes from "./routes/clientes.routes.js";
+import recomendacionesRoutes from "./routes/recomendaciones.routes.js"; // Importa la nueva ruta de recomendaciones
+
 // Importar relaciones
 import './models/relaciones.js';
 
@@ -27,4 +29,7 @@ app.use(ingredientesRoutes);
 app.use(recetasRoutes);
 app.use(objetivosRoutes);
 app.use(ingredienteUsuarioRoutes);
+app.use(recomendacionesRoutes); // Usa la nueva ruta de recomendaciones
+
 export default app;
+
