@@ -1,6 +1,5 @@
 import { Ingredientes } from "../models/ingredientes.js";
 import { Recetas } from "../models/recetas.js";
-import { Ingredientes } from "../models/ingredientes.js";
 import { Recetas_Ingredientes } from "../models/recetas_ingredientes.js";
 import { recomendarRecetas } from "./recommendation.service.js"; // Importa la función recomendarRecetas
 
