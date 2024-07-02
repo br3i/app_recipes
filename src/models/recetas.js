@@ -1,7 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Ingredientes } from "./ingredientes.js"; // Importa el modelo de Ingredientes
-import { Recetas_Ingredientes } from "./recetas_ingredientes.js"; // Importa el modelo de Recetas_Ingredientes
 
 export const Recetas = sequelize.define(
   "recetas",
@@ -14,6 +12,7 @@ export const Recetas = sequelize.define(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     instrucciones_prep: {
       type: DataTypes.TEXT,

@@ -1,5 +1,5 @@
 Documentos/archivos csv
 Documentos/entrenarIA
-
+node_modules/
 src/databse/database.js
 src/utilities/utilitiesClientes.js
