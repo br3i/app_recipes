@@ -28,30 +28,21 @@ export const getClienteId = async (req, res) => {
     console.log('Sending response with client:', cliente);
     res.json(cliente);
   } catch (error) {
-    console.error(`Error fetching client with ID: ${id}`, error);
+    console.error(`Error fetching client with ID: ${req.params.id}`, error);
     res.status(500).json({ error: error.message });
   }
 };
 
 // Crear un cliente
 export const createCliente = async (req, res) => {
-  const transaction = await sequelize.transaction();
+  const { nombre_cliente, contrasena, correo } = req.body;
+
   try {
-    console.log('POST /clientes');
-    console.log('Request body:', req.body);
-
-    // Ejemplo de uso de bcrypt para hashear la contraseña
-    const hashedPassword = await bcrypt.hash(req.body.contrasena, 10);
-    req.body.contrasena = hashedPassword;
-
-    const newCliente = await ClientesService.createCliente(req.body, transaction);
-    await transaction.commit();
-    console.log('Sending response with new client:', newCliente);
-    res.json(newCliente);
+    const nuevoCliente = await ClientesService.createCliente({ nombre_cliente, contrasena, correo });
+    res.status(201).json(nuevoCliente);
   } catch (error) {
-    await transaction.rollback();
     console.error('Error creating client:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'Error creating client', error: error.message });
   }
 };
 
@@ -68,19 +59,13 @@ export const updateCliente = async (req, res) => {
       return res.status(404).json({ error: 'Cliente no encontrado' });
     }
 
-    // Ejemplo de uso de bcrypt para hashear la contraseña
-    if (req.body.contrasena) {
-      const hashedPassword = await bcrypt.hash(req.body.contrasena, 10);
-      req.body.contrasena = hashedPassword;
-    }
-
     const updatedCliente = await ClientesService.updateCliente(id, req.body, transaction);
     await transaction.commit();
     console.log('Sending response with updated client:', updatedCliente);
     res.json(updatedCliente);
   } catch (error) {
     await transaction.rollback();
-    console.error(`Error updating client with ID: ${id}`, error);
+    console.error(`Error updating client with ID: ${req.body.id}`, error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -103,7 +88,7 @@ export const deleteCliente = async (req, res) => {
     res.json({ message: 'Cliente eliminado' });
   } catch (error) {
     await transaction.rollback();
-    console.error(`Error deleting client with ID: ${id}`, error);
+    console.error(`Error deleting client with ID: ${req.params.id}`, error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -111,10 +96,11 @@ export const deleteCliente = async (req, res) => {
 // Autenticación (Login)
 export const loginCliente = async (req, res) => {
   try {
-    const { email, contrasena } = req.body;
-    const result = await ClientesService.login(email, contrasena);
+    const { correo, contrasena } = req.body;
+    const result = await ClientesService.loginClienteService(correo, contrasena);
     res.json(result);
   } catch (error) {
+    console.error('Error logging in client:', error);
     res.status(500).json({ error: error.message });
   }
 };
