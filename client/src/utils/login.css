@@ -1,0 +1,102 @@
+/* login.css */
+
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  position: relative;
+  /* Añadido para el posicionamiento */
+}
+
+/* Estilos para el cuadro de login/registro */
+.login-box,
+.password-reset-container {
+  width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  /* Añadido para el posicionamiento */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  /* Transición suave */
+}
+
+.login-box.hidden,
+.password-reset-container.hidden {
+  opacity: 0;
+  /* Ocultar el formulario con transición */
+  pointer-events: none;
+  /* Deshabilitar eventos de puntero */
+  visibility: hidden;
+  /* Asegurar que el formulario no ocupe espacio */
+}
+
+.login-box h1,
+.password-reset-container h2 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.login-box form,
+.password-reset-container form {
+  margin-top: 20px;
+}
+
+.login-box label,
+.password-reset-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.login-box input[type="text"],
+.login-box input[type="email"],
+.login-box input[type="password"],
+.password-reset-container input[type="email"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-box button,
+.password-reset-container button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-box button:hover,
+.password-reset-container button:hover {
+  background-color: #0056b3;
+}
+
+.switch-button {
+  background-color: #6c757d;
+}
+
+.switch-button:hover {
+  background-color: #5a6268;
+}
+
+.password-reset-link {
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.password-reset-link:hover {
+  text-decoration: underline;
+}
