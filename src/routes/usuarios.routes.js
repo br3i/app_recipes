@@ -11,7 +11,7 @@ import {
   updateUsuarioId,
   updateUsuarioEmail,
   deleteUsuarioById,
-  deleteUsuarioByEmail
+  deleteUsuarioByEmail,
   login,
   changePassword,
 } from "../controllers/usuarios.controller.js";
