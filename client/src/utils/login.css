@@ -1,39 +1,42 @@
 /* login.css */
 
+/* Estilos básicos */
+body {
+
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
 /* Contenedor principal */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
-  position: relative;
-  /* Añadido para el posicionamiento */
+  background: url('../components/public/img1.avif');
+  background-size: cover; /* Ajusta el tamaño de fondo para cubrir toda el área */
+  background-position: center; /* Centra la imagen de fondo */
 }
 
 /* Estilos para el cuadro de login/registro */
 .login-box,
 .password-reset-container {
-  width: 300px;
+  width: 90%; /* Ajusta el ancho para pantallas pequeñas */
+  max-width: 400px; /* Limita el ancho máximo */
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: absolute;
-  /* Añadido para el posicionamiento */
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  /* Transición suave */
 }
 
 .login-box.hidden,
 .password-reset-container.hidden {
   opacity: 0;
-  /* Ocultar el formulario con transición */
   pointer-events: none;
-  /* Deshabilitar eventos de puntero */
   visibility: hidden;
-  /* Asegurar que el formulario no ocupe espacio */
 }
 
 .login-box h1,
@@ -61,6 +64,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  margin-bottom: 10px; /* Agrega margen entre campos */
 }
 
 .login-box button,
@@ -99,4 +103,51 @@
 
 .password-reset-link:hover {
   text-decoration: underline;
+}
+
+.login-container button {
+  width: 100%;
+  height: 40px;
+  background-color: #28a745;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Media queries para dispositivos pequeños */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  .login-box,
+  .password-reset-container {
+    width: 100%;
+    max-width: 90%;
+  }
+}
+
+/* Media queries para dispositivos muy pequeños */
+@media (max-width: 480px) {
+  .login-box h1,
+  .password-reset-container h2 {
+    font-size: 20px;
+  }
+
+  .login-box input[type="text"],
+  .login-box input[type="email"],
+  .login-box input[type="password"],
+  .password-reset-container input[type="email"] {
+    padding: 8px;
+  }
+
+  .login-box button,
+  .password-reset-container button {
+    font-size: 14px;
+  }
 }

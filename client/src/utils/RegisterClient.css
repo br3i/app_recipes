@@ -1,0 +1,66 @@
+/* src/utils/RegisterClient.css */
+
+.register-client-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 160px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .register-client-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .register-client-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .register-client-container form div {
+    margin-bottom: 15px;
+  }
+  
+  .register-client-container form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .register-client-container form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .register-client-container form button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .register-client-container form button:hover {
+    background-color: #218838;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .success-message {
+    color: #28a745;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
