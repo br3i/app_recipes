@@ -6,11 +6,6 @@ import LoginComponent from './pages/LoginComponent';
 import MenuComponent from './pages/MenuComponent';
 import ManagementUserComponent from './pages/ManagementUserComponent';
 import ProfileComponent from './pages/ProfileComponent';
-import EquiposComponent from './pages/EquiposComponent';
-import ReservationComponent from './pages/ReservasComponent';
-import EspaciosComponent from './pages/EspaciosComponent';
-import LaboratorioComponent from './pages/LaboratorioComponent';
-import EquipmentSpacesComponent from './pages/EquipmentSpacesComponent';
 import PasswordResetComponent from './pages/PasswordResetComponent';
 import HomePage from './pages/HomePage';
 import AboutUs from './pages/AboutUs';
@@ -30,17 +25,11 @@ const App = () => {
           <Route path='/login' element={<LoginComponent />} />
           <Route path="/crear-cuenta" element={<RegisterClient />} />
           <Route path='/password-reset' element={<PasswordResetComponent />} />
-          // Agregar la ruta en el componente App
           <Route path='/register-client' element={<RegisterClient />} />
           {/* Rutas protegidas */}
           <Route path='/menu/*' element={<ProtectedRoute element={MenuComponent} />} />
           <Route path='/management-user' element={<ProtectedRoute element={ManagementUserComponent} />} />
-          <Route path='/profile' element={<ProtectedRoute element={ProfileComponent} />} />
-          <Route path='/equipos' element={<ProtectedRoute element={EquiposComponent} />} />
-          <Route path='/reservaciones' element={<ProtectedRoute element={ReservationComponent} />} />
-          <Route path='/espacios' element={<ProtectedRoute element={EspaciosComponent} />} />
-          <Route path='/laboratorios' element={<ProtectedRoute element={LaboratorioComponent} />} />
-          <Route path='/equipment-spaces' element={<ProtectedRoute element={EquipmentSpacesComponent} />} />
+          <Route path='/profile' element={<ProtectedRoute element={ProfileComponent} />} />        
         </Routes>
       </AuthProvider>
     </Router>

@@ -18,7 +18,6 @@ const AdminHeader = () => {
         <Link to="/profile">Perfil</Link>
         <Link to="/ingredientes">Ingredientes Disponibles</Link>
         <Link to="/recetas">Recetas Disponibles</Link>
-        <Link to="/password-reset">Cambiar Contraseña</Link>
       </nav>
       <button className="logout-button" onClick={logout}>Cerrar sesión</button>
     </header>

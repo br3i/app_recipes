@@ -5,6 +5,7 @@ import {
   getIngredienteId,
   getIngredienteNbr,
   getIngredienteCtg,
+  getCategorias,
   getIngredientesByComparison,
   createIngredientes,
   updateIngredientesId,
@@ -25,6 +26,7 @@ router.get("/ingredientes/:id", getIngredienteId);
 router.get("/ingredientes/nombre/:nombre", getIngredienteNbr);
 router.get("/ingredientes/categoria/:categoria", getIngredienteCtg);
 router.get('/ingredientes/:comparison/:parameter/:value', getIngredientesByComparison);
+router.get('/todas_categorias/', getCategorias);
 
 //Actualizar
 router.put("/ingredientes/id/:id", updateIngredientesId);
