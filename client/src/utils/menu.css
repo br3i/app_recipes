@@ -62,46 +62,48 @@
 
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2px 2%;
-    background: seagreen;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2px 2%;
+  background: seagreen;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
 }
 
 .logo img {
-    width: 60px; /* Ajusta el tamaño según tus necesidades */
-    height: auto;
-  }
-  
+  width: 60px;
+  /* Ajusta el tamaño según tus necesidades */
+  height: auto;
+}
+
 
 .navbar a {
-    position: relative;
-    font-size: 18px;
-    color: #fff;
-    font-weight: 500;
-    margin-left: 40px;
-    text-decoration: none; /* Añade esta línea para quitar el subrayado */
+  position: relative;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  margin-left: 40px;
+  text-decoration: none;
+  /* Añade esta línea para quitar el subrayado */
 }
 
 .navbar a::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: .3s;
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: .3s;
 }
 
 .navbar a:hover::before {
-    width: 100%;
+  width: 100%;
 }
 
 .content {
@@ -186,18 +188,19 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-.header button{
+
+.header button {
   width: 12%;
   height: 45px;
   background: #fff;
   border: none;
-  outline:  none;
+  outline: none;
   border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0,0,0, .1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   cursor: pointer;
   font-size: 16px;
   color: #333;
-  font-weight: 500;  
+  font-weight: 500;
 }
 
 .header {
@@ -205,18 +208,21 @@ code {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 5%; /* Ajusta el padding para pantallas más pequeñas */
+  padding: 10px 5%;
+  /* Ajusta el padding para pantallas más pequeñas */
   background: seagreen;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
 
-  margin: 10px 0; /* Agrega margen vertical para separación */
+  margin: 10px 0;
+  /* Agrega margen vertical para separación */
 }
 
 .logo img {
-  width: 50px; /* Ajusta el tamaño según tus necesidades */
+  width: 50px;
+  /* Ajusta el tamaño según tus necesidades */
   height: auto;
 }
 
@@ -226,10 +232,12 @@ code {
 }
 
 .navbar a {
-  font-size: 16px; /* Ajusta el tamaño de fuente */
+  font-size: 16px;
+  /* Ajusta el tamaño de fuente */
   color: #fff;
   font-weight: 500;
-  margin-left: 20px; /* Reduce el margen para pantallas pequeñas */
+  margin-left: 20px;
+  /* Reduce el margen para pantallas pequeñas */
   text-decoration: none;
   position: relative;
 }
@@ -260,8 +268,10 @@ code {
   }
 
   .navbar {
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: flex-start; /* Alinea los elementos al principio */
+    flex-direction: column;
+    /* Apila los elementos verticalmente */
+    align-items: flex-start;
+    /* Alinea los elementos al principio */
   }
 
   .navbar a {
@@ -281,21 +291,25 @@ code {
   }
 
   .navbar a {
-    font-size: 14px; /* Ajusta el tamaño de fuente */
+    font-size: 14px;
+    /* Ajusta el tamaño de fuente */
   }
 }
 
 .header button {
-  width: 14%; /* Haz que el botón ocupe el ancho completo en pantallas pequeñas */
+  width: 14%;
+  /* Haz que el botón ocupe el ancho completo en pantallas pequeñas */
   height: 40px;
   background: #fff;
   border: none;
   outline: none;
   border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0,0,0, .1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   cursor: pointer;
-  font-size: 14px; /* Ajusta el tamaño de fuente */
+  font-size: 14px;
+  /* Ajusta el tamaño de fuente */
   color: #333;
   font-weight: 500;
-  margin: 10px 0; /* Agrega margen vertical para separación */
+  margin: 10px 0;
+  /* Agrega margen vertical para separación */
 }

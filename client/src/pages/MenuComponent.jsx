@@ -10,7 +10,18 @@ import ManagementUserComponent from './ManagementUserComponent'
 
 const MenuComponent = () => {
   const [activePage, setActivePage] = useState('home'); // Estado para manejar la página activa
+  const [activePage, setActivePage] = useState('home'); // Estado para manejar la página activa
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const handleNavigation = (page) => {
+    setActivePage(page);
+  };
   const navigate = useNavigate();
 
   const handleLogout = () => {
