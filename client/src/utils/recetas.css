@@ -1,0 +1,243 @@
+/* recetas.css */
+li {
+    list-style-type: none;
+}
+
+.recetas-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Para centrar verticalmente en toda la pantalla */
+    margin-top: 10px;
+}
+.recetas-selectors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.recetas-selectors select,
+.recetas-selectors input,
+.recetas-selectors button {
+    margin: 2%;
+    padding: auto;
+    width: 200px;
+    /* Puedes ajustar este ancho según tus necesidades */
+}
+
+.recetas-title {
+    text-align: center;
+}
+
+.objetivo-select,
+.comparacion-select,
+.parametro-select,
+.valor-parametro-input {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.recetas-table-container {
+    overflow-x: auto;
+}
+
+.recetas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.recetas-table th,
+.recetas-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.recetas-table th {
+    background-color: #f2f2f2;
+}
+
+.td-editable input,
+.td-editable select {
+    width: 100%;
+    padding: 5px;
+}
+
+.paginacion {
+    margin: 10% 10% 10% 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline;
+    margin: 0 5px;
+}
+
+.pagination li button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.pagination li button:hover {
+    color: blue;
+}
+
+.pagination li.active button {
+    color: blue;
+    font-weight: bold;
+}
+
+.pagina-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.pagina-button.active {
+    background-color: #45a049;
+}
+
+@media screen and (min-width: 768px) {
+    .recetas-table-container {
+        overflow-x: auto;
+    }
+
+    .recetas-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .recetas-table th,
+    .recetas-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .recetas-table th {
+        background-color: #f2f2f2;
+    }
+
+    .td-editable input,
+    .td-editable select {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .paginacion {
+        margin-top: 20px;
+        display: none;
+        /* Ocultar paginación en pantalla grande */
+    }
+}
+
+/* Estilos para pantalla pequeña (tabla vertical) */
+@media screen and (max-width: 767px) {
+    .recetas-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        margin-top: 10px;
+    }
+
+    .recetas-table th,
+    .recetas-table td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .td-label {
+        font-weight: bold;
+        width: 30%;
+    }
+
+    .td-value {
+        width: 70%;
+    }
+
+    .paginacion {
+        margin-top: 20px;
+        display: block;
+        /* Mostrar paginación en pantalla pequeña */
+    }
+}
+
+.editar-receta {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.editar-receta.visible {
+    display: block;
+    /* Otros estilos específicos para cuando está visible */
+}
+
+.editar-receta h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.editar-receta form {
+    display: grid;
+    gap: 10px;
+}
+
+.editar-receta label {
+    font-weight: bold;
+}
+
+.editar-receta input,
+.editar-receta textarea,
+.editar-receta select {
+    width: calc(100% - 20px);
+    padding: 8px;
+    font-size: 14px;
+}
+
+.editar-receta button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.editar-receta button[type="button"] {
+    background-color: #f44336;
+}
+
+.editar-receta button[type="submit"] {
+    background-color: #4CAF50;
+}
+
+.editar-receta button[type="submit"]:hover,
+.editar-receta button[type="button"]:hover {
+    opacity: 0.8;
+}

@@ -1,0 +1,53 @@
+.management-user-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.ingredientes-table-container {
+    overflow-x: auto;
+}
+
+.ingredientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.ingredientes-table th,
+.ingredientes-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.ingredientes-table th {
+    background-color: #f2f2f2;
+}
+
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination__link {
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.pagination__link--disabled {
+    color: #ddd;
+    cursor: default;
+}
+
+.pagination__link--active {
+    background-color: #007bff;
+    color: #fff;
+}

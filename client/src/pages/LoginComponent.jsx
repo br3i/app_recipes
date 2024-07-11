@@ -61,7 +61,7 @@ const LoginComponent = () => {
         navigate('/menu', { replace: true });
       } catch (error) {
         console.error('Registration error:', error);
-        setError('Registration failed. Please try again.');
+        setError('Registro fallido. Intente nuevamente.');
       }
     } else {
       try {
@@ -71,7 +71,7 @@ const LoginComponent = () => {
         navigate('/menu', { replace: true });
       } catch (error) {
         console.error('Login error:', error);
-        setError('Invalid credentials. Please try again.');
+        setError('Credenciales incorrectas. Intente nuevamente.');
       }
     }
   };
@@ -121,9 +121,7 @@ const LoginComponent = () => {
           <button type="submit">{isRegistering ? 'Registrar' : 'Iniciar sesión'}</button>
         </form>
         <PasswordResetLink onClick={() => setShowResetForm(true)} />
-        <button className="switch-button" onClick={() => setIsRegistering(!isRegistering)}>
-          {isRegistering ? 'Cambiar a Iniciar sesión' : 'Cambiar a Registro'}
-        </button>
+  
       </div>
 
       {showResetForm && (

@@ -50,7 +50,23 @@ class IngredientesService {
     }
   }
 
+  async getAllCategorias() {
+    console.log("llego al servicio");
+    try {
+      const categorias = await Ingredientes.findAll({
+      attributes: ['categoria'], // Solo seleccionamos el atributo 'categoria'
+      group: ['categoria'], // Agrupamos por la columna 'categoria'
+      raw: true, // Obtener datos sin formato
+    });
 
+    return categorias
+      .map(item => item.categoria)
+      .filter(categoria => categoria !== null);
+    } catch (error) {
+      console.error("Error al obtener las categorías de ingredientes:", error);
+      throw error;
+    }
+  }
 
   async getIngredientesByComparison(comparison, parameter, value) {
     console.log(`Fetching ingredients with ${comparison} ${parameter} ${value}`);

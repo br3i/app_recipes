@@ -1,0 +1,143 @@
+/* ingredientes.css */
+.ingredientes-admin {
+    margin-top: 50px;
+}
+
+.ingredientes-title {
+    text-align: center;
+}
+
+.categoria-select {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.ingredientes-table-container {
+    overflow-x: auto;
+}
+
+.ingredientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.ingredientes-table th,
+.ingredientes-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.ingredientes-table th {
+    background-color: #f2f2f2;
+}
+
+.td-editable input,
+.td-editable select {
+    width: 100%;
+    padding: 5px;
+}
+
+.paginacion {
+    margin: 10% 10% 10% 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline;
+    margin: 0 5px;
+}
+
+.pagination li button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.pagination li button:hover {
+    color: blue;
+}
+
+.pagination li.active button {
+    color: blue;
+    font-weight: bold;
+}
+
+.pagina-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.pagina-button.active {
+    background-color: #45a049;
+}
+
+
+@media screen and (min-width: 768px) {
+    .ingredientes-table-container {
+        overflow-x: auto;
+    }
+
+    .ingredientes-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .ingredientes-table th,
+    .ingredientes-table td {
+        border: 1px solid #cb8585;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .ingredientes-table th {
+        background-color: #c7f4d4;
+    }
+
+    .td-editable input,
+    .td-editable select {
+        width: 100%;
+        padding: 5px;
+    }
+}
+
+/* Estilos para pantalla pequeña (tabla vertical) */
+@media screen and (max-width: 767px) {
+    .ingredientes-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        margin-top: 10px;
+    }
+
+    .ingredientes-table th,
+    .ingredientes-table td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .td-label {
+        font-weight: bold;
+        width: 30%;
+    }
+
+    .td-value {
+        width: 70%;
+    }
+}

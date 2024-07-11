@@ -104,6 +104,20 @@ export const getIngredientesByComparison = async (req, res) => {
   }
 };
 
+// Obtiene todas las categorías
+export const getCategorias = async (req, res) => {
+  console.log("controllador");
+  try {
+    console.log('GET /categorias');
+    const categorias = await IngredientesService.getAllCategorias();
+    console.log('Sending response with categories:', categorias);
+    res.json(categorias);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Crear un Ingrediente
 
 export const createIngredientes = async (req, res) => {

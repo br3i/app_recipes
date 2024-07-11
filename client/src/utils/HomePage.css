@@ -1,0 +1,228 @@
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .homepage-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 2%;
+    background: seagreen;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+  }
+  
+  .homepage-header .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Elimina el subrayado del texto */
+  }
+  
+  .homepage-header .logo img {
+    width: 60px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+  }
+  
+  .homepage-header .logo .logo-text {
+    font-size: 24px;
+    color: #fff;
+    margin-left: 10px;
+    text-decoration: none; /* Elimina el subrayado del texto */
+  }
+  
+  .homepage-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .homepage-navbar a {
+    margin: 0 15px;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  .homepage-navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: .3s;
+  }
+  
+  .homepage-navbar a:hover::before {
+    width: 100%;
+  }
+  
+  .btn-black {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .btn-green {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .homepage-main {
+    margin-top: 80px; /* Ajuste para el header fijo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .intro-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    margin-bottom: 20px;
+  }
+  
+  .intro-text {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .intro-text h2 {
+    font-size: 36px;
+    margin: 0;
+    color: #000;
+  }
+  
+  .intro-image img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Añadido para mejorar el aspecto */
+  }
+  
+  .stats {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples líneas */
+    justify-content: center; /* Centra los cuadros horizontalmente */
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+  }
+  
+  .stat {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 200px; /* Ajusta el tamaño del cuadro */
+    text-align: center;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añadido para mejorar el aspecto */
+  }
+  
+  .stat h3 {
+    margin: 0;
+    font-size: 36px;
+    color: #000;
+  }
+  
+  .stat p {
+    margin: 5px 0 0;
+    color: #000;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .homepage-header .logo img {
+      width: 40px;
+    }
+  
+    .homepage-navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .homepage-navbar a {
+      margin: 10px 0;
+    }
+  
+    .intro-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .intro-text {
+      margin-right: 0;
+      text-align: center;
+    }
+  
+    .intro-image {
+      margin-top: 20px;
+    }
+  
+    .stats {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .stat {
+      width: 80%;
+      max-width: 300px; /* Aumenta el tamaño máximo para pantallas pequeñas */
+      margin-bottom: 20px;
+    }
+  }
+
+/* Estilos para la sección "Sobre Nosotros" */
+.aboutus-section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    background: #fff; /* Fondo blanco para el cuadro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para el cuadro */
+    border: 1px solid #ddd; /* Borde sutil */
+  }
+  
+  .aboutus-section h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .aboutus-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  /* Estilos responsivos para la sección "Sobre Nosotros" */
+  @media (max-width: 768px) {
+    .aboutus-section h1 {
+      font-size: 28px;
+    }
+  
+    .aboutus-section p {
+      font-size: 16px;
+    }
+  }
+  
