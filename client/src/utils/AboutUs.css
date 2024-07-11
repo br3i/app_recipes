@@ -1,103 +1,102 @@
 /* src/utils/AboutUs.css */
 .aboutus-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .aboutus-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 2%;
-    background-color: seagreen;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 100;
-  }
-  
-  .aboutus-header .logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-  
-  .aboutus-header .logo img {
-    width: 60px;
-    height: auto;
-  }
-  
-  .aboutus-header .logo .logo-text {
-    font-size: 24px;
-    color: #fff;
-    margin-left: 10px;
-  }
-  
-  .aboutus-navbar {
-    display: flex;
-    align-items: center;
-  }
-  
-  .aboutus-navbar a {
-    margin: 0 15px;
-    font-size: 18px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-  }
-  
-  .aboutus-navbar a::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: .3s;
-  }
-  
-  .aboutus-navbar a:hover::before {
-    width: 100%;
-  }
-  
-  .btn-black {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-  }
-  
-  .btn-green {
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-  }
-  
-  .aboutus-main {
-    margin-top: 80px;
-    padding: 20px;
-  }
-  
-  .aboutus-introduction {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  
-  .aboutus-introduction h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .aboutus-introduction p {
-    margin-bottom: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.aboutus-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 2%;
+  background-color: seagreen;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.aboutus-header .logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.aboutus-header .logo img {
+  width: 60px;
+  height: auto;
+}
+
+.aboutus-header .logo .logo-text {
+  font-size: 24px;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.aboutus-navbar {
+  display: flex;
+  align-items: center;
+}
+
+.aboutus-navbar a {
+  margin: 0 15px;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.aboutus-navbar a::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: .3s;
+}
+
+.aboutus-navbar a:hover::before {
+  width: 100%;
+}
+
+.btn-black {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn-green {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.aboutus-main {
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.aboutus-introduction {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.aboutus-introduction h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.aboutus-introduction p {
+  margin-bottom: 20px;
+}
