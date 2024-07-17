@@ -93,17 +93,6 @@ export const deleteCliente = async (req, res) => {
   }
 };
 
-// Autenticación (Login)
-export const loginCliente = async (req, res) => {
-  try {
-    const { correo, contrasena } = req.body;
-    const result = await ClientesService.loginClienteService(correo, contrasena);
-    res.json(result);
-  } catch (error) {
-    console.error('Error logging in client:', error);
-    res.status(500).json({ error: error.message });
-  }
-};
 
 // Cambiar contraseña
 export const changePasswordCliente = async (req, res) => {
@@ -116,3 +105,18 @@ export const changePasswordCliente = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// // Autenticación (Login)
+export const loginCliente = async (req, res) => {
+  try {
+    const { correo, contrasena } = req.body;
+    const result = await ClientesService.loginClienteService(correo, contrasena);
+
+    // Aquí asumimos que 'result' incluye tipo_usuario y otros datos necesarios
+    res.json(result);
+  } catch (error) {
+    console.error('Error logging in client:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+

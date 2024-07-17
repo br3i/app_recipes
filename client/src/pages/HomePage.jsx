@@ -44,9 +44,11 @@ const HomePage = () => {
           <button className="btn-green" onClick={handleStartClick}>Empezar</button>
         </nav>
       </header>
+      <div className="image-side image-left"></div> {/* Imagen izquierda */}
       <main className="homepage-main">
         {currentPage === 'home' && (
           <>
+          
             <section className="intro-section">
               <div className="intro-text">
                 <h2>COCINA CON LO QUE TIENES!</h2>
@@ -82,7 +84,7 @@ const HomePage = () => {
         {currentPage === 'profile' && <ProfileForm />}
         {currentPage === 'passwordReset' && <PasswordReset />}
       </main>
-
+      <div className="image-side image-right"></div> {/* Imagen derecha */}
     </div>
   );
 };

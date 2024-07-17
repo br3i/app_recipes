@@ -1,3 +1,5 @@
+// src/pages/LoginComponent.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -47,32 +49,35 @@ const LoginComponent = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      // Navegar a la página de menú correspondiente según el tipo de usuario
       navigate('/menu', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (isRegistering) {
-      try {
-        const payload = { nombre: name, email, contrasena: password, tipo_usuario: tipoUsuario };
-        const response = await axios.post(`${API_URL}/login`, payload);
-        login(response.data);
-        navigate('/menu', { replace: true });
-      } catch (error) {
-        console.error('Registration error:', error);
-        setError('Registro fallido. Intente nuevamente.');
+    try {
+      const payload = isRegistering ? 
+        { nombre: name, email, contrasena: password, tipo_usuario: tipoUsuario } : 
+        { email, contrasena: password };
+        
+      const response = await axios.post(`${API_URL}/login`, payload);
+      const userData = response.data;
+
+      // Almacenar los datos del usuario en el contexto de autenticación
+      login(userData);
+
+      // Verificar el tipo de usuario y redirigir a la página correspondiente
+      if (userData.tipo_usuario === 'administrador') {
+        navigate('/menu-admin', { replace: true });
+      } else if (userData.tipo_usuario === 'cliente') {
+        navigate('/menu-client', { replace: true });
+      } else {
+        setError('Tipo de usuario desconocido.');
       }
-    } else {
-      try {
-        const payload = { email, contrasena: password };
-        const response = await axios.post(`${API_URL}/login`, payload);
-        login(response.data);
-        navigate('/menu', { replace: true });
-      } catch (error) {
-        console.error('Login error:', error);
-        setError('Credenciales incorrectas. Intente nuevamente.');
-      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Credenciales incorrectas. Intente nuevamente.');
     }
   };
 
@@ -84,7 +89,7 @@ const LoginComponent = () => {
       setResetError('');
     } catch (error) {
       setResetMessage('');
-      setResetError('Failed to reset password. Please try again.');
+      setResetError('Error al resetear la contraseña. Intente nuevamente.');
     }
   };
 
@@ -121,7 +126,6 @@ const LoginComponent = () => {
           <button type="submit">{isRegistering ? 'Registrar' : 'Iniciar sesión'}</button>
         </form>
         <PasswordResetLink onClick={() => setShowResetForm(true)} />
-  
       </div>
 
       {showResetForm && (

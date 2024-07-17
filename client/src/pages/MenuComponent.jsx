@@ -37,6 +37,7 @@ const MenuComponent = () => {
         
         <button className="logout-button" type="button" onClick={handleLogout}>Cerrar sesión</button>
       </header>
+      <div className="image-side image-left"></div> {/* Imagen izquierda */}
       <br />
       <main className="content">
         {activePage === 'profile' && <ProfileForm />}
@@ -70,9 +71,12 @@ const MenuComponent = () => {
               </p>
             </div>
           </main>
+          
         )}
       </main>
+      <div className="image-side image-right"></div> {/* Imagen derecha */}
     </div>
+    
   );
 };
 
