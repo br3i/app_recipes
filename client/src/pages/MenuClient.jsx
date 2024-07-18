@@ -1,5 +1,6 @@
 // src/pages/MenuClient.jsx
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../utils/MenuClient.css'; // Importa el archivo de estilos
 
 const MenuClient = () => {
@@ -10,10 +11,28 @@ const MenuClient = () => {
     { title: 'Receta Ejemplo 1', description: 'Descripción de la receta 1' },
     { title: 'Receta Ejemplo 2', description: 'Descripción de la receta 2' },
   ]);
+  const [showCommentForm, setShowCommentForm] = useState(false);
+  const [comment, setComment] = useState('');
+  const [commentMessage, setCommentMessage] = useState('');
 
   const handleObjectiveChange = (event) => {
     setSelectedObjective(event.target.value);
     // Aquí puedes añadir lógica para obtener recetas basadas en el objetivo
+  };
+
+  const handleCommentSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:4000/comentarios', {
+        comment,
+        // Aquí añade otros campos necesarios para la tabla de comentarios
+      });
+      setCommentMessage('Comentario enviado con éxito');
+      setComment('');
+      setShowCommentForm(false);
+    } catch (error) {
+      setCommentMessage('Error al enviar el comentario');
+    }
   };
 
   return (
@@ -24,6 +43,7 @@ const MenuClient = () => {
           <li><a href="#profile">Perfil</a></li>
           <li><a href="#settings">Ajustes</a></li>
           <li><a href="#history">Historial de Recetas</a></li>
+          <li><a href="#comment" onClick={() => setShowCommentForm(true)}>Enviar un comentario</a></li>
           {/* Añade más opciones según sea necesario */}
         </ul>
       </div>
@@ -60,6 +80,20 @@ const MenuClient = () => {
               </li>
             ))}
           </ul>
+        )}
+        {showCommentForm && (
+          <div className="comment-form">
+            <h2>Enviar un comentario</h2>
+            <form onSubmit={handleCommentSubmit}>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Escribe tu comentario"
+              />
+              <button type="submit">Enviar</button>
+              {commentMessage && <p>{commentMessage}</p>}
+            </form>
+          </div>
         )}
       </div>
     </div>

@@ -59,3 +59,67 @@
   transform: translateY(-50%);
   background-size: 20px 20px; /* Ajusta el tamaño de las flechitas */
 }
+
+
+.newsletter-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.newsletter-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.newsletter-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-container input[type="email"],
+.newsletter-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.newsletter-container input[type="email"]::placeholder,
+.newsletter-container textarea::placeholder {
+  color: #aaa;
+}
+
+.newsletter-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.newsletter-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-container button:hover {
+  background-color: #218838;
+}
+
+.newsletter-container p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}

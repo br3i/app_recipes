@@ -1,8 +1,10 @@
 // src/pages/ComoFunciona.jsx
-import React from 'react';
+
+import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../utils/ComoFunciona.css';
+import axios from 'axios';
 
 // Imágenes para el carrusel
 import img1 from '../components/public/img3.jpeg'; // Reemplaza con la ruta correcta
@@ -11,6 +13,20 @@ import img3 from '../components/public/img1.jpeg'; // Reemplaza con la ruta corr
 import img4 from '../components/public/img4.jpeg'; // Reemplaza con la ruta correcta
 
 const ComoFunciona = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [response, setResponse] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:4000/send-comment', { email, message });
+      setResponse(res.data.message);
+    } catch (error) {
+      setResponse('Error al enviar el comentario.');
+    }
+  };
+
   return (
     <div className="comofunciona-container">
       <Carousel interval={5000} prevIcon={<span className="carousel-control-prev-icon" aria-hidden="true"></span>} nextIcon={<span className="carousel-control-next-icon" aria-hidden="true"></span>}>
@@ -49,6 +65,29 @@ const ComoFunciona = () => {
           </div>
         </Carousel.Item>
       </Carousel>
+      <div className="newsletter-container">
+        <h2>Deja tu comentario en este boletín</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Ingrese su correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            
+          />
+ 
+          <textarea
+            placeholder="Ingrese su mensaje"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+          />
+      
+          <button type="submit" className="btn btn-success">Enviar</button>
+        </form>
+        {response && <p>{response}</p>}
+      </div>
     </div>
   );
 };
