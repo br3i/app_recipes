@@ -86,9 +86,11 @@ const HomePage = () => {
         </nav>
       </header>
       <div className="image-side image-left"></div> {/* Imagen izquierda */}
+      <div className="image-side image-left"></div> {/* Imagen izquierda */}
       <main className="homepage-main">
         {currentPage === 'home' && (
           <>
+          
             <section className="intro-section">
               <div className="intro-text">
                 <h2>COCINA CON LO QUE TIENES!</h2>
