@@ -143,7 +143,12 @@ class RecetasService {
         [parameter]: {
           [operator]: value
         }
-      }
+      },
+      include:[{
+        model: Objetivos_Nutricionales,
+        as: 'objetivo',
+        attributes: ['nombre_objetivo']
+      }]
     });
 
     console.log('Fetched recetas:', recetas);

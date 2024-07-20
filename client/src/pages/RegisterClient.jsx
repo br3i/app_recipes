@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../utils/login.css'; // Puedes ajustar los estilos según sea necesario
 import '../utils/RegisterClient.css';
-const API_URL = 'http://localhost:4000/usuarios';
+const API_URL = 'http://localhost:4000/clientes';
 
 const RegisterClient = () => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [correo, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [error, setError] = useState('');
@@ -19,8 +19,8 @@ const RegisterClient = () => {
 
     try {
       const payload = {
-        nombre: name,
-        email,
+        nombre_cliente: name,
+        correo,
         contrasena: password,
         tipo_usuario: 'cliente', // Establecido como estático
         informacion_contacto: contactInfo,
@@ -55,7 +55,7 @@ const RegisterClient = () => {
           <label>Email</label>
           <input
             type="email"
-            value={email}
+            value={correo}
             onChange={(e) => setEmail(e.target.value)}
             required
           />

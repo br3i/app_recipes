@@ -21,14 +21,14 @@ const VisualizadorRecetas = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     instrucciones_prep: '',
-    tiempo_coccion: '',
-    calorias_totales: '',
-    proteinas_totales: '',
-    carbohidratos_totales: '',
-    grasas_totales: '',
-    azucares_totales: '',
-    fibra_total: '',
-    sodio_total: '',
+    tiempo: '',
+    calorias: '',
+    proteinas: '',
+    carbohidratos: '',
+    grasas: '',
+    azucares: '',
+    fibra: '',
+    sodio: '',
     id_objetivo: '',
     ingredientes: []
   });
@@ -114,6 +114,7 @@ const VisualizadorRecetas = () => {
         });
       }
       setRecetas(response.data);
+      console.log(`\n\n\n\n\n\n Esto es lo que llega del servidor en respuesta: ${JSON.stringify(response.data, null, 2)}\n\n\n\n\n`);
       setPaginaActual(1);
     } catch (error) {
       console.error('Error fetching filtered recipes:', error);
@@ -158,30 +159,41 @@ const VisualizadorRecetas = () => {
     setFormData({
       nombre: receta.nombre,
       instrucciones_prep: receta.instrucciones_prep,
-      tiempo_coccion: receta.tiempo_coccion,
-      calorias_totales: receta.calorias_totales,
-      proteinas_totales: receta.proteinas_totales,
-      carbohidratos_totales: receta.carbohidratos_totales,
-      grasas_totales: receta.grasas_totales,
-      azucares_totales: receta.azucares_totales,
-      fibra_total: receta.fibra_total,
-      sodio_total: receta.sodio_total,
+      tiempo: receta.tiempo_coccion,
+      calorias: receta.calorias_totales,
+      proteinas: receta.proteinas_totales,
+      carbohidratos: receta.carbohidratos_totales,
+      grasas: receta.grasas_totales,
+      azucares: receta.azucares_totales,
+      fibra: receta.fibra_total,
+      sodio: receta.sodio_total,
       id_objetivo: receta.id_objetivo,
       ingredientes: receta.ingredientes.map(ing => ({
         id_ingrediente: ing.id_ingrediente,
         nombre: ing.nombre,
         cantidad: ing.recetas_ingredientes.cantidad || 0 // Use the correct quantity
       }))
-    });
-  };
-
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
+  }, () => {
+    // Callback ejecutado después de que el estado se haya actualizado
+    console.log('Receta editando:', receta); // Imprime la receta original
+    console.log('FormData enviado:', formData); // Imprime el formData actualizado
+  });
+};
+const handleFormChange = (e) => {
+  const { name, value } = e.target;
+  console.log(`El valor de name: ${name} y de value ${value}`);
+  if (name === "tiempo_coccion") {
+    setFormData(prevState => ({
+      ...prevState,
+      tiempo_coccion: value // Asegúrate de actualizar tiempo_coccion en lugar de tiempo
+    }));
+  } else {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
-  };
+  }
+};
 
   const handleBusquedaIngredienteChange = (e) => {
     const { value } = e.target;
@@ -216,35 +228,48 @@ const VisualizadorRecetas = () => {
     }));
   };
 
-  const guardarCambios = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(`${API_URL}/recetas/id/${recetaEditando}`, {
-        ...formData,
-        ingredientes: formData.ingredientes.map(ing => ({
-          id_ingrediente: ing.id_ingrediente,
-          cantidad: ing.cantidad
-        }))
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authTokens}`
-        }
-      });
+const guardarCambios = async (e) => {
+  e.preventDefault();
+  try {
+    console.log('Sending PUT request to:', `${API_URL}/recetas/id/${recetaEditando}`);
+    console.log('Request body:', {
+      ...formData,
+      ingredientes: formData.ingredientes.map(ing => ({
+        id_ingrediente: ing.id_ingrediente,
+        cantidad: ing.cantidad
+      }))
+    });
 
-      const updatedReceta = response.data;
-
-      setRecetas(recetas.map(receta =>
-        receta.id_receta === recetaEditando ? updatedReceta : receta
-      ));
-      setRecetaEditando(null);
-    } catch (error) {
-      console.error('Error updating recipe:', error);
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
+    const response = await axios.put(`${API_URL}/recetas/id/${recetaEditando}`, {
+      ...formData,
+      ingredientes: formData.ingredientes.map(ing => ({
+        id_ingrediente: ing.id_ingrediente,
+        cantidad: ing.cantidad
+      }))
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authTokens}`
       }
+    });
+
+    console.log('Response:', response.data);
+
+    const updatedReceta = response.data;
+
+    setRecetas(recetas.map(receta =>
+      receta.id_receta === recetaEditando ? updatedReceta : receta
+    ));
+    setRecetaEditando(null);
+  } catch (error) {
+    console.error('Error updating recipe:', error);
+    if (error.response && error.response.status === 401) {
+      navigate('/login');
     }
-  };
+  }
+};
+
+
 
   const cancelarEdicion = () => {
     setRecetaEditando(null);
@@ -285,7 +310,7 @@ return (
       <select className="objetivo-select" value={objetivoSeleccionado} onChange={handleObjetivoChange}>
         <option value="">Todos los Objetivos</option>
         {objetivos.map(objetivo => (
-          <option key={objetivo.id_objetivo} value={objetivo.nombre_objetivo}>{objetivo.descripcion}</option>
+          <option key={objetivo.id_objetivo} value={objetivo.nombre_objetivo}>{objetivo.nombre_objetivo}</option>
         ))}
       </select>
       <select className="comparacion-select" value={comparacion} onChange={handleComparacionChange}>
@@ -296,13 +321,14 @@ return (
       </select>
       <select className="parametro-select" value={parametro} onChange={handleParametroChange}>
         <option value="">Seleccionar Parámetro</option>
-        <option value="calorias_totales">Calorías Totales</option>
-        <option value="proteinas_totales">Proteínas Totales</option>
-        <option value="carbohidratos_totales">Carbohidratos Totales</option>
-        <option value="grasas_totales">Grasas Totales</option>
-        <option value="azucares_totales">Azúcares Totales</option>
-        <option value="fibra_total">Fibra Total</option>
-        <option value="sodio_total">Sodio Total</option>
+        <option value="tiempo">Tiempo Total</option>
+        <option value="calorias">Calorías Totales</option>
+        <option value="proteinas">Proteínas Totales</option>
+        <option value="carbohidratos">Carbohidratos Totales</option>
+        <option value="grasas">Grasas Totales</option>
+        <option value="azucares">Azúcares Totales</option>
+        <option value="fibra">Fibra Total</option>
+        <option value="sodio">Sodio Total</option>
       </select>
       <input className="valor-parametro-input" type="number" value={valorParametro} onChange={handleValorParametroChange} placeholder="Valor" />
       <button onClick={handleBuscarClick}>Buscar</button>
@@ -314,6 +340,7 @@ return (
             <th>Nombre</th>
             <th>Objetivo</th>
             <th>Instrucciones</th>
+            <th>Tiempo</th>
             <th>Calorías Totales</th>
             <th>Carbohidratos Totales</th>
             <th>Grasas Totales</th>
@@ -329,6 +356,7 @@ return (
               <td>{receta.nombre}</td>
               <td>{receta.objetivo ? receta.objetivo.nombre_objetivo : '-'}</td>
               <td>{receta.instrucciones_prep}</td>
+              <td>{receta.tiempo_coccion}</td>
               <td>{receta.calorias_totales}</td>
               <td>{receta.carbohidratos_totales}</td>
               <td>{receta.grasas_totales}</td>
@@ -381,71 +409,16 @@ return (
           <input
             type="number"
             name="tiempo_coccion"
-            value={formData.tiempo_coccion}
+            value={formData.tiempo}
             onChange={handleFormChange}
             required
           />
-          <label>Calorías Totales:</label>
-          <input
-            type="number"
-            name="calorias_totales"
-            value={formData.calorias_totales}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Proteínas Totales:</label>
-          <input
-            type="number"
-            name="proteinas_totales"
-            value={formData.proteinas_totales}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Carbohidratos Totales:</label>
-          <input
-            type="number"
-            name="carbohidratos_totales"
-            value={formData.carbohidratos_totales}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Grasas Totales:</label>
-          <input
-            type="number"
-            name="grasas_totales"
-            value={formData.grasas_totales}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Azúcares Totales:</label>
-          <input
-            type="number"
-            name="azucares_totales"
-            value={formData.azucares_totales}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Fibra Total:</label>
-          <input
-            type="number"
-            name="fibra_total"
-            value={formData.fibra_total}
-            onChange={handleFormChange}
-            required
-          />
-          <label>Sodio Total:</label>
-          <input
-            type="number"
-            name="sodio_total"
-            value={formData.sodio_total}
-            onChange={handleFormChange}
-            required
-          />
+          
           <label>Objetivo:</label>
           <select name="id_objetivo" value={formData.id_objetivo} onChange={handleFormChange}>
             <option value="">Seleccionar Objetivo</option>
             {objetivos.map(objetivo => (
-              <option key={objetivo.id_objetivo} value={objetivo.id_objetivo}>{objetivo.descripcion}</option>
+              <option key={objetivo.id_objetivo} value={objetivo.id_objetivo}>{objetivo.nombre_objetivo}</option>
             ))}
           </select>
           <h3>Ingredientes</h3>

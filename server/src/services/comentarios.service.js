@@ -1,5 +1,9 @@
 import { Op } from "sequelize";
 import { Comentarios } from "../models/comentarios.js";
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class ComentariosService {
   async getAllComentarios() {
@@ -115,6 +119,35 @@ class ComentariosService {
       return { deletedCount, message: `Se eliminaron ${deletedCount} comentarios del usuario` };
     } catch (error) {
       console.error(`Error deleting comments for user with ID: ${idUsuario}`, error);
+      throw error;
+    }
+  }
+
+  async sendComment(email, message) {
+    try {
+      // Configurar el transporte de correo
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER, // Utiliza la variable de entorno
+          pass: process.env.EMAIL_PASS  // Utiliza la variable de entorno
+        }
+      });
+
+      // Configurar los detalles del correo
+      const mailOptions = {
+        from: process.env.EMAIL_USER, // Utiliza la variable de entorno
+        to: email,
+        subject: 'Nuevo Comentario',
+        text: message
+      };
+
+      // Enviar el correo
+      await transporter.sendMail(mailOptions);
+      console.log('Correo enviado:', mailOptions);
+      return { message: 'Correo enviado exitosamente' };
+    } catch (error) {
+      console.error('Error enviando correo:', error);
       throw error;
     }
   }

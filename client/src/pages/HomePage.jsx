@@ -1,38 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet'; // Importa Helmet
+import axios from 'axios';
 import '../utils/HomePage.css';
 import logo from '../components/public/logo.png';
 import cookingImage from '../components/public/receta.jpg';
 import LoginComponent from '../pages/LoginComponent'; // Importa el componente LoginComponent
 import RegisterClient from '../pages/RegisterClient'; // Importa el componente RegisterClient
+import AboutUs from '../pages/AboutUs'; // Importa el componente AboutUs
+import ProfileForm from '../pages/ProfileComponent'; // Importa el componente ProfileForm
+import PasswordReset from '../pages/PasswordResetComponent'; // Importa el componente PasswordReset
+import ComoFunciona from '../pages/ComoFunciona'; // Importa el componente PasswordReset
+import RecetasCliente from '../pages/RecetasCliente'
+import RecetasBackUp from '../pages/RecetasComponent'
+
+const API_URL = 'http://localhost:4000'; // Ajusta según tu configuración
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState('home'); // Estado para controlar la página actual
-  const [showLogin, setShowLogin] = useState(false); // Estado para controlar la visualización del LoginComponent
-  const [showRegister, setShowRegister] = useState(false); // Estado para controlar la visualización del RegisterClient
+  const [recetasCount, setRecetasCount] = useState(0);
+  const [objetivosCount, setObjetivosCount] = useState(0);
+  const [comentarios, setComentarios] = useState([]); // Estado para almacenar los comentarios
+
+  useEffect(() => {
+    const fetchRecetas = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/recetas`);
+        setRecetasCount(response.data.length);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+
+    const fetchObjetivos = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/objetivos`);
+        setObjetivosCount(response.data.length);
+      } catch (error) {
+        console.error('Error fetching objetivos:', error);
+      }
+    };
+
+    const fetchComentarios = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/comentarios`);
+        setComentarios(response.data);
+      } catch (error) {
+        console.error('Error fetching comentarios:', error);
+      }
+    };
+
+    fetchRecetas();
+    fetchObjetivos();
+    fetchComentarios();
+  }, []);
 
   const handleNavClick = (page) => {
     setCurrentPage(page);
   };
 
   const handleStartClick = () => {
-    setShowLogin(true); // Muestra el LoginComponent
-    setShowRegister(false); // Asegúrate de ocultar el formulario de registro
+    setCurrentPage('login'); // Navega al LoginComponent
   };
 
   const handleCreateAccountClick = () => {
-    setShowRegister(true); // Muestra el RegisterClient
-    setShowLogin(false); // Asegúrate de ocultar el LoginComponent
+    setCurrentPage('register'); // Navega al RegisterClient
   };
 
   return (
     <div className="homepage-container">
+      <Helmet>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+      </Helmet>
       <header className="homepage-header">
         <a href="/" className="logo">
           <img src={logo} alt="Logo" />
           <span className="logo-text">SMART PLATE</span>
         </a>
         <nav className="homepage-navbar">
-          <a href="/" onClick={() => handleNavClick('home')}>Inicio</a>
+          <a href="#!" onClick={() => handleNavClick('home')}>Inicio</a>
           <a href="#about" onClick={() => handleNavClick('about')}>Sobre nosotros</a>
           <a href="#recipes" onClick={() => handleNavClick('recipes')}>Recetas</a>
           <a href="#how-it-works" onClick={() => handleNavClick('how-it-works')}>Cómo funciona</a>
@@ -40,6 +85,7 @@ const HomePage = () => {
           <button className="btn-green" onClick={handleStartClick}>Empezar</button>
         </nav>
       </header>
+      <div className="image-side image-left"></div> {/* Imagen izquierda */}
       <main className="homepage-main">
         {currentPage === 'home' && (
           <>
@@ -53,11 +99,11 @@ const HomePage = () => {
             </section>
             <div className="stats">
               <div className="stat">
-                <h3>180</h3>
+                <h3>{recetasCount}</h3>
                 <p>RECETAS</p>
               </div>
               <div className="stat">
-                <h3>12</h3>
+                <h3>{objetivosCount}</h3>
                 <p>OBJETIVOS</p>
               </div>
               <div className="stat">
@@ -68,34 +114,26 @@ const HomePage = () => {
                 <p>Ninguna razón para no usarla</p>
               </div>
             </div>
+           <div className="comments-section">
+            {comentarios.map((comentario) => (
+              <div key={comentario.id_comentario} className="comment-card">
+                <h4>{comentario.nombre}</h4>
+                <p>{comentario.descripcion}</p>
+              </div>
+            ))}
+          </div>
+
           </>
         )}
-        {currentPage === 'about' && (
-          <section className="aboutus-section">
-            <h1>¡Bienvenidos a Recetas Saludables!</h1>
-            <p>
-              Somos un grupo de estudiantes de la carrera de Software de la Escuela Superior Politécnica de Chimborazo. En Poli Devs, nos apasiona el desarrollo de software y la creación de soluciones innovadoras que aborden desafíos reales.
-            </p>
-            <p>
-              Nuestro equipo está compuesto por estudiantes dedicados y motivados que combinan sus habilidades en programación, diseño y gestión de proyectos para ofrecer productos y servicios de alta calidad. Desde nuestra fundación, hemos trabajado en diversos proyectos que buscan mejorar la experiencia del usuario y aportar valor en el campo de la tecnología.
-            </p>
-            <p>
-              Nos enorgullece nuestro enfoque colaborativo y nuestra constante búsqueda de aprendizaje y mejora. Estamos comprometidos con la excelencia y la innovación, y nuestro objetivo es aplicar nuestros conocimientos para crear soluciones prácticas y efectivas.
-            </p>
-            <p>
-              Gracias por visitar nuestra página. Si tienes alguna pregunta o deseas colaborar con nosotros, no dudes en ponerte en contacto. ¡Estamos aquí para ayudarte!
-            </p>
-          </section>
-        )}
-        {/* Mostrar el LoginComponent si showLogin es verdadero */}
-        {showLogin && <LoginComponent />}
-        {/* Mostrar el RegisterClient si showRegister es verdadero */}
-        {showRegister && (
-          <div className="register-form">
-            <RegisterClient />
-          </div>
-        )}
+        {currentPage === 'about' && <AboutUs />}
+        {currentPage === 'recipes' && <RecetasCliente/>}
+        {currentPage === 'how-it-works' && <ComoFunciona />}
+        {currentPage === 'login' && <LoginComponent />}
+        {currentPage === 'register' && <RegisterClient />}
+        {currentPage === 'profile' && <ProfileForm />}
+        {currentPage === 'passwordReset' && <PasswordReset />}
       </main>
+      <div className="image-side image-right"></div> {/* Imagen derecha */}
     </div>
   );
 };

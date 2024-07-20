@@ -1,6 +1,6 @@
 import { sequelize } from "../database/database.js";
 import { trim } from "../utilities/trim.js";
-import ComentariosService from '../services/comentarios.service.js'; // Asegúrate de tener la ruta correcta hacia tu servicio
+import ComentariosService from '../services/comentarios.service.js';
 import usuariosService from "../services/usuarios.service.js";
 
 // Obtener todos los comentarios
@@ -107,7 +107,7 @@ export const createComentario = async (req, res) => {
 
     await transaction.commit();
     console.log('Created comment:', newComentario);
-    res.json(newComentario);
+    res.json({ message: 'Comentario creado exitosamente', comentario: newComentario });
   } catch (error) {
     await transaction.rollback();
     console.error('Error creating comment:', error);
@@ -151,7 +151,7 @@ export const updateComentarioId = async (req, res) => {
 
     await transaction.commit();
     console.log('Updated comment:', updatedComentario);
-    res.json(updatedComentario);
+    res.json({ message: 'Comentario editado exitosamente', comentario: updatedComentario });
   } catch (error) {
     await transaction.rollback();
     console.error('Error updating comment:', error);
@@ -215,6 +215,25 @@ export const deleteComentariosIdUsuario = async (req, res) => {
   } catch (error) {
     await transaction.rollback();
     console.error('Error deleting comments for user:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Enviar comentario por correo electrónico
+export const sendComment = async (req, res) => {
+  try {
+    const { email, message } = req.body;
+    console.log(`POST /comentarios/sendComment to ${email}`);
+    
+    if (!email || !message) {
+      return res.status(400).json({ error: 'El correo electrónico y el mensaje son requeridos' });
+    }
+
+    const response = await ComentariosService.sendComment(email, message);
+    console.log('Email sent:', response);
+    res.json(response);
+  } catch (error) {
+    console.error('Error sending comment email:', error);
     res.status(500).json({ error: error.message });
   }
 };

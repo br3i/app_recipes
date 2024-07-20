@@ -1,0 +1,100 @@
+/* src/utils/MenuClient.css */
+
+.menu-client {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .menu-client-left, .menu-client-center, .menu-client-right {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu-client-left {
+    background-color: #f9f9f9;
+    max-width: 200px; /* Ancho fijo para el menú */
+  }
+  
+  .menu-client-left h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .menu-client-left ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu-client-left li {
+    margin-bottom: 10px;
+  }
+  
+  .menu-client-left a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .menu-client-center {
+    background-color: #fff;
+    max-width: 400px; /* Ancho máximo para la sección central */
+  }
+  
+  .menu-client-center h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .menu-client-center select, .menu-client-center textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .menu-client-right {
+    background-color: #f9f9f9;
+    max-width: 300px; /* Ancho máximo para la sección de recetas */
+  }
+  
+  .menu-client-right h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .menu-client-right ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu-client-right li {
+    margin-bottom: 15px;
+  }
+  
+  .menu-client-right h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .menu-client-right p {
+    margin: 0;
+    color: #555;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .menu-client {
+      flex-direction: column;
+    }
+  
+    .menu-client-left, .menu-client-center, .menu-client-right {
+      max-width: none;
+      margin: 10px 0;
+    }
+  }
+  

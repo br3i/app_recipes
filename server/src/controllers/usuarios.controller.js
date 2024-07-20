@@ -193,15 +193,22 @@ export const updateUsuarioId = async (req, res) => {
       return res.status(400).json({ error: 'El ID debe ser un número' });
     }
 
-    const hashedPassword = await bcrypt.hash(userData.contrasena, 10);
-    const updatedUsuario = await UsuariosService.updateUsuarioById(trim(id), {
+    const updateData = {
       nombre: userData.nombre,
       email: userData.email,
-      contrasena: hashedPassword,
       tipo_usuario: userData.tipo_usuario,
       informacion_contacto: userData.informacion_contacto,
       especialidad: userData.especialidad,
-    }, transaction);
+    };
+
+    // Si la contraseña está presente y no vacía, la incluimos en la actualización
+    if (userData.contrasena && userData.contrasena.trim()) {
+      const hashedPassword = await bcrypt.hash(userData.contrasena, 10);
+      updateData.contrasena = hashedPassword;
+    }
+
+  
+    const updatedUsuario = await UsuariosService.updateUsuarioById(trim(id), updateData, transaction);
 
     await transaction.commit();
     res.json(updatedUsuario);

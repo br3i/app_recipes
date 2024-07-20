@@ -1,0 +1,70 @@
+/* BotRecomendaciones.css */
+
+/* Estilos generales para el contenedor principal */
+.bot-recomendaciones-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    /* Color de texto principal */
+}
+
+/* Estilos para los títulos */
+.bot-recomendaciones-container h3 {
+    color: seagreen;
+    /* Color seagreen para los títulos */
+    margin-top: 20px;
+}
+
+.bot-recomendaciones-container h4 {
+    color: seagreen;
+    /* Color seagreen para subtítulos */
+    margin-top: 15px;
+}
+
+.bot-recomendaciones-container h5 {
+    color: seagreen;
+    /* Color seagreen para subtítulos secundarios */
+    margin-top: 10px;
+}
+
+/* Estilos para los elementos de lista y párrafos */
+.bot-recomendaciones-container ul,
+.bot-recomendaciones-container ol,
+.bot-recomendaciones-container p {
+    margin-bottom: 10px;
+}
+
+/* Estilos para los inputs y selects */
+.bot-recomendaciones-container input,
+.bot-recomendaciones-container select {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid seagreen;
+}
+
+/* Estilos para el botón */
+.bot-recomendaciones-container button {
+    background-color: seagreen;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.bot-recomendaciones-container button:hover {
+    background-color: #1e824c;
+    /* Cambio de color al pasar el mouse */
+}
+
+/* Estilos para los elementos de lista de ingredientes */
+.bot-recomendaciones-container ul li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+/* Estilos para la sección de recomendaciones */
+.bot-recomendaciones-container .recomendaciones-section {
+    margin-top: 20px;
+}
+
+/* Otros estilos específicos según sea necesario */
