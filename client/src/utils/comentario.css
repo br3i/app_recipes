@@ -1,0 +1,149 @@
+
+
+/* General styling for the comment form and container */
+.comentario-form-container {
+    background-color: #f0f4f7;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-comentario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-comentario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.form-comentario button {
+    background-color: seagreen;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-comentario button:hover {
+    background-color: darkseagreen;
+}
+
+.response-message {
+    color: seagreen;
+    margin-top: 10px;
+}
+
+/* Styling for the carousel container and items */
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f4f7;
+}
+
+.carousel-content {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.comentario-item {
+    margin: 3% 5%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background-color: #c3e6cb84;
+    border-radius: 7%;
+}
+
+.comentario-item:last-child {
+    border-right: none;
+}
+
+.comentario-item p {
+    margin: 0 0 10px;
+}
+
+.comentario-item button {
+    background-color: seagreen;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.comentario-item button:hover {
+    background-color: darkseagreen;
+}
+
+/* Styling for the buttons at the border level */
+.border-buttons {
+    position: relative;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Carousel buttons styling */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(470%);
+    background-color: rgba(46, 139, 86, 0.827);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.carousel-button.left {
+    left: -40px;
+    /* Adjust this value to align with the border */
+}
+
+.carousel-button.right {
+    right: -40px;
+    /* Adjust this value to align with the border */
+}
+
+.carousel-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* Hide default carousel controls and indicators */
+.carousel-control-prev,
+.carousel-control-next,
+.carousel-indicators {
+    display: none;
+}

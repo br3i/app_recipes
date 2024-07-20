@@ -10,13 +10,14 @@ export const createNutricionista = async ({ id_usuario, especialidad }, transact
 };
 
 // Actualiza un Nutricionista
-export const updateNutricionistaId = async (id_usuario, especialista, transaction) => {
+export const updateNutricionistaId = async (id_usuario, especialidad, transaction) => {
+  console.log(`\n\n\n\nAqui llego a el update de Nutri: ${especialidad}`);
   try {
     const nutricionista = await Nutricionista.findOne({ where: { id_usuario }, transaction });
     if (!nutricionista) {
       throw new Error("Nutricionista no encontrado");
     }
-    nutricionista.especialista = especialista;
+    nutricionista.especialidad = especialidad;
     await nutricionista.save({ transaction });
   } catch (error) {
     throw new Error("Error al actualizar nutricionista: " + error.message);

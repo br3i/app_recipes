@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../utils/menu.css'; // Importa tus estilos CSS aquí
@@ -7,15 +7,55 @@ import ProfileForm from './ProfileComponent'; // Asegúrate de tener este compon
 import IngredientesComponent from './IngredientesComponent';
 import RecetasComponent from './RecetasComponent';
 import ManagementUserComponent from './ManagementUserComponent'
+import Bot_Recomendaciones from './Bot_Recomendaciones'
+import DejarComentario from './DejarComentario'
 
 const MenuComponent = () => {
   const [activePage, setActivePage] = useState('home'); // Estado para manejar la página act
+  const [tipoUsuario, setTipoUsuario] = useState(null);
+  const navigate = useNavigate();
   const { logout } = useAuth();
+
+  useEffect(() => {
+    // Función para obtener y procesar los datos del usuario desde localStorage
+    const fetchUserData = async () => {
+      try {
+        const userDataString = localStorage.getItem('usuario');
+        console.log('Datos en localStorage:', userDataString);
+
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.usuario && userData.usuario.id_usuario) {
+            const tipo_usuario = userData.usuario.tipo_usuario;
+            console.log(`Valor en el tipo de usuario: ${tipo_usuario}`)
+            setTipoUsuario(tipo_usuario);
+          } else {
+            console.error('No se encontró el ID de usuario válido en los datos almacenados.');
+          }
+        } else {
+          console.error('No se encontraron datos de usuario en localStorage.');
+        }
+      } catch (error) {
+        console.error('Error al procesar los datos de usuario desde localStorage:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []); // Ejecutar solo una vez al montar el componente
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Actualizamos el estado formData
+    setFormData({ ...formData, [name]: value });
+    console.log("Nuevos Datos: ", formData);
+  };
+
+  
 
   const handleNavigation = (page) => {
     setActivePage(page);
   };
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
@@ -29,10 +69,20 @@ const MenuComponent = () => {
           <img src={logo} alt="Logo" />
         </a>
         <nav className="navbar">
-          <a href="#!" onClick={() => handleNavigation('manageUsers')}>Manage Users</a>
           <a href="#!" onClick={() => handleNavigation('profile')}>Perfil</a>
-          <a href="#!" onClick={() => handleNavigation('ingredientes')}>Ingredientes Disponibles</a>
-          <a href="#!" onClick={() => handleNavigation('recetas')}>Recetas Disponibles</a>
+          {tipoUsuario === 'admin' && (
+            <>
+              <a href="#!" onClick={() => handleNavigation('manage-usuarios')}>Administrar Usuarios</a>
+              <a href="#!" onClick={() => handleNavigation('manage-ingredientes')}>Ingredientes Disponibles</a>
+              <a href="#!" onClick={() => handleNavigation('manage-recetas')}>Recetas Disponibles</a>
+            </>
+          )}
+          {tipoUsuario === 'cliente' && (
+            <>
+              <a href="#!" onClick={() => handleNavigation('bot-recomendaciones')}>Recomendaciones</a>
+              <a href="#!" onClick={() => handleNavigation('comentarios-cliente')}>Comentarios</a>
+            </>
+          )}
         </nav>
         
         <button className="logout-button" type="button" onClick={handleLogout}>Cerrar sesión</button>
@@ -41,9 +91,11 @@ const MenuComponent = () => {
       <br />
       <main className="content">
         {activePage === 'profile' && <ProfileForm />}
-        {activePage === 'manageUsers' && < ManagementUserComponent/>}
-        {activePage === 'ingredientes' && <IngredientesComponent />}
-        {activePage === 'recetas' && <RecetasComponent />}
+        {activePage === 'manage-usuarios' && < ManagementUserComponent/>}
+        {activePage === 'manage-ingredientes' && <IngredientesComponent />}
+        {activePage === 'manage-recetas' && <RecetasComponent />}
+        {activePage === 'bot-recomendaciones' && <Bot_Recomendaciones />}
+        {activePage === 'comentarios-cliente' && <DejarComentario />}
         {activePage === 'home' && (
           <main className="content">
             <div>

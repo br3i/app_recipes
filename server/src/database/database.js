@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 export const sequelize = new Sequelize(
   "SmartPlate", // db name,
   "postgres", // username
-  "12345", // password
+  "1234", // password
   {
     host: "localhost",
     dialect: "postgres",

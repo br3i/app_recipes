@@ -163,6 +163,7 @@ class UsuariosService {
   async updateUsuarioById(id, usuarioData, transaction) {
     try {
       console.log(`Updating user with ID: ${id}`);
+      console.log(`Datos que llegan: ${JSON.stringify(usuarioData)}`);
       const usuario = await Usuarios.findByPk(id, { transaction });
 
       if (!usuario) {
@@ -177,7 +178,7 @@ class UsuariosService {
           console.log(`Updated admin for user ID: ${id}`);
           break;
         case 'nutricionista':
-          await updateNutricionistaId(usuario.id_usuario, usuarioData.especialista, transaction);
+          await updateNutricionistaId(usuario.id_usuario, usuarioData.especialidad, transaction);
           console.log(`Updated nutritionist for user ID: ${id}`);
           break;
         default:

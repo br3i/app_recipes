@@ -107,7 +107,7 @@ export const createComentario = async (req, res) => {
 
     await transaction.commit();
     console.log('Created comment:', newComentario);
-    res.json(newComentario);
+    res.json({ message: 'Comentario creado exitosamente', comentario: newComentario });
   } catch (error) {
     await transaction.rollback();
     console.error('Error creating comment:', error);
@@ -151,7 +151,7 @@ export const updateComentarioId = async (req, res) => {
 
     await transaction.commit();
     console.log('Updated comment:', updatedComentario);
-    res.json(updatedComentario);
+    res.json({ message: 'Comentario editado exitosamente', comentario: updatedComentario });
   } catch (error) {
     await transaction.rollback();
     console.error('Error updating comment:', error);
