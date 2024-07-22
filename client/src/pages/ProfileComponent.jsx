@@ -16,14 +16,13 @@ const ProfileComponent = () => {
   const [userId, setUserId] = useState(null); // Estado para almacenar el userId
 
   useEffect(() => {
-    // Función para obtener y procesar los datos del usuario desde localStorage
     const fetchUserData = async () => {
       try {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-          const userObject = JSON.parse(userData);
-          if (userObject && userObject.usuario && userObject.usuario.id_usuario) {
-            const id = userObject.usuario.id_usuario;
+        const userDataString = localStorage.getItem('usuario');
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.usuario && userData.usuario.id_usuario) {
+            const id = userData.usuario.id_usuario;
             setUserId(id); // Almacena el userId en el estado local
             
             // Realizar la solicitud GET usando el ID de usuario
@@ -42,7 +41,7 @@ const ProfileComponent = () => {
     };
 
     fetchUserData();
-  }, []); // Ejecutar solo una vez al montar el componente
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

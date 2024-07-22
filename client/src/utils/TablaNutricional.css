@@ -1,0 +1,77 @@
+/* TablaNutricional.css */
+
+.tabla-nutricional {
+    background-color: #f0f4f7;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.tabla-nutricional h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tabla-nutricional p {
+    margin: 5px 0;
+}
+
+.tabla-nutricional table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-nutricional th,
+.tabla-nutricional td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.tabla-nutricional th {
+    background-color: #f8f9fa;
+}
+
+.tabla-nutricional td {
+    background-color: #fff;
+}
+
+.tabla-nutricional td:first-child {
+    font-weight: bold;
+}
+
+.tabla-nutricional tr:last-child td {
+    border-bottom: none;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 480px) {
+    .tabla-nutricional {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .tabla-nutricional table,
+    .tabla-nutricional th,
+    .tabla-nutricional td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-nutricional th,
+    .tabla-nutricional td {
+        box-sizing: border-box;
+    }
+
+    .tabla-nutricional th {
+        background-color: #f0f4f7;
+        font-weight: bold;
+    }
+}

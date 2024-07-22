@@ -1,6 +1,238 @@
+
+/*
+.recetas-clientes-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.recetas-clientes-container h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.carousel-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-content h3 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.carousel-content p {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.carousel-content ul {
+    list-style-type: none;
+    padding: 0;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.carousel-content ul li {
+    margin-bottom: 5px;
+}
+
+.carousel-content h4 {
+    color: #343a40;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
 .carousel-image {
-    width: 70%;
-    /* Ajusta el tamaño de la imagen */
-    opacity: 0.6;
-    /* Ajusta la opacidad de la imagen */
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.border-buttons {
+    position: relative;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(46, 139, 86, 0.827);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.carousel-button.left {
+    left: -40px;
+}
+
+.carousel-button.right {
+    right: -40px;
+}
+
+.carousel-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.carousel-control-prev,
+.carousel-control-next,
+.carousel-indicators {
+    display: none;
+}
+*/
+/* General styling for the recetas clientes container */
+.recetas-clientes-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.recetas-clientes-container h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Styling for the carousel content */
+.carousel-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-content h3 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.carousel-content p {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.carousel-content ul {
+    list-style-type: none;
+    padding: 0;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.carousel-content ul li {
+    margin-bottom: 5px;
+}
+
+.carousel-content h4 {
+    color: #343a40;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Styling for the carousel image */
+.carousel-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Styling for the buttons at the border level */
+.border-buttons {
+    position: relative;
+    width: 100%;
+}
+
+/* Carousel buttons styling */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(46, 139, 86, 0.827);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.carousel-button.left {
+    left: -40px;
+    /* Adjust this value to align with the border */
+}
+
+.carousel-button.right {
+    right: -40px;
+    /* Adjust this value to align with the border */
+}
+
+.carousel-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* Hide default carousel controls and indicators */
+.carousel-control-prev,
+.carousel-control-next,
+.carousel-indicators {
+    display: none;
+}
+
+/* CSS for the remove ingredient button */
+.remove-ingredient {
+    margin-left: 10px;
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.remove-ingredient:hover {
+    color: darkred;
 }

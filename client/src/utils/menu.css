@@ -59,57 +59,65 @@
   background-color: #c82333;
 }
 */
-
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 2px 2%;
-  background: seagreen;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
+.menu-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.logo img {
-  width: 60px;
-  /* Ajusta el tamaño según tus necesidades */
-  height: auto;
+.menu-container h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+}
 
-.navbar a {
-  position: relative;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
-  margin-left: 40px;
+.menu-list li {
+  margin-bottom: 10px;
+}
+
+.menu-list li a {
+  display: block;
+  padding: 10px;
   text-decoration: none;
-  /* Añade esta línea para quitar el subrayado */
+  color: #333;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
 }
 
-.navbar a::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #fff;
-  transition: .3s;
+.menu-list li a:hover {
+  background-color: #007bff;
+  color: #fff;
 }
 
-.navbar a:hover::before {
+.logout-button {
+  display: block;
   width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 3px;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
 }
 
 .content {
-  margin: 2%;
-  /* Ajusta el margen superior para dejar espacio debajo del encabezado fijo */
-  padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -121,14 +129,12 @@
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
-  /* Color de texto */
 }
 
 .content p {
   font-size: 16px;
   line-height: 1.6;
   color: #666;
-  /* Color de texto más suave */
 }
 
 .content ul {
@@ -140,12 +146,10 @@
   font-size: 16px;
   margin-bottom: 10px;
   color: #666;
-  /* Color de texto más suave */
 }
 
 .content a {
   color: #007bff;
-  /* Color de enlace */
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
@@ -153,14 +157,7 @@
 
 .content a:hover {
   color: #0056b3;
-  /* Color de enlace al pasar el mouse */
 }
-
-/* Elimina esta clase si no la estás utilizando
-a.none {
-    text-decoration: none;
-}
-*/
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -176,11 +173,6 @@ body {
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
-
   background-size: cover;
   background-position: center;
 }
@@ -189,148 +181,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.header button {
-  width: 12%;
-  height: 45px;
-  background: #fff;
-  border: none;
-  outline: none;
-  border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  cursor: pointer;
-  font-size: 16px;
-  color: #333;
-  font-weight: 500;
-}
-
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   padding: 10px 5%;
-  /* Ajusta el padding para pantallas más pequeñas */
   background: seagreen;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
-
-  margin: 10px 0;
-  /* Agrega margen vertical para separación */
-}
-
-.logo img {
-  width: 50px;
-  /* Ajusta el tamaño según tus necesidades */
-  height: auto;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-}
-
-.navbar a {
-  font-size: 16px;
-  /* Ajusta el tamaño de fuente */
-  color: #fff;
-  font-weight: 500;
-  margin-left: 20px;
-  /* Reduce el margen para pantallas pequeñas */
-  text-decoration: none;
-  position: relative;
-}
-
-.navbar a::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #fff;
-  transition: .3s;
-}
-
-.navbar a:hover::before {
   width: 100%;
 }
 
-/* Media queries para dispositivos pequeños */
-@media (max-width: 768px) {
-  .header {
-    padding: 10px 2%;
-  }
-
-  .logo img {
-    width: 40px;
-  }
-
-  .navbar {
-    flex-direction: column;
-    /* Apila los elementos verticalmente */
-    align-items: flex-start;
-    /* Alinea los elementos al principio */
-  }
-
-  .navbar a {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-}
-
-/* Media queries para dispositivos muy pequeños */
-@media (max-width: 480px) {
-  .header {
-    padding: 10px 1%;
-  }
-
-  .logo img {
-    width: 30px;
-  }
-
-  .navbar a {
-    font-size: 14px;
-    /* Ajusta el tamaño de fuente */
-  }
-}
-
-.header button {
-  width: 14%;
-  /* Haz que el botón ocupe el ancho completo en pantallas pequeñas */
-  height: 40px;
-  background: #fff;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  cursor: pointer;
-  font-size: 14px;
-  /* Ajusta el tamaño de fuente */
-  color: #333;
-  font-weight: 500;
-  margin: 10px 0;
-  /* Agrega margen vertical para separación */
-}
-
-  
 .image-side {
-  position: fixed; /* Mantiene la posición fija */
+  position: fixed;
   top: 0;
-  width: 16%; /* Ocupa un 25% del ancho de la pantalla */
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
-  background-size: cover; /* Ajusta la imagen para cubrir toda el área */
-  background-position: center; /* Centra la imagen */
-  z-index: -1; /* Envía las imágenes al fondo */
+  width: 16%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
 }
 
 .image-left {
-  left: 0; /* Alinea a la izquierda */
-  background-image: url('../components/public/fondo.jpg'); /* Reemplaza con la URL de la imagen izquierda */
+  left: 0;
+  background-image: url('../components/public/fondo.jpg');
 }
 
 .image-right {
-  right: 0; /* Alinea a la derecha */
-  background-image: url('../components/public/fondo.jpg'); /* Reemplaza con la URL de la imagen derecha */
+  right: 0;
+  background-image: url('../components/public/fondo.jpg');
 }
