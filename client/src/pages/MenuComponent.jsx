@@ -1,4 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+/*import HeaderComponent from './HeaderComponent';*/
+import HeaderComponent from './Header2';
+import Paginas from './Paginas'; // Importar el componente Paginas
+import { useAuth } from '../context/AuthContext';
+import { usePage } from '../context/PageContext'; // Importar el hook de página
+import '../utils/menu.css';
+
+const MenuComponent = () => {
+  const [tipoUsuario, setTipoUsuario] = useState(null);
+  const { logout } = useAuth();
+  const { handleNavigation } = usePage();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDataString = localStorage.getItem('usuario');
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.usuario && userData.usuario.id_usuario) {
+            const tipo_usuario = userData.usuario.tipo_usuario;
+            setTipoUsuario(tipo_usuario);
+          } else {
+            console.error('No se encontró el ID de usuario válido en los datos almacenados.');
+          }
+        } else {
+          console.error('No se encontraron datos de usuario en localStorage.');
+        }
+      } catch (error) {
+        console.error('Error al procesar los datos de usuario desde localStorage:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  return (
+    <div className="menu-container">
+      <HeaderComponent handleNavigation={handleNavigation} tipoUsuario={tipoUsuario} />
+      <Paginas />
+      <div className="image-side image-left"></div>
+      <div className="image-side image-right"></div>
+    </div>
+  );
+};
+
+export default MenuComponent;
+
+
+
+/*import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../utils/menu.css'; // Importa tus estilos CSS aquí
@@ -7,7 +57,7 @@ import ProfileForm from './ProfileComponent'; // Asegúrate de tener este compon
 import IngredientesComponent from './IngredientesComponent';
 import RecetasComponent from './RecetasComponent';
 import ManagementUserComponent from './ManagementUserComponent'
-import Bot_Recomendaciones from './Bot_Recomendaciones'
+import BotRecomendaciones from './BotRecomendaciones'
 import DejarComentario from './DejarComentario'
 
 const MenuComponent = () => {
@@ -43,16 +93,6 @@ const MenuComponent = () => {
     fetchUserData();
   }, []); // Ejecutar solo una vez al montar el componente
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Actualizamos el estado formData
-    setFormData({ ...formData, [name]: value });
-    console.log("Nuevos Datos: ", formData);
-  };
-
-  
-
   const handleNavigation = (page) => {
     setActivePage(page);
   };
@@ -87,14 +127,14 @@ const MenuComponent = () => {
         
         <button className="logout-button" type="button" onClick={handleLogout}>Cerrar sesión</button>
       </header>
-      <div className="image-side image-left"></div> {/* Imagen izquierda */}
+      <div className="image-side image-left"></div> {/* Imagen izquierda }
       <br />
       <main className="content">
         {activePage === 'profile' && <ProfileForm />}
         {activePage === 'manage-usuarios' && < ManagementUserComponent/>}
         {activePage === 'manage-ingredientes' && <IngredientesComponent />}
         {activePage === 'manage-recetas' && <RecetasComponent />}
-        {activePage === 'bot-recomendaciones' && <Bot_Recomendaciones />}
+        {activePage === 'bot-recomendaciones' && <BotRecomendaciones />}
         {activePage === 'comentarios-cliente' && <DejarComentario />}
         {activePage === 'home' && (
           <main className="content">
@@ -126,10 +166,11 @@ const MenuComponent = () => {
           
         )}
       </main>
-      <div className="image-side image-right"></div> {/* Imagen derecha */}
+      <div className="image-side image-right"></div> {/* Imagen derecha }
     </div>
     
   );
 };
 
 export default MenuComponent;
+*/
