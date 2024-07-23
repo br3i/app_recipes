@@ -9,7 +9,19 @@ export const getComentarios = async (req, res) => {
     console.log('GET /comentarios');
     const comentarios = await ComentariosService.getAllComentarios();
     console.log('Sending response with comments:', comentarios);
-    res.json(comentarios);
+    res.json({ message: 'Todos los Comentarios obtenidos exitosamente', comentarios: comentarios });
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+// Obtener los ultimos 20 comentarios
+export const get20Comentarios = async (req, res) => {
+  try {
+    console.log('GET /20comentarios');
+    const comentarios = await ComentariosService.get20Comentarios();
+    console.log('Sending response with comments:', comentarios);
+    res.json({ message: 'Ultimos 20 Comentarios obtenidos exitosamente', comentarios: comentarios });
   } catch (error) {
     console.error('Error fetching comments:', error);
     res.status(500).json({ error: error.message });
@@ -34,7 +46,7 @@ export const getComentarioId = async (req, res) => {
       return res.status(404).json({ error: 'Comentario no encontrado' });
     }
     console.log('Sending response with comment:', comentario);
-    res.json(comentario);
+    res.json({ message: 'Comentario obtenido exitosamente', comentario: comentario });
   } catch (error) {
     console.error(`Error fetching comment with ID: ${id}`, error);
     res.status(500).json({ error: error.message });
@@ -54,7 +66,7 @@ export const getComentariosIdUsuario = async (req, res) => {
     }
     
     console.log('Sending response with comments:', comentarios);
-    res.json(comentarios);
+    res.json({ message: 'Comentarios obtenidos exitosamente', comentarios: comentarios });
   } catch (error) {
     console.error(`Error fetching comments for user ID: ${req.body.idU}`, error);
     res.status(500).json({ error: error.message });
@@ -74,7 +86,7 @@ export const getComentariosNombreUsuario = async (req, res) => {
     }
 
     console.log('Sending response with comments:', comentarios);
-    res.json(comentarios);
+    res.json({ message: 'Ultimos 20 Comentarios obtenidos exitosamente', comentarios: comentarios });
   } catch (error) {
     console.error(`Error fetching comments for user name: ${req.body.nombreU}`, error);
     res.status(500).json({ error: error.message });
@@ -231,7 +243,7 @@ export const sendComment = async (req, res) => {
 
     const response = await ComentariosService.sendComment(email, message);
     console.log('Email sent:', response);
-    res.json(response);
+    res.json({ message: 'Comentario enviado exitosamente', response: response });
   } catch (error) {
     console.error('Error sending comment email:', error);
     res.status(500).json({ error: error.message });

@@ -1,5 +1,7 @@
 #header {
     padding: 10px 5%;
+    border-radius: 7px;
+    margin-bottom: 10px;
     background: seagreen;
     display: flex;
     justify-content: space-between;
@@ -9,15 +11,26 @@
 
 #header .logo img {
     width: 60px;
-    /* Ajusta el tamaño según tus necesidades */
     height: auto;
     -webkit-mask-image: radial-gradient(circle, white 60%, transparent 100%);
     mask-image: radial-gradient(circle, white 60%, transparent 100%);
 }
 
+#menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 #navbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 #navbar a {
@@ -58,52 +71,65 @@
     font-weight: 500;
     text-align: center;
     white-space: normal;
-    /* Permite que el texto se divida en varias líneas */
     word-wrap: break-word;
-    /* Asegura que las palabras largas se dividan */
 }
 
 #logout-button:hover {
     background-color: #1e824c;
 }
 
-@media (max-width: 768px) {
-    #header {
-        padding: 10px 2%;
-    }
+#side-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: seagreen;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
 
-    #header .logo img {
-        width: 40px;
+#side-menu a {
+    color: #fff;
+    font-size: 18px;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+#side-menu.open {
+    display: flex;
+    transform: translateX(0);
+}
+
+#logout-button-menu {
+    margin-top: auto;
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#logout-button-menu:hover {
+    background-color: #1e824c;
+}
+
+@media (max-width: 768px) {
+    #menu-button {
+        display: block;
     }
 
     #navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    #navbar a {
-        margin-left: 0;
-        margin-top: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    #header {
-        padding: 10px 1%;
-    }
-
-    #header .logo img {
-        width: 30px;
-    }
-
-    #navbar a {
-        font-size: 14px;
+        display: none;
     }
 
     #logout-button {
-        font-size: 12px;
-        /* Ajusta el tamaño de fuente para pantallas muy pequeñas */
-        padding: 8px;
-        /* Ajusta el padding para pantallas muy pequeñas */
+        display: none;
     }
 }

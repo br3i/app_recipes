@@ -1,8 +1,6 @@
 // src/pages/AboutUs.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../utils/AboutUs.css'; // Asegúrate de que este archivo exista en la carpeta utils
-import logo from '../components/public/logo.png'; 
 
 const AboutUs = () => {
   return (

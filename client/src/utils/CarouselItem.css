@@ -1,0 +1,56 @@
+/* src/utils/CarouselItem.css */
+
+.comment-card {
+    width: 50px;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-left: 5px solid seagreen;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.comment-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.comment-card h4 {
+    margin: 0;
+    font-size: 20px;
+    color: seagreen;
+}
+
+.comment-card p {
+    margin: 5px 0 0;
+    color: #555;
+}
+
+.comments-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    margin: 20px auto;
+    position: relative;
+    z-index: 3;
+}
+
+.comments-carousel {
+    display: flex;
+    position: relative;
+    left: 0;
+    animation: slide 10s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}

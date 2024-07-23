@@ -20,7 +20,7 @@ const Paginas = () => {
       {activePage === 'bot-recomendaciones' && <BotRecomendaciones />}
       {activePage === 'comentarios-cliente' && <DejarComentario />}
       {activePage === 'home' && (
-        <div>
+        <div className='menu-pagina-principal'>
           <h2>Bienvenido a nuestra aplicación de gestión de ingredientes y recetas</h2>
           <p>
             Aquí podrás administrar tus ingredientes, explorar nuevas recetas y mantener tu perfil actualizado.

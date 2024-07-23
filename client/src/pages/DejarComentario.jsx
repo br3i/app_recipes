@@ -137,7 +137,6 @@ const DejarComentario = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 required
               />
-              
               <button type="submit" className="btn btn-success">Enviar</button>
             </form>
             {response && <div className="response-message">{response}</div>}
@@ -150,21 +149,24 @@ const DejarComentario = () => {
             >
               {comentarios.map((comentario, index) => (
                 <Carousel.Item key={comentario.id_comentario}>
-                  <div className="comentario-item">
+                  <div className="comment-card">
                     {editCommentId === comentario.id_comentario ? (
                       <form onSubmit={handleEditSubmit}>
                         <textarea
+                          id='textarea-edit'
                           value={editMessage}
                           onChange={(e) => setEditMessage(e.target.value)}
                           required
                         />
                         <br />
-                        <button type="submit" className="btn btn-success">Guardar</button>
-                        <button type="button" className="btn btn-secondary" onClick={handleCancelEdit}>Cancelar</button>
+                        <div id='contenedor-buttons-editar'>
+                          <button type="submit" className="btn btn-success">Guardar</button>
+                          <button type="button" className="btn btn-danger" onClick={handleCancelEdit}>Cancelar</button>
+                        </div>
                       </form>
                     ) : (
                       <>
-                        <p><strong>{comentario.nombre}</strong></p>
+                        <h4>{comentario.nombre}</h4>
                         <p>{comentario.descripcion}</p>
                       </>
                     )}
@@ -190,10 +192,9 @@ const DejarComentario = () => {
                 </button>
               </div>
             )}
-            
           </div>
-          <button className="carousel-button left" onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
-          <button className="carousel-button right" onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
+          <button className="carousel-button-comentario left" onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
+          <button className="carousel-button-comentario right" onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
         </div>
       ) : (
         <p>Cargando datos del usuario...</p>

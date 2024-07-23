@@ -1,102 +1,32 @@
 /* src/utils/AboutUs.css */
 .aboutus-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  margin: 0 2%;
+  padding: 2%;
 }
 
-.aboutus-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 2%;
-  background-color: seagreen;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 100;
-}
-
-.aboutus-header .logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.aboutus-header .logo img {
-  width: 60px;
-  height: auto;
-}
-
-.aboutus-header .logo .logo-text {
-  font-size: 24px;
-  color: #fff;
-  margin-left: 10px;
-}
-
-.aboutus-navbar {
-  display: flex;
-  align-items: center;
-}
-
-.aboutus-navbar a {
-  margin: 0 15px;
-  font-size: 18px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  position: relative;
-}
-
-.aboutus-navbar a::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #fff;
-  transition: .3s;
-}
-
-.aboutus-navbar a:hover::before {
-  width: 100%;
-}
-
-.btn-black {
-  background-color: #000;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.btn-green {
-  background-color: #28a745;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
+.aboutus-container p,
+.aboutus-container li {
+  text-align: justify;
 }
 
 .aboutus-main {
-  margin-top: 5px;
-  padding: 5px;
+  padding: 1%;
+  border-radius: 15px;
+  background-color: rgba(245, 245, 220, 0.579);
 }
 
-.aboutus-introduction {
-  max-width: 800px;
-  margin: 0 auto;
-  font-size: 18px;
-  line-height: 1.6;
+.aboutus-section {
+  margin: 2%;
+  padding: 2%;
+  border-radius: 15px;
+  background-color: #b5dab16a;
 }
 
-.aboutus-introduction h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
+.aboutus-section ul {
+  padding-left: 20px;
 }
 
-.aboutus-introduction p {
-  margin-bottom: 20px;
+.aboutus-section li {
+  text-align: justify;
+  margin-bottom: 10px;
 }
