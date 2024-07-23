@@ -13,8 +13,8 @@ const RecetasClientes = () => {
 
   const fetchRecetas = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/recetas'); // Ajusta la URL según tu API
-      setRecetas(response.data); // Asumiendo que tu API devuelve un array de recetas
+      const response = await axios.get('http://localhost:4000/recetas');
+      setRecetas(response.data);
     } catch (error) {
       console.error('Error al obtener las recetas:', error);
     }
@@ -27,7 +27,7 @@ const RecetasClientes = () => {
   };
 
   return (
-    <div className="recetas-clientes-container border-buttons">
+    <div className="recetas-clientes-container">
       <h2>Nuestras Recetas</h2>
       <div className="carousel-container">
         <Carousel interval={5000}>
@@ -36,7 +36,7 @@ const RecetasClientes = () => {
               <div className="carousel-content">
                 <h3>{receta.nombre}</h3>
                 <p>{receta.descripcion}</p>
-                <img src={getRandomImage()} alt={receta.nombre} className="carousel-image" />
+                <img src={getRandomImage()} alt={receta.nombre} id="cliente-recetas-image" />
                 <h4>Ingredientes:</h4>
                 <ul>
                   {receta.ingredientes.map((ingrediente, index) => (
@@ -50,8 +50,8 @@ const RecetasClientes = () => {
           ))}
         </Carousel>
       </div>
-      <button className="carousel-button left" onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
-      <button className="carousel-button right" onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
+      <button className="carousel-button" id='btn-left' onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
+      <button className="carousel-button" id='btn-right' onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
     </div>
   );
 };

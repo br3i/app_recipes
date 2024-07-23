@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   getComentarios,
+  get20Comentarios,
   getComentarioId,
   getComentariosIdUsuario,
   getComentariosNombreUsuario,
@@ -19,6 +20,7 @@ router.post("/comentarios/:id", createComentario);
 
 // Leer
 router.get("/comentarios/", getComentarios);
+router.get("/comentarios20/", get20Comentarios);
 router.get("/comentarios/id/:id", getComentarioId);
 router.get("/comentarios/nombreU/:nombreU", getComentariosNombreUsuario);
 router.get("/comentarios/idU/:idU", getComentariosIdUsuario);

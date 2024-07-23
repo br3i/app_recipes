@@ -18,6 +18,22 @@ class ComentariosService {
     }
   }
 
+  async get20Comentarios() {
+    try {
+      console.log('Fetching last 20 comments...');
+      const comentarios = await Comentarios.findAll({
+        limit: 20,
+        order: [['id_comentario', 'DESC']]
+      });
+      console.log('Fetched comments:', comentarios);
+      return comentarios;
+    } catch (error) {
+      console.error('Error fetching last 20 comments:', error);
+      throw error;
+    }
+  }
+
+
   async getComentarioById(id) {
     try {
       console.log(`Fetching comment with ID: ${id}`);
