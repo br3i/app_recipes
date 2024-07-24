@@ -1,6 +1,7 @@
 import { sequelize } from "../database/database.js";
 import { trim } from "../utilities/trim.js";
 import UsuariosService from "../services/usuarios.service.js";
+import ClientesService from "../services/clientes.service.js"
 
 import bcrypt from "bcryptjs";
 
@@ -207,7 +208,6 @@ export const updateUsuarioId = async (req, res) => {
       updateData.contrasena = hashedPassword;
     }
 
-  
     const updatedUsuario = await UsuariosService.updateUsuarioById(trim(id), updateData, transaction);
 
     await transaction.commit();
@@ -357,6 +357,41 @@ export const changePassword = async (req, res) => {
   } catch (error) {
     await transaction.rollback();
     console.error('Error deleting user by email:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Cambiar contraseña
+export const changePasswordByEmail = async (req, res) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { email } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    const usuario = await UsuariosService.getUsuarioByEmail(trim(email));
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, usuario.contrasena);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Contraseña actual incorrecta" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    // Verificar si el usuario es un cliente
+    if (usuario.tipo_usuario === 'cliente') {
+      await ClientesService.updateCliente(usuario.id_usuario, { contrasena: hashedNewPassword }, transaction);
+    } else {
+      await UsuariosService.updateUsuarioById(usuario.id_usuario, { contrasena: hashedNewPassword }, transaction);
+    }
+
+    await transaction.commit();
+    res.json({ message: "Contraseña actualizada exitosamente" });
+  } catch (error) {
+    await transaction.rollback();
+    console.error('Error al cambiar la contraseña:', error);
     res.status(500).json({ error: error.message });
   }
 };

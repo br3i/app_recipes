@@ -1,4 +1,4 @@
-#management-ingredientes-wrapper {
+#management-users-wrapper {
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
@@ -7,14 +7,14 @@
     background-color: #f8f9fa35;
 }
 
-#management-ingredientes-title {
+#management-users-title {
     color: seagreen;
     margin-bottom: 20px;
     text-align: center;
     text-transform: uppercase;
 }
 
-#search-container-administrar-ingredientes {
+#search-container-administrar-usuarios {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -22,11 +22,10 @@
     gap: 10px;
 }
 
-#search-input-administrar-ingredientes,
-#search-select-administrar-ingredientes,
-#search-button-administrar-ingredientes,
-#reset-button-administrar-ingredientes,
-#search-input-ingredientes {
+#search-input-administrar-usuarios,
+#search-select-administrar-usuarios,
+#search-button-administrar-usuarios,
+#reset-button-administrar-usuarios {
     flex: 1;
     min-width: 100px;
     padding: 10px;
@@ -35,46 +34,46 @@
     margin: 5px;
 }
 
-#search-button-administrar-ingredientes {
+#search-button-administrar-usuarios {
     background-color: seagreen;
     color: white;
     border: none;
     cursor: pointer;
 }
 
-#reset-button-administrar-ingredientes {
+#reset-button-administrar-usuarios {
     background-color: #e7e7a0;
     color: rgb(0, 0, 0);
     border: none;
     cursor: pointer;
 }
 
-#management-ingredientes-table-container {
+#management-users-table-container {
     width: 100%;
     overflow-x: auto;
     position: relative;
     margin-bottom: 20px;
 }
 
-#management-ingredientes-table-container::-webkit-scrollbar {
+#management-users-table-container::-webkit-scrollbar {
     height: 12px;
 }
 
-#management-ingredientes-table-container::-webkit-scrollbar-track {
+#management-users-table-container::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-#management-ingredientes-table-container::-webkit-scrollbar-thumb {
+#management-users-table-container::-webkit-scrollbar-thumb {
     background: seagreen;
     border-radius: 6px;
     border: 3px solid #f1f1f1;
 }
 
-#management-ingredientes-table-container::-webkit-scrollbar-thumb:hover {
+#management-users-table-container::-webkit-scrollbar-thumb:hover {
     background: #1e824c;
 }
 
-#management-ingredientes-table {
+#management-users-table {
     width: 100%;
     min-width: 600px;
     border-collapse: collapse;
@@ -82,37 +81,37 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#management-ingredientes-table th,
-#management-ingredientes-table td {
+#management-users-table th,
+#management-users-table td {
     padding: 10px;
     border: 1px solid #dee2e6;
     text-align: left;
 }
 
-#management-ingredientes-table th {
+#management-users-table th {
     background-color: #eaf2e3;
     color: seagreen;
 }
 
-#management-ingredientes-table td.td-editable input,
-#management-ingredientes-table td.td-editable select {
+#management-users-table td.td-editable input,
+#management-users-table td.td-editable select {
     width: 100%;
     padding: 5px;
     border: 1px solid seagreen;
     border-radius: 5px;
 }
 
-#management-ingredientes-table td.td-editable input[type="text"],
-#management-ingredientes-table td.td-editable select {
+#management-users-table td.td-editable input[type="text"],
+#management-users-table td.td-editable select {
     background-color: #ffffff;
 }
 
-#management-ingredientes-table td.td-editable input[type="text"]:hover,
-#management-ingredientes-table td.td-editable select:hover {
+#management-users-table td.td-editable input[type="text"]:hover,
+#management-users-table td.td-editable select:hover {
     background-color: #e9ecef;
 }
 
-#management-ingredientes-table button {
+#management-users-table button {
     color: white;
     padding: 5px 10px;
     margin: 2px;
@@ -130,20 +129,20 @@
     background-color: #e74d3cbe;
 }
 
-#management-ingredientes-table .btn-mu-editar:hover {
+#management-users-table .btn-mu-editar:hover {
     background-color: #1e824c;
 }
 
-#management-ingredientes-table .btn-mu-eliminar:hover {
+#management-users-table .btn-mu-eliminar:hover {
     background-color: #e74c3c;
 }
 
-#management-ingredientes-table tbody tr:hover {
+#management-users-table tbody tr:hover {
     background-color: #b5dab18e;
 }
 
-#management-ingredientes-table th:nth-child(2),
-#management-ingredientes-table td:nth-child(2) {
+#management-users-table th:nth-child(3),
+#management-users-table td:nth-child(3) {
     position: sticky;
     left: 0;
     background-color: #eaf2e3;
@@ -156,7 +155,7 @@
     margin-top: 20px;
 }
 
-.pagination-button-administrar-ingredientes {
+.pagination-button-administrar-usuarios {
     margin: 0 5px;
     padding: 10px 15px;
     border: none;
@@ -184,24 +183,24 @@
     background-color: #b5dab18e;
 }
 
-#nuevo-ingrediente-form-container {
+#nuevo-usuario-form-container {
     margin-top: 20px;
 }
 
-#nuevo-ingrediente-form {
+#nuevo-usuario-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-#nuevo-ingrediente-form input,
-#nuevo-ingrediente-form select {
+#nuevo-usuario-form input,
+#nuevo-usuario-form select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-#btn-crear-ingrediente {
+#btn-crear-usuario {
     padding: 10px 20px;
     background-color: seagreen;
     color: white;
@@ -211,54 +210,25 @@
     margin-top: 10px;
 }
 
-#btn-crear-ingrediente:hover {
+#btn-crear-usuario:hover {
     background-color: #1e824c;
 }
-
-
-
-
-
-.btn-ing-editar {
-    background-color: rgba(46, 139, 86, 0.776);
-}
-
-.btn-ing-eliminar {
-    background-color: #e74d3cbe;
-}
-
-#management-ingredientes-table .btn-ing-editar:hover {
-    background-color: #1e824c;
-}
-
-#management-ingredientes-table .btn-ing-eliminar:hover {
-    background-color: #e74c3c;
-}
-
-#nueva-categoria-ingredientes{
-    margin-left: 15px;
-}
-
-
-
-
-
 
 @media (max-width: 768px) {
-    #management-ingredientes-table {
+    #management-users-table {
         min-width: 600px;
     }
 
-    #search-input-administrar-ingredientes,
-    #search-select-administrar-ingredientes,
-    #search-button-administrar-ingredientes,
-    #reset-button-administrar-ingredientes {
+    #search-input-administrar-usuarios,
+    #search-select-administrar-usuarios,
+    #search-button-administrar-usuarios,
+    #reset-button-administrar-usuarios {
         flex: 100%;
         margin-bottom: 10px;
     }
 
-    #search-button-administrar-ingredientes,
-    #reset-button-administrar-ingredientes {
+    #search-button-administrar-usuarios,
+    #reset-button-administrar-usuarios {
         margin-top: 10px;
     }
 }

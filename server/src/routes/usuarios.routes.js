@@ -14,6 +14,7 @@ import {
   deleteUsuarioByEmail,
   login,
   changePassword,
+  changePasswordByEmail
 } from "../controllers/usuarios.controller.js";
 
 const router = Router();
@@ -41,5 +42,6 @@ router.delete("/usuarios/correo/:email", deleteUsuarioByEmail);
 // Authentication and Password Management
 router.post("/login", login);
 router.put("/usuarios/:id/password", changePassword);
+router.put("/usuarios/email/:email/password", changePasswordByEmail);
 
 export default router;
