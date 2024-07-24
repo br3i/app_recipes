@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import '../utils/RecetasCliente.css';
 
 const RecetasClientes = () => {
   const [recetas, setRecetas] = useState([]);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     fetchRecetas();
@@ -26,14 +27,26 @@ const RecetasClientes = () => {
     return randomImageApiUrl;
   };
 
+  const handlePrevClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.prev();
+    }
+  };
+
+  const handleNextClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
   return (
     <div className="recetas-clientes-container">
       <h2>Nuestras Recetas</h2>
       <div className="carousel-container">
-        <Carousel interval={5000}>
+        <Carousel interval={5000} ref={carouselRef}>
           {recetas.map((receta) => (
             <Carousel.Item key={receta.id}>
-              <div className="carousel-content">
+              <div id="cliente-recetas-carousel-content">
                 <h3>{receta.nombre}</h3>
                 <p>{receta.descripcion}</p>
                 <img src={getRandomImage()} alt={receta.nombre} id="cliente-recetas-image" />
@@ -50,8 +63,8 @@ const RecetasClientes = () => {
           ))}
         </Carousel>
       </div>
-      <button className="carousel-button" id='btn-left' onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
-      <button className="carousel-button" id='btn-right' onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
+      <button id="custom-prev-button" className="carousel-button" onClick={handlePrevClick}>&lt;</button>
+      <button id="custom-next-button" className="carousel-button" onClick={handleNextClick}>&gt;</button>
     </div>
   );
 };
