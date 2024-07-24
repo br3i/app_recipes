@@ -1,0 +1,105 @@
+/* utils/Footer.css */
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+/* Asegúrate de que html y body ocupen toda la altura del viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  /* El contenedor principal debe ocupar todo el espacio disponible */
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenedor ocupe al menos la altura del viewport */
+  }
+  
+  /* Contenido de la página */
+  .main-content {
+    flex: 1; /* Ajustado para ocupar el espacio disponible correctamente */
+  }
+  
+  /* Ajustes para el footer */
+  .footer {
+    background-color: #746969;
+    color: #fff;
+    padding: 20px 0; /* Padding superior e inferior */
+    width: 100%; /* Asegúrate de que el footer ocupe el ancho completo del contenedor */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    position: relative; /* Posiciona el footer de forma normal para que no esté fijo */
+  }
+  
+  /* Contenido del footer */
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centra el contenido del footer horizontalmente */
+    padding: 0 20px; /* Padding horizontal para evitar que el contenido esté pegado a los bordes */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribuye las secciones con espacio entre ellas */
+  }
+  
+  /* Secciones del footer */
+  .footer-sections {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  /* Secciones individuales del footer */
+  .footer-section {
+    flex: 1;
+    min-width: 200px; /* Ancho mínimo para las secciones */
+    margin: 0 10px; /* Espacio entre las secciones */
+    padding: 0 15px; /* Padding lateral dentro de cada sección */
+  }
+  
+  /* Alinea el texto y el contenido dentro de las secciones */
+  .footer-section h4 {
+    margin-bottom: 15px; /* Espacio debajo del título */
+  }
+  
+  .footer-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-section ul li {
+    margin: 5px 0;
+  }
+  
+  .footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-section ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilos para los íconos de redes sociales */
+  .social-icons {
+    display: flex;
+    gap: 15px; /* Espacio entre los íconos */
+  }
+  
+  .social-icon {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  
+  .social-icon:hover {
+    color: #ddd;
+  }
+  
+  /* Estilo para la parte inferior del footer */
+  .footer-bottom {
+    text-align: center; /* Centra el texto en la parte inferior del footer */
+    margin-top: 20px;
+    font-size: 14px; /* Tamaño de fuente más pequeño para el texto en la parte inferior */
+    width: 100%; /* Asegúrate de que ocupe el ancho completo del contenedor */
+  }
+  

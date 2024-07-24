@@ -52,7 +52,11 @@ const RecetasClientes = () => {
       </div>
       <button className="carousel-button" id='btn-left' onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
       <button className="carousel-button" id='btn-right' onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
+    <div>
+      
     </div>
+    </div>
+    
   );
 };
 

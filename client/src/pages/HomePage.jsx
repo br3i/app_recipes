@@ -12,6 +12,7 @@ import PasswordReset from '../pages/PasswordResetComponent';
 import ComoFunciona from '../pages/ComoFunciona';
 import RecetasCliente from '../pages/RecetasCliente';
 import CarouselItem from '../components/ComentarioCarousel';
+import Footer from '../pages/Footer'; 
 
 const API_URL = 'http://localhost:4000';
 
@@ -175,6 +176,7 @@ const HomePage = () => {
         {currentPage === 'passwordReset' && <PasswordReset />}
       </main>
       <div className="image-side image-right"></div>
+      <Footer /> 
     </div>
   );
 };

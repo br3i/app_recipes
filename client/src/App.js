@@ -14,13 +14,14 @@ import { AuthProvider } from './context/AuthContext';
 import { PageProvider } from './context/PageContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import RegisterClient from './pages/RegisterClient';
-
+import ServerStatus from './pages/ServerStatus';  // Importar el componente ServerStatus
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <PageProvider>
+        <ServerStatus />
           <Routes>
             {/* Rutas públicas */}
             <Route path='/' element={<HomePage />} />
