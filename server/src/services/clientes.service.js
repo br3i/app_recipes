@@ -10,10 +10,17 @@ const SECRET_KEY = "your_secret_key_here";
 class ClientesService {
   async getAllClientes() {
     console.log('Fetching all clients...');
-    const clientes = await Cliente.findAll();
+    const clientes = await Cliente.findAll({
+      include: {
+        model: Usuarios,
+        as: 'usuario', // Asegúrate de usar el alias correcto de la relación
+        attributes: ['id_usuario', 'nombre', 'email', 'tipo_usuario', 'informacion_contacto']
+      }
+    });
     console.log('Fetched clients:', clientes);
     return clientes;
   }
+
 
   async getClienteById(id) {
     console.log(`Fetching client with ID: ${id}`);

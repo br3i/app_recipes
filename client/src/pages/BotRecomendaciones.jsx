@@ -117,7 +117,7 @@ const BotRecomendaciones = () => {
   return (
     <>
       <button
-        className={`toggle-sidebar ${showHistorial ? 'expanded' : 'collapsed'}`}
+        className={`button-obtain-recomendations toggle-sidebar ${showHistorial ? 'expanded' : 'collapsed'}`}
         onClick={() => setShowHistorial(!showHistorial)}
       >
         {showHistorial ? '<' : '>'}

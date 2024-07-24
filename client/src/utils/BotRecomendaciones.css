@@ -261,7 +261,7 @@ select {
     border-radius: 5px;
 }
 
-button {
+.button-obtain-recomendations {
     background-color: seagreen;
     color: white;
     padding: 10px 20px;
@@ -272,7 +272,7 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
+.button-obtain-recomendations:hover {
     background-color: #1e824c;
 }
 

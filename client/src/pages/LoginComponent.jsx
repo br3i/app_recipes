@@ -1,12 +1,9 @@
-// src/pages/LoginComponent.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../utils/login.css';
-
-const API_URL = 'http://localhost:4000';
+import API_URL from '../components/API_URL';
 
 const PasswordResetLink = ({ onClick }) => (
   <p className="password-reset-link" onClick={onClick}>
@@ -14,7 +11,7 @@ const PasswordResetLink = ({ onClick }) => (
   </p>
 );
 
-const PasswordResetForm = ({ onSubmit, onCancel, resetEmail, setResetEmail, resetMessage, resetError }) => (
+const PasswordResetForm = ({ onSubmit, onCancel, resetEmail, setResetEmail, setOldPassword, setNewPassword, resetMessage, resetError }) => (
   <div className="password-reset-container">
     <h2>Resetear Contraseña</h2>
     {resetMessage && <p className="success-message">{resetMessage}</p>}
@@ -23,6 +20,14 @@ const PasswordResetForm = ({ onSubmit, onCancel, resetEmail, setResetEmail, rese
       <div>
         <label>Email</label>
         <input type="email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} required />
+      </div>
+      <div>
+        <label>Contraseña Actual</label>
+        <input type="password" onChange={(e) => setOldPassword(e.target.value)} required />
+      </div>
+      <div>
+        <label>Nueva Contraseña</label>
+        <input type="password" onChange={(e) => setNewPassword(e.target.value)} required />
       </div>
       <button type="submit">Resetear Contraseña</button>
     </form>
@@ -43,6 +48,8 @@ const LoginComponent = () => {
 
   // State for password reset
   const [resetEmail, setResetEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [resetMessage, setResetMessage] = useState('');
   const [resetError, setResetError] = useState('');
   const [showResetForm, setShowResetForm] = useState(false);
@@ -84,7 +91,10 @@ const LoginComponent = () => {
   const handleSubmitReset = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}/usuarios/reset-password`, { email: resetEmail });
+      const response = await axios.put(`${API_URL}/usuarios/email/${resetEmail}/password`, {
+        oldPassword,
+        newPassword
+      });
       setResetMessage(response.data.message);
       setResetError('');
     } catch (error) {
@@ -136,6 +146,8 @@ const LoginComponent = () => {
           setResetEmail={setResetEmail}
           resetMessage={resetMessage}
           resetError={resetError}
+          setOldPassword={setOldPassword}
+          setNewPassword={setNewPassword}
         />
       )}
     </div>

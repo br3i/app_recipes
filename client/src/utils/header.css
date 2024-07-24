@@ -60,7 +60,7 @@
 #logout-button {
     display: inline-block;
     padding: 10px;
-    background: #fff;
+    background: #e7e7a0;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -75,7 +75,7 @@
 }
 
 #logout-button:hover {
-    background-color: #1e824c;
+    background-color: #ffffff;
 }
 
 #side-menu {
@@ -91,6 +91,14 @@
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
     z-index: 1000;
+    transform: translateX(100%);
+    /* Start hidden off-screen */
+}
+
+#side-menu.open {
+    display: flex;
+    transform: translateX(0);
+    /* Slide into view */
 }
 
 #side-menu a {
@@ -98,11 +106,6 @@
     font-size: 18px;
     margin: 10px 0;
     text-decoration: none;
-}
-
-#side-menu.open {
-    display: flex;
-    transform: translateX(0);
 }
 
 #logout-button-menu {
@@ -131,5 +134,14 @@
 
     #logout-button {
         display: none;
+    }
+
+    #side-menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #logout-button-menu {
+        display: block;
     }
 }

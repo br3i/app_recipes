@@ -8,7 +8,7 @@ import '../utils/menu.css';
 
 const MenuComponent = () => {
   const [tipoUsuario, setTipoUsuario] = useState(null);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { handleNavigation } = usePage();
 
   useEffect(() => {
@@ -37,8 +37,7 @@ const MenuComponent = () => {
   return (
     <div className="menu-container">
       <HeaderComponent handleNavigation={handleNavigation} tipoUsuario={tipoUsuario} />
-      <Paginas />
-      <div className="image-side"></div>
+      <Paginas tipoUsuario={tipoUsuario} />
     </div>
   );
 };

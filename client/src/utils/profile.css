@@ -1,9 +1,9 @@
 /* profile.css */
 .profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px 180px;
-    background-color: #f9f9f9;
+    max-width: 85%;
+    margin: 5% auto;
+    padding: 2% 10%;
+    background-color: #b5dab170;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -17,6 +17,10 @@
     margin-bottom: 15px;
   }
   
+  .profile-container form div span{
+    text-transform: uppercase;
+  }
+
   .profile-container form label {
     display: block;
     margin-bottom: 5px;
@@ -32,7 +36,7 @@
   .profile-container form button {
     width: 100%;
     padding: 10px;
-    background-color: #28a745;
+    background-color: #28a746cb;
     color: white;
     border: none;
     border-radius: 4px;

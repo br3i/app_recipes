@@ -1,8 +1,8 @@
 import { Usuarios } from "../models/usuarios.js";
 import { Administradores } from "../models/administradores.js";
 import { Nutricionista } from "../models/nutricionistas.js";
-import { createAdmin, deleteAdminId, deleteAdminEmail, updateAdminId, updateAdminEmail } from "../utilities/utilitiesAdministrador.js";
-import { createNutricionista, deleteNutricionistaId, deleteNutricionistaEmail, updateNutricionistaId, updateNutricionistaEmail } from "../utilities/utilitiesNutricionista.js";
+import { updateAdminId } from "../utilities/utilitiesAdministrador.js";
+import { updateNutricionistaId } from "../utilities/utilitiesNutricionista.js";
 
 class UsuariosService {
   async getAllUsuarios() {
@@ -53,7 +53,8 @@ class UsuariosService {
 
   async getUsuarioByEmail(email) {
     console.log(`Fetching user with email: ${email}`);
-    const usuario = await Usuarios.findOne({where: { email },
+    const usuario = await Usuarios.findOne({
+      where: { email },
       include: [
         { model: Administradores, as: 'administrador', required: false },
         { model: Nutricionista, as: 'nutricionista', required: false }
@@ -67,9 +68,10 @@ class UsuariosService {
     return usuario;
   }
 
-    async getUsuariosByNombre(nombre) {
+  async getUsuariosByNombre(nombre) {
     console.log(`Fetching user with nombre: ${nombre}`);
-    const usuario = await Usuarios.findOne({where: { nombre },
+    const usuario = await Usuarios.findOne({
+      where: { nombre },
       include: [
         { model: Administradores, as: 'administrador', required: false },
         { model: Nutricionista, as: 'nutricionista', required: false }
@@ -82,7 +84,6 @@ class UsuariosService {
     }
     return usuario;
   }
-
 
   async getUsuariosByTipo(tipo_usuario) {
     try {
@@ -131,12 +132,11 @@ class UsuariosService {
 
   async createUsuario(usuarioData, transaction) {
     try {
+      const validUserTypes = ['administrador', 'nutricionista'];
+      if (!validUserTypes.includes(usuarioData.tipo_usuario)) {
+        throw new Error(`Tipo de usuario inválido: ${usuarioData.tipo_usuario}`);
+      }
 
-       const validUserTypes = ['administrador', 'nutricionista'];
-    if (!validUserTypes.includes(usuarioData.tipo_usuario)) {
-      throw new Error(`Tipo de usuario inválido: ${usuarioData.tipo_usuario}`);
-    }
-    
       console.log('Creating new user with data:', usuarioData);
       const newUsuario = await Usuarios.create(usuarioData, { transaction });
 
@@ -170,8 +170,15 @@ class UsuariosService {
         throw new Error('Usuario not found');
       }
 
+      const prevTipoUsuario = usuario.tipo_usuario;
       await usuario.update(usuarioData, { transaction });
 
+      // Gestionar el cambio de tipo de usuario
+      if (prevTipoUsuario !== usuarioData.tipo_usuario) {
+        await this.handleTipoUsuarioChange(usuario.id_usuario, prevTipoUsuario, usuarioData.tipo_usuario, transaction);
+      }
+
+      // Actualizar los detalles específicos del tipo de usuario
       switch (usuarioData.tipo_usuario) {
         case 'administrador':
           await updateAdminId(usuario.id_usuario, transaction);
@@ -184,11 +191,56 @@ class UsuariosService {
         default:
           break;
       }
+
       console.log('Updated user:', usuario);
       return usuario;
     } catch (error) {
       console.error(`Error updating user with ID: ${id}`, error);
       throw error;
+    }
+  }
+
+  async handleTipoUsuarioChange(id_usuario, prevTipoUsuario, newTipoUsuario, transaction) {
+    try {
+      if (prevTipoUsuario === 'administrador') {
+        await Administradores.destroy({ where: { id_usuario }, transaction });
+        console.log(`Removed admin for user ID: ${id_usuario}`);
+      } else if (prevTipoUsuario === 'nutricionista') {
+        await Nutricionista.destroy({ where: { id_usuario }, transaction });
+        console.log(`Removed nutritionist for user ID: ${id_usuario}`);
+      }
+
+      if (newTipoUsuario === 'administrador') {
+        await this.ensureAdminExists(id_usuario, transaction);
+        console.log(`Added admin for user ID: ${id_usuario}`);
+      } else if (newTipoUsuario === 'nutricionista') {
+        await this.ensureNutricionistaExists(id_usuario, transaction);
+        console.log(`Added nutritionist for user ID: ${id_usuario}`);
+      }
+    } catch (error) {
+      throw new Error("Error handling user type change: " + error.message);
+    }
+  }
+
+  async ensureAdminExists(id_usuario, transaction) {
+    try {
+      let admin = await Administradores.findOne({ where: { id_usuario }, transaction });
+      if (!admin) {
+        admin = await Administradores.create({ id_usuario }, { transaction });
+      }
+    } catch (error) {
+      throw new Error("Error ensuring admin exists: " + error.message);
+    }
+  }
+
+  async ensureNutricionistaExists(id_usuario, transaction) {
+    try {
+      let nutricionista = await Nutricionista.findOne({ where: { id_usuario }, transaction });
+      if (!nutricionista) {
+        nutricionista = await Nutricionista.create({ id_usuario }, { transaction });
+      }
+    } catch (error) {
+      throw new Error("Error ensuring nutricionista exists: " + error.message);
     }
   }
 
@@ -202,6 +254,11 @@ class UsuariosService {
       }
 
       await usuario.update(usuarioData, { transaction });
+
+      const prevTipoUsuario = usuario.tipo_usuario;
+      if (prevTipoUsuario !== usuarioData.tipo_usuario) {
+        await this.handleTipoUsuarioChange(usuario.id_usuario, prevTipoUsuario, usuarioData.tipo_usuario, transaction);
+      }
 
       switch (usuarioData.tipo_usuario) {
         case 'administrador':
@@ -267,7 +324,7 @@ class UsuariosService {
       switch (usuario.tipo_usuario) {
         case 'administrador':
           await deleteAdminId(usuario.id_usuario, transaction);
-          console.log(`Deleted admin for user witj email: ${email}`);
+          console.log(`Deleted admin for user with email: ${email}`);
           break;
         case 'nutricionista':
           await deleteNutricionistaId(usuario.id_usuario, transaction);
@@ -281,7 +338,24 @@ class UsuariosService {
       console.log(`User with email: ${email} deleted`);
       return { message: 'Usuario eliminado' };
     } catch (error) {
-      console.error(`Error deleting user with ID: ${email}`, error);
+      console.error(`Error deleting user with email: ${email}`, error);
+      throw error;
+    }
+  }
+
+  async changePasswordByEmail(email, newPassword, transaction) {
+    try {
+      const usuario = await Usuarios.findOne({ where: { email } });
+      if (!usuario) throw new Error('Usuario no encontrado');
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      usuario.contrasena = hashedPassword;
+
+      await usuario.save({ transaction });
+
+      return usuario;
+    } catch (error) {
+      console.error('Error in changePasswordByEmail:', error);
       throw error;
     }
   }

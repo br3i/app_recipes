@@ -19,7 +19,7 @@ const HeaderComponent = ({ handleNavigation, tipoUsuario }) => {
     setMenuOpen(!menuOpen);
   };
 
-   const closeMenu = () => {
+  const closeMenu = () => {
     setMenuOpen(false);
   };
 
@@ -39,7 +39,7 @@ const HeaderComponent = ({ handleNavigation, tipoUsuario }) => {
   return (
     <>
       <header id="header">
-        <a href="home" className="logo">
+        <a href="menu" className="logo">
           <img src={logo} alt="Logo" />
         </a>
         <button id="menu-button" onClick={toggleMenu}>
@@ -63,19 +63,19 @@ const HeaderComponent = ({ handleNavigation, tipoUsuario }) => {
       </header>
 
       <div id="side-menu" ref={menuRef} className={menuOpen ? 'open' : ''}>
-                  <a href="#!" onClick={() => handleNavigation('profile')}>Perfil</a>
-          {tipoUsuario === 'administrador' && (
-            <a href="#!" onClick={() => handleNavigation('manage-usuarios')}>Administrar Usuarios</a>
-          )}
-          {(tipoUsuario === 'nutricionista' || tipoUsuario === 'administrador') && (
-            <>
-              <a href="#!" onClick={() => handleNavigation('manage-ingredientes')}>Ingredientes Disponibles</a>
-              <a href="#!" onClick={() => handleNavigation('manage-recetas')}>Recetas Disponibles</a>
-            </>
-          )}
-          <a href="#!" onClick={() => handleNavigation('bot-recomendaciones')}>Recomendaciones</a>
-          <a href="#!" onClick={() => handleNavigation('comentarios-cliente')}>Comentarios</a>
-        <button id="logout-button" type="button" onClick={handleLogout}>Cerrar sesión</button>
+        <a href="#!" onClick={() => handleNavigation('profile')}>Perfil</a>
+        {tipoUsuario === 'administrador' && (
+          <a href="#!" onClick={() => handleNavigation('manage-usuarios')}>Administrar Usuarios</a>
+        )}
+        {(tipoUsuario === 'nutricionista' || tipoUsuario === 'administrador') && (
+          <>
+            <a href="#!" onClick={() => handleNavigation('manage-ingredientes')}>Ingredientes Disponibles</a>
+            <a href="#!" onClick={() => handleNavigation('manage-recetas')}>Recetas Disponibles</a>
+          </>
+        )}
+        <a href="#!" onClick={() => handleNavigation('bot-recomendaciones')}>Recomendaciones</a>
+        <a href="#!" onClick={() => handleNavigation('comentarios-cliente')}>Comentarios</a>
+        <button id="logout-button-menu" type="button" onClick={handleLogout}>Cerrar sesión</button>
       </div>
     </>
   );
