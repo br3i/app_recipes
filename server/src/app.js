@@ -31,6 +31,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Ruta de estado
+app.get('/status', (req, res) => {
+  res.json({ status: 'OK' });
+});
 
 // Ruta para obtener ingredientes desde FatSecret
 app.get('/api/fatsecret/ingredients', async (req, res) => {

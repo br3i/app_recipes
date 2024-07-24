@@ -13,8 +13,8 @@ import PasswordReset from '../pages/PasswordResetComponent';
 import ComoFunciona from '../pages/ComoFunciona';
 import RecetasCliente from '../pages/RecetasCliente';
 import CarouselItem from '../components/ComentarioCarousel';
-
-const API_URL = 'http://localhost:4000';
+import Footer from '../pages/Footer'; 
+import API_URL from '../components/API_URL';
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -144,7 +144,7 @@ const HomePage = () => {
         {currentPage === 'profile' && <ProfileForm />}
         {currentPage === 'passwordReset' && <PasswordReset />}
       </main>
-      <div className="image-side image-right"></div>
+      <Footer /> 
     </div>
   );
 };
