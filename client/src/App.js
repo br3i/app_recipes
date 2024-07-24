@@ -15,6 +15,7 @@ import { PageProvider } from './context/PageContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import RegisterClient from './pages/RegisterClient';
 import ServerStatus from './pages/ServerStatus.jsx';  // Importar el componente ServerStatus
+import { ModalProvider }  from './context/ModalContext.js'
 
 const App = () => {
   return (
@@ -22,20 +23,22 @@ const App = () => {
       <AuthProvider>
         <PageProvider>
           <ServerStatus />
-          <Routes>
-            {/* Rutas públicas */}
-            <Route path='/' element={<HomePage />} />
-            <Route path='/about' element={<AboutUs />} />
-            <Route path='/login' element={<LoginComponent />} />
-            <Route path="/crear-cuenta" element={<RegisterClient />} />
-            <Route path='/password-reset' element={<PasswordResetComponent />} />
-            <Route path='/register-client' element={<RegisterClient />} />
-            {/* Rutas protegidas */}
-            <Route path='/menu/*' element={<ProtectedRoute element={MenuComponent} />} />
-            <Route path='/----/*' element={<ProtectedRoute element={Menu2} />} /> {/* Añadir ruta para MenuClient */}
-            <Route path='/management-user' element={<ProtectedRoute element={ManagementUserComponent} />} />
-            <Route path='/profile' element={<ProtectedRoute element={ProfileComponent} />} />        
-          </Routes>
+          <ModalProvider>
+            <Routes>
+              {/* Rutas públicas */}
+              <Route path='/' element={<HomePage />} />
+              <Route path='/about' element={<AboutUs />} />
+              <Route path='/login' element={<LoginComponent />} />
+              <Route path="/crear-cuenta" element={<RegisterClient />} />
+              <Route path='/password-reset' element={<PasswordResetComponent />} />
+              <Route path='/register-client' element={<RegisterClient />} />
+              {/* Rutas protegidas */}
+              <Route path='/menu/*' element={<ProtectedRoute element={MenuComponent} />} />
+              <Route path='/----/*' element={<ProtectedRoute element={Menu2} />} /> {/* Añadir ruta para MenuClient */}
+              <Route path='/management-user' element={<ProtectedRoute element={ManagementUserComponent} />} />
+              <Route path='/profile' element={<ProtectedRoute element={ProfileComponent} />} />     
+            </Routes>
+          </ModalProvider>   
         </PageProvider>
       </AuthProvider>
     </Router>

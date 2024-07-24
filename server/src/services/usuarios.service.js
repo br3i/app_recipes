@@ -1,8 +1,8 @@
 import { Usuarios } from "../models/usuarios.js";
 import { Administradores } from "../models/administradores.js";
 import { Nutricionista } from "../models/nutricionistas.js";
-import { updateAdminId } from "../utilities/utilitiesAdministrador.js";
-import { updateNutricionistaId } from "../utilities/utilitiesNutricionista.js";
+import { deleteAdminId, updateAdminId } from "../utilities/utilitiesAdministrador.js";
+import { deleteNutricionistaId, updateNutricionistaId } from "../utilities/utilitiesNutricionista.js";
 
 class UsuariosService {
   async getAllUsuarios() {

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_URL from '../components/API_URL';
 import '../utils/ManagementUsers.css';
+import { useModal } from '../context/ModalContext'; // Importa useModal
 
 const ManagementUserComponent = () => {
   const [users, setUsers] = useState([]);
   const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const { showModal, hideModal } = useModal(); // Usa useModal
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -35,10 +37,13 @@ const ManagementUserComponent = () => {
     try {
       const response = await axios.get(`${API_URL}/usuarios`);
       setUsers(response.data);
+      showModal(<div>{response.data.message || 'Datos de administrador obtenido con éxito'}</div>, 3000); // Línea añadida
     } catch (error) {
       console.error('Error fetching users:', error);
+      showModal(<div>{error.response?.data?.error || 'Error obteniendo datos de usuario'}</div>, 3000); // Línea añadida
     }
   };
+
 
   const handleFormChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -93,10 +98,13 @@ const ManagementUserComponent = () => {
         informacion_contacto: '',
         especialidad: '',
       });
+      showModal(<div>{response.data.message || 'Datos actualizados con éxito'}</div>, 3000); // Línea añadida
     } catch (error) {
       console.error('Error updating user:', error);
+      showModal(<div>{error.response?.data?.error || 'Error actualizando datos'}</div>, 3000); // Línea añadida
     }
   };
+
 
 
   const cancelarEdicion = () => {
@@ -110,13 +118,16 @@ const ManagementUserComponent = () => {
     });
   };
 
-  const eliminarUsuario = async (idUsuario) => {
+  const eliminarUsuario = async (email) => {
     try {
-      await axios.delete(`${API_URL}/usuarios/${idUsuario}`);
-      const updatedUsers = users.filter((user) => user.id_usuario !== idUsuario);
+      http://localhost:4000/usuarios/correo/abb@b.c
+      await axios.delete(`${API_URL}/usuarios/correo/${email}`);
+      const updatedUsers = users.filter((user) => user.email !== email);
       setUsers(updatedUsers);
+      showModal(<div>Usuario eliminado con éxito</div>, 3000);
     } catch (error) {
       console.error('Error deleting user:', error);
+      showModal(<div>{error.response?.data?.error || 'Error eliminando usuario'}</div>, 3000);
     }
   };
 
@@ -188,6 +199,7 @@ const ManagementUserComponent = () => {
       }
     } catch (error) {
       console.error('Error searching users:', error);
+      showModal(<div>{error.response?.data?.error || 'Error buscando usuarios'}</div>, 3000); // Línea añadida
     }
   };
 
@@ -205,8 +217,10 @@ const ManagementUserComponent = () => {
         especialidad: '',
         contrasena: ''
       });
+      showModal(<div>{response.data.message || 'Usuario creado con éxito'}</div>, 3000); // Línea añadida
     } catch (error) {
       console.error('Error creating user:', error);
+      showModal(<div>{error.response?.data?.error || 'Error creando usuario'}</div>, 3000); // Línea añadida
     }
   };
 
@@ -345,7 +359,7 @@ const ManagementUserComponent = () => {
                   ) : (
                     <>
                       <button className="btn-mu-editar" onClick={() => editarUsuario(usuario)}>Editar</button>
-                      <button className="btn-mu-eliminar" onClick={() => eliminarUsuario(usuario.id_usuario)}>Eliminar</button>
+                      <button className="btn-mu-eliminar" onClick={() => eliminarUsuario(usuario.email)}>Eliminar</button>
                     </>
                   )}
                 </td>

@@ -1,0 +1,79 @@
+/* ModalContext.css */
+
+/* Estilo base para el overlay del modal */
+.ReactModal__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    /* Fondo transparente */
+    z-index: 9999;
+    /* Asegura que esté sobre todo el contenido */
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea a la derecha */
+    align-items: flex-start;
+    /* Alinea en la parte superior */
+    padding: 20px;
+    /* Espaciado desde los bordes */
+}
+
+/* Estilo del contenido del modal */
+.ReactModal__Content {
+    position: relative;
+    background: #ffefc3ad;
+    /* Fondo llamativo */
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
+    width: auto;
+    max-width: 300px;
+    /* Ancho máximo del modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    z-index: 10000;
+    /* Asegura que esté sobre todo */
+    border: 2px solid #ffc107d2;
+    /* Borde llamativo */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo para el contenido dentro del modal */
+.modal-content {
+    background-color: rgba(46, 139, 86, 0.776);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Botón de cierre */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.close-button:hover {
+    color: #000;
+}

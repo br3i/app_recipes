@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../utils/ingredientes.css';
 import API_URL from '../components/API_URL';
+import { useModal } from '../context/ModalContext'; // Importa useModal
 
 const VisualizadorIngredientes = () => {
   const [ingredientes, setIngredientes] = useState([]);
@@ -11,6 +12,7 @@ const VisualizadorIngredientes = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
   const [paginaActual, setPaginaActual] = useState(1);
   const [ingredienteEditando, setIngredienteEditando] = useState(null);
+  const { showModal, hideModal } = useModal(); // Usa useModal
   const [formData, setFormData] = useState({
     nombre: '',
     categoria: '',
@@ -77,7 +79,9 @@ const VisualizadorIngredientes = () => {
       console.error('Error fetching categories:', error);
       if (error.response && error.response.status === 401) {
         navigate('/login');
-      }
+      }else {
+        showModal(<div>{error.response?.data?.error || 'Error obteniendo categorias'}</div>, 3000);
+      } 
     }
   };
 
@@ -94,7 +98,9 @@ const VisualizadorIngredientes = () => {
       console.error('Error fetching ingredients:', error);
       if (error.response && error.response.status === 401) {
         navigate('/login');
-      }
+      }else {
+        showModal(<div>{error.response?.data?.error || 'Error obteniendo ingredientes'}</div>, 3000);
+      } 
     }
   };
 
@@ -145,11 +151,14 @@ const VisualizadorIngredientes = () => {
       setIngredienteEditando(null);
       setMostrarInputNuevaCategoria(false); 
       await fetchCategorias();
+      showModal(<div>{response.data.message || 'Ingrediente actualizado con éxito'}</div>, 3000);
     } catch (error) {
       console.error('Error updating ingredient:', error);
       if (error.response && error.response.status === 401) {
         navigate('/login');
-      }
+      }else {
+        showModal(<div>{error.response?.data?.error || 'Error actualizando ingredientes'}</div>, 3000);
+      } 
     }
   };
 
@@ -170,10 +179,13 @@ const VisualizadorIngredientes = () => {
 
       setIngredientes(updatedIngredientes);
       setIngredientesFiltrados(updatedIngredientes.filter(i => i.categoria === categoriaSeleccionada));
+      showModal(<div>Ingrediente eliminado con éxito</div>, 3000);
     } catch (error) {
       console.error('Error deleting ingredient:', error);
       if (error.response && error.response.status === 401) {
         navigate('/login');
+      }else{
+        showModal(<div>{error.response.data.error || 'Error eliminando ingrediente'}</div>, 3000);
       }
     }
   };
@@ -201,6 +213,7 @@ const buscarIngredientes = async () => {
     setPaginaActual(1); // Reinicia la paginación a la primera página
   } catch (error) {
     console.error('Error searching ingredients:', error);
+    showModal(<div>{error.response?.data?.error || 'Error buscando ingredientes'}</div>, 3000);
   }
 };
 
@@ -286,8 +299,10 @@ const buscarIngredientes = async () => {
       });
       setNuevaCategoria('');
       setMostrarInputNuevaCategoria(false);
+      showModal(<div>{response.data.message || 'Ingrediente creado con éxito'}</div>, 3000);
     } catch (error) {
       console.error('Error creating ingredient:', error);
+      showModal(<div>{error.response.data.error || 'Error creando ingrediente'}</div>, 3000);
     }
   };
 
