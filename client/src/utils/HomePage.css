@@ -103,14 +103,15 @@
 
 .intro-section {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 85%;
   margin-bottom: 20px;
 }
 
-.intro-text {
-  flex: 1;
+.intro-text,
+.intro-image {
+  flex: 1 1 50%;
 }
 
 .intro-text h2 {
@@ -120,25 +121,25 @@
 }
 
 .intro-image img {
-  max-width: 60%;
+  max-width: 50%;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .stats-container {
+  width: 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 800px;
   margin-bottom: 20px;
 }
 
 .stats-row {
   display: flex;
-  justify-content: space-between;
   width: 100%;
+  justify-content: center;
 }
 
 .stat {
@@ -163,29 +164,26 @@
   color: #000;
 }
 
-.comments-carousel-container {
-  width: 100%;
-  overflow: hidden;
-  margin: 20px auto;
-  position: relative;
-}
 
-.comments-carousel {
-  display: flex;
-  position: relative;
-  left: 0;
-  animation: slide 20s linear infinite;
-}
 
-@keyframes slide {
-  0% {
-    transform: translateX(0%);
-  }
 
-  100% {
-    transform: translateX(-50%);
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Media Queries */
 @media (max-width: 1024px) {
@@ -197,9 +195,9 @@
     max-width: 40%;
     text-align: center;
   }
-  
+
   .intro-image {
-    max-width: 40%;
+    max-width: 45%;
     margin-top: 20px;
   }
 }
@@ -248,11 +246,11 @@
   }
 
   .intro-text {
-    max-width: 50%;
+    max-width: 35%;
   }
 
   .intro-image {
-    width: 80%;
+    max-width: 70%;
   }
 
   .stat {
@@ -260,13 +258,13 @@
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 350px) {
   .intro-text {
-    max-width: 50%;
+    max-width: 40%;
   }
 
   .intro-image {
-    width: 70%;
+    max-width: 60%;
   }
 
   .stat {
@@ -274,7 +272,6 @@
   }
 }
 
-/* Side Menu */
 .side-menu {
   position: fixed;
   top: 0;
@@ -315,4 +312,16 @@
   padding: 10px;
   border-radius: 5px;
   text-decoration: none;
+}
+
+.comments-carousel-container {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+  background: #b5dab18e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
 }

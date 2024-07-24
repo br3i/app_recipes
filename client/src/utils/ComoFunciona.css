@@ -1,65 +1,132 @@
 /* src/utils/ComoFunciona.css */
 .comofunciona-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .carousel-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  
-  .carousel-content h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .carousel-content p,
-  .carousel-content ul {
-    margin-bottom: 20px;
-    color: #555;
-  }
-  
-  .carousel-content ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .carousel-content li {
-    margin-bottom: 10px;
-  }
-  
-  .carousel-content strong {
-    color: #6e6666;
-  }
-  
-  .carousel-image {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin: 20px 0;
-  }
-  
-
-  .carousel-control-prev,
-  .carousel-control-next {
-    filter: invert(1); /* Cambia el color de los iconos si es necesario */
-  }
-  /* Estilos para los controles del carrusel */
-.carousel-control-prev,
-.carousel-control-next {
-  width: 5%; /* Ajusta el tamaño si es necesario */
-  height: 100%; /* Ajusta la altura */
-  top: 90%;
-  transform: translateY(-50%);
-  background-size: 20px 20px; /* Ajusta el tamaño de las flechitas */
+  display: flex;
+  flex-direction: column;
 }
 
+.carousel-content {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.carousel-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.carousel-content p,
+.carousel-content ul {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.carousel-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.carousel-content li {
+  margin-bottom: 10px;
+}
+
+.carousel-content strong {
+  color: #6e6666;
+}
+
+.carousel-image {
+  max-width: 80%;
+  max-height: 50%;
+  margin: 20px 0;
+  position: relative;
+}
+
+/* Carousel buttons styling */
+.carousel-button-como-funciona {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(46, 139, 86, 0.827);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+#btn-prev-como-funciona {
+  left: 5%;
+}
+
+#btn-next-como-funciona {
+  right: 5%;
+}
+
+/* Media Queries */
+@media (max-width: 1250px) {
+  .carousel-button-como-funciona {
+    top: 65%;
+  }
+
+  #btn-prev-como-funciona {
+    left: 10%;
+  }
+
+  #btn-next-como-funciona {
+    right: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-button-como-funciona {
+    top: 55%;
+  }
+
+  #btn-prev-como-funciona {
+    left: 8%;
+  }
+
+  #btn-next-como-funciona {
+    right: 8%;
+  }
+}
+
+@media (max-width: 500px) {
+  .carousel-button-como-funciona {
+    top: 40%;
+  }
+
+  #btn-prev-como-funciona {
+    left: 5%;
+  }
+
+  #btn-next-como-funciona {
+    right: 5%;
+  }
+}
+
+@media (max-width: 350px) {
+  .carousel-button-como-funciona {
+    top: 35%;
+  }
+
+  #btn-prev-como-funciona {
+    left: 1%;
+  }
+
+  #btn-next-como-funciona {
+    right: 1%;
+  }
+}
 
 .newsletter-container {
   max-width: 800px;

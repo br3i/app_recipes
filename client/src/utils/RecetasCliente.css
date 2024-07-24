@@ -2,9 +2,7 @@
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 10px;
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%;
+    margin: 1%;
     max-width: 800px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -17,38 +15,25 @@
 }
 
 /* Styling for the carousel content */
-.carousel-content {
+#cliente-recetas-carousel-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+    padding-top: 10px;
 }
 
-.carousel-content h3 {
-    color: #343a40;
-    margin-bottom: 10px;
-}
-
-.carousel-content p {
-    color: #6c757d;
-    margin-bottom: 10px;
-}
-
-.carousel-content ul {
+#cliente-recetas-carousel-content ul {
     list-style-type: none;
     padding: 0;
     color: #6c757d;
-    margin-bottom: 10px;
 }
 
-.carousel-content ul li {
+#cliente-recetas-carousel-content ul li {
     margin-bottom: 5px;
 }
 
-.carousel-content h4 {
+#cliente-recetas-carousel-content h4 {
     color: #343a40;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -63,14 +48,14 @@
 /* Carousel buttons styling */
 .carousel-button {
     position: absolute;
-    top: 37%;
+    top: 40%;
     transform: translateY(-50%);
     background-color: rgba(46, 139, 86, 0.827);
     color: #fff;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -79,46 +64,82 @@
     transition: background-color 0.3s;
 }
 
-#btn-left {
-    padding: 20px;
-    left: 10%;
-    /* Adjust this value to align with the border */
+#custom-prev-button {
+    left: 5%;
 }
 
-#btn-right {
-    padding: 20px;
-    right: 10%;
-    /* Adjust this value to align with the border */
+#custom-next-button {
+    right: 5%;
 }
 
-.carousel-button:disabled {
-    background-color: gray;
-    cursor: not-allowed;
-}
-
-/* Hide default carousel controls and indicators */
-.carousel-control-prev,
-.carousel-control-next,
-.carousel-indicators {
-    display: none;
-}
-
-/* CSS for the remove ingredient button */
-.remove-ingredient {
-    margin-left: 10px;
-    color: red;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2em;
-    transition: color 0.3s;
-}
-
-.remove-ingredient:hover {
-    color: darkred;
-}
-
-@media (max-width: 505px) {
+/* Media Queries */
+@media (max-width: 1024px) {
     .carousel-button {
-        top: 30%;
+        top: 40%;
     }
+
+    #btn-left {
+        left: 20%;
+    }
+
+    #btn-right {
+        right: 20%;
+    }
+}
+
+@media (max-width: 850px) {
+    .carousel-button {
+        top: 40%;
+    }
+
+    #btn-left {
+        left: 18%;
+    }
+
+    #btn-right {
+        right: 18%;
+    }
+}
+
+@media (max-width: 760px) {
+    .carousel-button {
+        top: 40%;
+    }
+
+    #btn-left {
+        left: 10%;
+    }
+
+    #btn-right {
+        right: 10%;
+    }
+}
+
+@media (max-width: 500px) {
+    .carousel-button {
+        top: 36%;
+    }
+
+    #btn-left {
+        left: 12%;
+    }
+
+    #btn-right {
+        right: 12%;
+    }
+}
+
+@media (max-width: 350px) {
+    .carousel-button {
+        top: 32%;
+    }
+
+    #btn-left {
+        left: 10%;
+    }
+
+    #btn-right {
+        right: 10%;
+    }
+
 }

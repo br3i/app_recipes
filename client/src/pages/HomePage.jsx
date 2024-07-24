@@ -1,8 +1,9 @@
+// src/pages/HomePage.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import '../utils/HomePage.css';
-import logo from '../components/public/logo.png';
+import HeaderHomePage from '../components/HeaderHomePage';
 import cookingImage from '../components/public/imagen-pag-principal.png';
 import LoginComponent from '../pages/LoginComponent';
 import RegisterClient from '../pages/RegisterClient';
@@ -21,7 +22,6 @@ const HomePage = () => {
   const [objetivosCount, setObjetivosCount] = useState(0);
   const [comentarios, setComentarios] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     const fetchRecetas = async () => {
@@ -79,50 +79,20 @@ const HomePage = () => {
     setMenuOpen(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        closeMenu();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
     <div className="homepage-container">
       <Helmet>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       </Helmet>
-      <header className="homepage-header">
-        <a href="/" className="logo">
-          <img src={logo} alt="Logo" />
-          <span className="logo-text">SMART PLATE</span>
-        </a>
-        <button className="menu-button" onClick={toggleMenu}>
-          &#9776;
-        </button>
-        <nav className="homepage-navbar">
-          <a href="#!" onClick={() => handleNavClick('home')}>Inicio</a>
-          <a href="#about" onClick={() => handleNavClick('about')}>Sobre nosotros</a>
-          <a href="#recipes" onClick={() => handleNavClick('recipes')}>Recetas</a>
-          <a href="#how-it-works" onClick={() => handleNavClick('how-it-works')}>Cómo funciona</a>
-          <a href="#create-account" className="btn-black" onClick={handleCreateAccountClick}>Crear Cuenta</a>
-          <button className="btn-green" onClick={handleStartClick}>Empezar</button>
-        </nav>
-      </header>
-      <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>
-        <a href="#!" onClick={() => handleNavClick('home')}>Inicio</a>
-        <a href="#about" onClick={() => handleNavClick('about')}>Sobre nosotros</a>
-        <a href="#recipes" onClick={() => handleNavClick('recipes')}>Recetas</a>
-        <a href="#how-it-works" onClick={() => handleNavClick('how-it-works')}>Cómo funciona</a>
-        <a href="#create-account" className="btn-black" onClick={handleCreateAccountClick}>Crear Cuenta</a>
-        <button className="btn-green" onClick={handleStartClick}>Empezar</button>
-      </div>
-      <div className="image-side"></div>
+      <HeaderHomePage
+        handleNavClick={handleNavClick}
+        handleStartClick={handleStartClick}
+        handleCreateAccountClick={handleCreateAccountClick}
+        menuOpen={menuOpen}
+        toggleMenu={toggleMenu}
+        closeMenu={closeMenu}
+      />
+      <div className="image-side image-left"></div>
       <main className="homepage-main">
         {currentPage === 'home' && (
           <>

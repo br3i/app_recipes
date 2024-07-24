@@ -1,14 +1,17 @@
 /* src/utils/AboutUs.css */
 .aboutus-container {
-  margin: 0 2%;
-  padding: 2%;
+  margin: 0 0.5%;
+  padding: 0.5%;
 }
 
 .aboutus-container p,
 .aboutus-container li {
   text-align: justify;
+  padding: 0 2%;
 }
-
+.aboutus-container h1, h2{
+  padding-top: 15px;
+}
 .aboutus-main {
   padding: 1%;
   border-radius: 15px;
@@ -16,8 +19,7 @@
 }
 
 .aboutus-section {
-  margin: 2%;
-  padding: 2%;
+  margin: 0.5%;
   border-radius: 15px;
   background-color: #b5dab16a;
 }
