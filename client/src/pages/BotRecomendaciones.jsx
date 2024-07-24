@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TablaNutricional from './TablaNutricional'; // Importa el componente TablaNutricional
 import '../utils/BotRecomendaciones.css';
+import { useModal } from '../context/ModalContext'; // Importar useModal
 
 const API_URL = 'http://localhost:4000';
 
@@ -13,14 +14,53 @@ const BotRecomendaciones = () => {
   const [objetivos, setObjetivos] = useState([]);
   const [objetivoSeleccionado, setObjetivoSeleccionado] = useState('');
   const [recomendaciones, setRecomendaciones] = useState([]);
-  const [historialRecomendaciones, setHistorialRecomendaciones] = useState({});
+  const [historialRecomendaciones, setHistorialRecomendaciones] = useState([]);
   const [showHistorial, setShowHistorial] = useState(false);
+  const [id_cliente, setClienteId] = useState(null);
+
+  const { showModal, hideModal } = useModal(); // Usar useModal
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDataString = localStorage.getItem('usuario');
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.usuario && userData.usuario.id_usuario) {
+            const id_cliente = userData.usuario.id_usuario;
+            setClienteId(id_cliente); // Almacena el userId en el estado local
+            console.log('ID del cliente obtenido del localStorage:', id_cliente);
+            fetchHistorial(id_cliente); // Llama a fetchHistorial al obtener el ID del cliente
+          } else {
+            console.error('No se encontró el ID de usuario válido en los datos almacenados.');
+          }
+        } else {
+          console.error('No se encontraron datos de usuario en localStorage.');
+        }
+      } catch (error) {
+        console.error('Error al procesar los datos de usuario desde localStorage:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const fetchHistorial = async (id_cliente) => {
+    try {
+      const response = await axios.get(`${API_URL}/historial-recomendaciones/${id_cliente}`);
+      setHistorialRecomendaciones(Array.isArray(response.data) ? response.data : []);
+      console.log('Historial de recomendaciones obtenido:', response.data);
+    } catch (error) {
+      console.error('Error fetching historial de recomendaciones:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchObjetivos = async () => {
       try {
         const response = await axios.get(`${API_URL}/objetivos/`);
         setObjetivos(response.data);
+        console.log('Objetivos obtenidos:', response.data);
       } catch (error) {
         console.error('Error fetching objetivos:', error);
       }
@@ -30,6 +70,7 @@ const BotRecomendaciones = () => {
       try {
         const response = await axios.get(`${API_URL}/ingredientes`);
         setIngredientesDisponibles(response.data);
+        console.log('Ingredientes obtenidos:', response.data);
       } catch (error) {
         console.error('Error fetching ingredientes:', error);
       }
@@ -57,6 +98,7 @@ const BotRecomendaciones = () => {
       ]);
       setBusquedaIngrediente('');
       setIngredientesFiltrados([]);
+      console.log('Ingrediente agregado:', ingrediente);
     }
   };
 
@@ -70,12 +112,14 @@ const BotRecomendaciones = () => {
 
   const handleObjetivoChange = (e) => {
     setObjetivoSeleccionado(e.target.value);
+    console.log('Objetivo seleccionado:', e.target.value);
   };
 
   const handleRemoveIngredient = (id) => {
     setIngredientesSeleccionados((prevState) =>
       prevState.filter((ing) => ing.id_ingrediente !== id)
     );
+    console.log('Ingrediente removido:', id);
   };
 
   const handleSubmit = async () => {
@@ -88,27 +132,57 @@ const BotRecomendaciones = () => {
     };
 
     try {
+      console.log('Datos enviados para obtener recomendaciones:', data);
       const response = await axios.post(`${API_URL}/recomendaciones/`, data);
       setRecomendaciones(response.data);
-      
+
+      const guardarRecomendacionesData = {
+        recomendaciones: response.data,
+        objetivo: objetivoSeleccionado,
+        id_cliente
+      };
+
+      console.log('Datos que se enviarán para guardar recomendaciones:', guardarRecomendacionesData);
+
+      await axios.post(`${API_URL}/guardar-recomendaciones/`, guardarRecomendacionesData);
+
       const fecha = new Date().toLocaleDateString();
       const hora = new Date().toLocaleTimeString();
       
       setHistorialRecomendaciones((prevHistorial) => {
-        console.log('Historial Previo:', JSON.stringify(prevHistorial, null, 2));
-        
-        const newHistorial = { ...prevHistorial };
-        if (!newHistorial[fecha]) {
-          newHistorial[fecha] = {};
-        }
-        newHistorial[fecha][hora] = response.data;
-        
-        console.log('Historial Nuevo:', JSON.stringify(newHistorial, null, 2));
-        console.dir(newHistorial, { depth: null });
+        const newHistorial = [...prevHistorial];
+        newHistorial.push({ fecha, hora, data: response.data });
         return newHistorial;
       });
 
       console.log('Recomendaciones recibidas:', response.data);
+
+      // Muestra el modal con las recomendaciones recibidas
+      showModal(
+        <div>
+          <h2>Recomendaciones</h2>
+          <div id="recomendaciones-grid">
+            {response.data.map((rec) => (
+              <div key={rec.id_receta} className="recomendacion-card">
+                <h4>{rec.nombre}</h4>
+                <p><strong>Objetivo:</strong> {rec.objetivo.nombre_objetivo}</p>
+                <p><strong>Calorías Totales:</strong> {rec.calorias_totales}</p>
+                <p><strong>Tiempo de Cocción:</strong> {rec.tiempo_coccion} minutos</p>
+                <h5>Ingredientes:</h5>
+                <ul>
+                  {rec.ingredientes.map((ing) => (
+                    <li key={ing.id_ingrediente}>{ing.nombre}: {ing.recetas_ingredientes.cantidad}g</li>
+                  ))}
+                </ul>
+                <p><strong>Instrucciones:</strong> {rec.instrucciones_prep}</p>
+              </div>
+            ))}
+          </div>
+          <button onClick={hideModal}>Cerrar</button>
+        </div>
+      );
+      await fetchHistorial(id_cliente);
+
     } catch (error) {
       console.error('Error submitting data:', error);
     }
@@ -125,24 +199,13 @@ const BotRecomendaciones = () => {
       <div id="sidebar" className={showHistorial ? 'expanded' : 'collapsed'}>
         <h4>Historial de Recomendaciones</h4>
         <ul>
-          {Object.keys(historialRecomendaciones).map((fecha) => (
-            <li key={fecha}>
-              <strong>{fecha}</strong>
-              <ul>
-                {Object.keys(historialRecomendaciones[fecha]).map((hora) => (
-                  <li key={hora}>
-                    <strong>{hora}</strong>
-                    <div className="recomendaciones-por-hora">
-                      {historialRecomendaciones[fecha][hora].map((rec, index) => (
-                        <div key={index} className="recomendacion">
-                          <h5>{rec.nombre}</h5>
-                          <p>Calorías Totales: {rec.calorias_totales}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+          {Array.isArray(historialRecomendaciones) && historialRecomendaciones.map((item) => (
+            <li key={item.id_historico_recomendaciones}>
+              <strong>{item.recetas_ingrediente?.receta?.nombre}</strong>
+              <div className="recomendaciones-por-hora">
+                <p><strong>Objetivo:</strong> {item.objetivos_nutricionale?.nombre_objetivo}</p>
+                <p><strong>Calorías Totales:</strong> {item.recetas_ingrediente?.receta?.calorias_totales}</p>
+              </div>
             </li>
           ))}
         </ul>

@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../utils/recetas.css';
 import API_URL from '../components/API_URL';
+import { useModal } from '../context/ModalContext'; // Importa useModal
+
 
 const VisualizadorRecetas = () => {
   const [recetas, setRecetas] = useState([]);
@@ -17,6 +19,8 @@ const VisualizadorRecetas = () => {
   const [valorParametro, setValorParametro] = useState('');
   const [paginaActual, setPaginaActual] = useState(1);
   const [recetaEditando, setRecetaEditando] = useState(null);
+  const { showModal, hideModal } = useModal(); // Usa useModal
+
 
   const [crearFormData, setCrearFormData] = useState({
     nombre: '',
@@ -72,20 +76,23 @@ const VisualizadorRecetas = () => {
   const navigate = useNavigate();
 
   const fetchRecetas = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/recetas/`, {
-        headers: {
-          Authorization: `Bearer ${authTokens}`
-        }
-      });
-      setRecetas(response.data);
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
+  try {
+    const response = await axios.get(`${API_URL}/recetas/`, {
+      headers: {
+        Authorization: `Bearer ${authTokens}`
       }
+    });
+    setRecetas(response.data);
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    if (error.response && error.response.status === 401) {
+      navigate('/login');
+    } else {
+      showModal(<div>{error.response?.data?.error || 'Error obteniendo recetas'}</div>, 3000);
     }
-  };
+  }
+};
+
 
   useEffect(() => {
     const fetchObjetivos = async () => {
@@ -100,6 +107,8 @@ const VisualizadorRecetas = () => {
         console.error('Error fetching objetivos:', error);
         if (error.response && error.response.status === 401) {
           navigate('/login');
+        }else {
+          showModal(<div>{error.response?.data?.error || 'Error obteniendo objetivos'}</div>, 3000);
         }
       }
     };
@@ -114,6 +123,7 @@ const VisualizadorRecetas = () => {
         setIngredientesDisponibles(response.data);
       } catch (error) {
         console.error('Error fetching ingredientes:', error);
+        showModal(<div>{error.response?.data?.error || 'Error obteniendo ingredientes'}</div>, 3000);
       }
     };
 
@@ -123,36 +133,39 @@ const VisualizadorRecetas = () => {
   }, [authTokens, navigate]);
 
   const fetchRecetasFiltradas = async () => {
-    try {
-      let response;
-      if (objetivoSeleccionado) {
-        response = await axios.get(`${API_URL}/recetas/objetivo/${objetivoSeleccionado}`, {
-          headers: {
-            Authorization: `Bearer ${authTokens}`
-          }
-        });
-      } else if (comparacion && parametro && valorParametro) {
-        response = await axios.get(`${API_URL}/recetas/${comparacion}/${parametro}/${valorParametro}`, {
-          headers: {
-            Authorization: `Bearer ${authTokens}`
-          }
-        });
-      } else {
-        response = await axios.get(`${API_URL}/recetas/`, {
-          headers: {
-            Authorization: `Bearer ${authTokens}`
-          }
-        });
-      }
-      setRecetas(response.data);
-      setPaginaActual(1);
-    } catch (error) {
-      console.error('Error fetching filtered recipes:', error);
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
+  try {
+    let response;
+    if (objetivoSeleccionado) {
+      response = await axios.get(`${API_URL}/recetas/objetivo/${objetivoSeleccionado}`, {
+        headers: {
+          Authorization: `Bearer ${authTokens}`
+        }
+      });
+    } else if (comparacion && parametro && valorParametro) {
+      response = await axios.get(`${API_URL}/recetas/${comparacion}/${parametro}/${valorParametro}`, {
+        headers: {
+          Authorization: `Bearer ${authTokens}`
+        }
+      });
+    } else {
+      response = await axios.get(`${API_URL}/recetas/`, {
+        headers: {
+          Authorization: `Bearer ${authTokens}`
+        }
+      });
     }
-  };
+    setRecetas(response.data);
+    setPaginaActual(1);
+  } catch (error) {
+    console.error('Error fetching filtered recipes:', error);
+    if (error.response && error.response.status === 401) {
+      navigate('/login');
+    } else {
+      showModal(<div>{error.response?.data?.error || 'Error obteniendo recetas filtradas'}</div>, 3000);
+    }
+  }
+};
+
 
   const handleCrearFormChange = (e) => {
     const { name, value } = e.target;
@@ -317,35 +330,39 @@ const handleSort = (campo) => {
   };
 
   const guardarCambios = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(`${API_URL}/recetas/id/${recetaEditando}`, {
-        ...formData,
-        ingredientes: formData.ingredientes.map(ing => ({
-          id_ingrediente: ing.id_ingrediente,
-          cantidad: ing.cantidad
-        }))
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authTokens}`
-        }
-      });
-
-      const updatedReceta = response.data;
-
-      setRecetas(recetas.map(receta =>
-        receta.id_receta === recetaEditando ? updatedReceta : receta
-      ));
-      setRecetaEditando(null);
-      fetchRecetas();
-    } catch (error) {
-      console.error('Error updating recipe:', error);
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
+  e.preventDefault();
+  try {
+    const response = await axios.put(`${API_URL}/recetas/id/${recetaEditando}`, {
+      ...formData,
+      ingredientes: formData.ingredientes.map(ing => ({
+        id_ingrediente: ing.id_ingrediente,
+        cantidad: ing.cantidad
+      }))
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authTokens}`
       }
+    });
+
+    const updatedReceta = response.data;
+
+    setRecetas(recetas.map(receta =>
+      receta.id_receta === recetaEditando ? updatedReceta : receta
+    ));
+    setRecetaEditando(null);
+    fetchRecetas();
+    showModal(<div>{response.data.message || 'Receta actualizada con éxito'}</div>, 3000);
+  } catch (error) {
+    console.error('Error updating recipe:', error);
+    if (error.response && error.response.status === 401) {
+      navigate('/login');
+    } else {
+      showModal(<div>{error.response?.data?.error || 'Error actualizando receta'}</div>, 3000);
     }
-  };
+  }
+};
+
 
   const cancelarEdicion = () => {
     setRecetaEditando(null);
@@ -375,6 +392,7 @@ const handleSort = (campo) => {
       setRecetas(recetas.filter(receta => receta.id_receta !== id));
     } catch (error) {
       console.error('Error deleting recipe:', error);
+      showModal(<div>{error.response?.data?.error || 'Error eliminando la receta'}</div>, 3000);
     }
   };
 
@@ -393,21 +411,24 @@ const handleSort = (campo) => {
   }, [ingredientesFiltrados, paginaActual]);
 
   const crearReceta = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${API_URL}/recetas`, crearFormData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authTokens}`
-        }
-      });
-      console.log('Receta creada:', response.data);
-      fetchRecetas();
-      resetCrearForm();
-    } catch (error) {
-      console.error('Error creating recipe:', error);
-    }
-  };
+  e.preventDefault();
+  try {
+    const response = await axios.post(`${API_URL}/recetas`, crearFormData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authTokens}`
+      }
+    });
+    console.log('Receta creada:', response.data);
+    fetchRecetas();
+    resetCrearForm();
+    showModal(<div>{response.data.message || 'Receta creada con éxito'}</div>, 3000);
+  } catch (error) {
+    console.error('Error creating recipe:', error);
+    showModal(<div>{error.response?.data?.error || 'Error creando receta'}</div>, 3000);
+  }
+};
+
 
   return (
     <div id="management-recetas-wrapper">

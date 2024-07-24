@@ -69,7 +69,14 @@ const ComoFunciona = () => {
       </Carousel>
       <button className="carousel-button-como-funciona" id='btn-prev-como-funciona' onClick={() => document.querySelector('.carousel-control-prev').click()}>&lt;</button>
       <button className="carousel-button-como-funciona" id='btn-next-como-funciona' onClick={() => document.querySelector('.carousel-control-next').click()}>&gt;</button>
-      <div className="newsletter-container">
+    </div>
+  );
+};
+
+export default ComoFunciona;
+
+/*
+<div className="newsletter-container">
         <h2>Deja tu comentario en este boletín</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -89,8 +96,4 @@ const ComoFunciona = () => {
         </form>
         {response && <p>{response}</p>}
       </div>
-    </div>
-  );
-};
-
-export default ComoFunciona;
+*/

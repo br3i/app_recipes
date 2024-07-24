@@ -1,4 +1,6 @@
 import { Op } from "sequelize";
+import { sequelize } from "../database/database.js";
+import { Historico_Recomendaciones } from "../models/historico_recomendaciones.js";
 import { Ingredientes } from "../models/ingredientes.js";
 import { Objetivos_Nutricionales } from "../models/objetivos_nutricionales.js";
 import { Recetas } from "../models/recetas.js";
@@ -287,6 +289,84 @@ class RecetasService {
       return recetasRecomendadas;
     } catch (error) {
       console.error('Error recommending recipes:', error);
+      throw error;
+    }
+  }
+
+  async saveRecomendaciones(recomendaciones, objetivo, id_cliente) {
+    const transaction = await sequelize.transaction();
+    try {
+      console.log('Datos recibidos para guardar recomendaciones:', recomendaciones, objetivo, id_cliente);
+
+      const objetivoData = await Objetivos_Nutricionales.findOne({
+        where: { nombre_objetivo: objetivo },
+        attributes: ['id_objetivo']
+      });
+
+      const historicos = await Promise.all(recomendaciones.map(async rec => {
+        const recetaIngrediente = await Recetas_Ingredientes.findOne({
+          where: { id_receta: rec.id_receta },
+          attributes: ['id_recetas_ingredientes'],
+          limit: 1
+        });
+
+        return {
+          id_objetivo: objetivoData.id_objetivo,
+          id_recetas_ingredientes: recetaIngrediente.id_recetas_ingredientes,
+          id_ingrediente_usuario: id_cliente
+        };
+      }));
+
+      console.log('Datos que se guardarán en Historico_Recomendaciones:', historicos);
+
+      await Historico_Recomendaciones.bulkCreate(historicos, { transaction });
+
+      await transaction.commit();
+      console.log('Transacción completada y recomendaciones guardadas exitosamente.');
+    } catch (error) {
+      await transaction.rollback();
+      console.error('Error al guardar el historial de recomendaciones:', error);
+      throw new Error("Error al guardar el historial de recomendaciones");
+    }
+  }
+
+  async getHistorialRecomendaciones(id_ingrediente_usuario) {
+    console.log('Fetching historial recomendaciones for client:', id_ingrediente_usuario);
+
+    try {
+      const historial = await Historico_Recomendaciones.findAll({
+        where: { id_ingrediente_usuario },
+        include: [
+          {
+            model: Recetas_Ingredientes,
+            as: 'recetas_ingrediente',  // Alias corregido
+            include: [
+              {
+                model: Recetas,
+                as: 'receta',
+                include: [
+                  {
+                    model: Ingredientes,
+                    as: 'ingredientes'
+                  },
+                  {
+                    model: Objetivos_Nutricionales,
+                    as: 'objetivo'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            model: Objetivos_Nutricionales,
+            as: 'objetivos_nutricionale'  // Alias corregido
+          }
+        ]
+      });
+      console.log('Historial fetched:', historial);
+      return historial;
+    } catch (error) {
+      console.error('Error fetching historial recomendaciones:', error);
       throw error;
     }
   }

@@ -1,3 +1,4 @@
+// src/models/index.js
 import { Comentarios } from "./comentarios.js";
 import { Historico_Recomendaciones } from "./historico_recomendaciones.js";
 import { Cliente } from "./clientes.js";
@@ -26,8 +27,8 @@ Usuarios.hasMany(Comentarios, { foreignKey: "id_usuario", as: 'comentarios' });
 Comentarios.belongsTo(Usuarios, { foreignKey: "id_usuario" });
 
 // Relaciones objetivos nutricionales - historico recomendaciones
-Objetivos_Nutricionales.hasMany(Historico_Recomendaciones, { foreignKey: "id_objetivo" });
-Historico_Recomendaciones.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo" });
+Objetivos_Nutricionales.hasMany(Historico_Recomendaciones, { foreignKey: "id_objetivo", as: 'historico_recomendaciones' });
+Historico_Recomendaciones.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo", as: 'objetivos_nutricionale' });
 
 // Relaciones Recetas - Objetivos_Nutricionales
 Recetas.belongsTo(Objetivos_Nutricionales, { foreignKey: "id_objetivo", as: "objetivo" });
@@ -38,8 +39,8 @@ Recetas.hasMany(Recetas_Ingredientes, { foreignKey: "id_receta", as: "recetaIngr
 Recetas_Ingredientes.belongsTo(Recetas, { foreignKey: "id_receta", as: "receta" });
 
 // Relaciones recetas ingredientes - historico recomendaciones
-Recetas_Ingredientes.hasMany(Historico_Recomendaciones, { foreignKey: "id_recetas_ingredientes" });
-Historico_Recomendaciones.belongsTo(Recetas_Ingredientes, { foreignKey: "id_recetas_ingredientes" });
+Recetas_Ingredientes.hasMany(Historico_Recomendaciones, { foreignKey: "id_recetas_ingredientes", as: "historico_recomendaciones" });
+Historico_Recomendaciones.belongsTo(Recetas_Ingredientes, { foreignKey: "id_recetas_ingredientes", as: 'recetas_ingrediente' });
 
 // Relaciones Ingredientes - Recetas_Ingredientes
 Ingredientes.hasMany(Recetas_Ingredientes, { foreignKey: "id_ingrediente", as: "ingredienteRecetas" });

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../utils/comentario.css';
+import { useModal } from '../context/ModalContext'; // Importa useModal
 
 const API_URL = 'http://localhost:4000';
 
@@ -16,6 +17,7 @@ const DejarComentario = () => {
   const [editMessage, setEditMessage] = useState('');
   const [currentComment, setCurrentComment] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // Estado para controlar la pausa del carrusel
+  const { showModal, hideModal } = useModal(); // Usa useModal
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,14 +31,18 @@ const DejarComentario = () => {
             setUserName(nombre);
             setUserId(id);
             await fetchComentarios(id);
+            showModal(<div>Datos de usuario encontrados con éxito</div>, 3000);
           } else {
             console.error('No se encontró el ID de usuario válido en los datos almacenados.');
+            showModal(<div>No se encontró el ID de usuario válido en los datos almacenados.</div>, 3000);
           }
         } else {
           console.error('No se encontraron datos de usuario en localStorage.');
+          showModal(<div>No se encontraron datos de usuario en localStorage.</div>, 3000);
         }
       } catch (error) {
         console.error('Error al procesar los datos de usuario desde localStorage:', error);
+        showModal(<div>Error al procesar los datos de usuario desde localStorage.</div>, 3000);
       }
     };
 
@@ -46,12 +52,13 @@ const DejarComentario = () => {
   const fetchComentarios = async (id) => {
     try {
       const res = await axios.get(`${API_URL}/comentarios/idU/${id}`);
-      setComentarios(res.data);
+      setComentarios(res.data.comentarios);
       if (res.data.length > 0) {
         setCurrentComment(res.data[0]); // Establecer el primer comentario como el comentario actual
       }
     } catch (error) {
       console.error('Error al obtener los comentarios:', error);
+      showModal(<div>Error al obtener los comentarios.</div>, 3000);
     }
   };
 
@@ -67,10 +74,12 @@ const DejarComentario = () => {
       setResponse(res.data.message); // Mensaje de éxito
       setMessage(''); // Limpiar el mensaje
       await fetchComentarios(userId); // Actualizar la lista de comentarios
+      showModal(<div>{res.data.message}</div>, 3000);
     } catch (error) {
       console.error('Error al enviar el comentario:', error);
       const errorMessage = 'Error al enviar el comentario.';
       setResponse(errorMessage); // Manejar el error seteando un mensaje de error
+      showModal(<div>{errorMessage}</div>, 3000);
     }
   };
 
@@ -94,11 +103,13 @@ const DejarComentario = () => {
       setEditMessage(''); // Limpiar el mensaje de edición
       await fetchComentarios(userId); // Actualizar la lista de comentarios
       setIsEditing(false); // Reanudar el carrusel al finalizar la edición
+      showModal(<div>{res.data.message}</div>, 3000);
     } catch (error) {
       console.error('Error al editar el comentario:', error);
       const errorMessage = 'Error al editar el comentario.';
       setResponse(errorMessage); // Manejar el error seteando un mensaje de error
       setIsEditing(false); // Reanudar el carrusel al finalizar la edición incluso en caso de error
+      showModal(<div>{errorMessage}</div>, 3000);
     }
   };
 
@@ -113,10 +124,12 @@ const DejarComentario = () => {
       const res = await axios.delete(`${API_URL}/comentarios/id/${id}`);
       setResponse(res.data.message); // Mensaje de éxito
       await fetchComentarios(userId); // Actualizar la lista de comentarios
+      showModal(<div>{res.data.message}</div>, 3000);
     } catch (error) {
       console.error('Error al eliminar el comentario:', error);
       const errorMessage = 'Error al eliminar el comentario.';
       setResponse(errorMessage); // Manejar el error seteando un mensaje de error
+      showModal(<div>{errorMessage}</div>, 3000);
     }
   };
 
