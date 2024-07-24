@@ -1,243 +1,269 @@
-/* recetas.css */
-li {
-    list-style-type: none;
-}
-
-.recetas-admin {
+#management-recetas-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    /* Para centrar verticalmente en toda la pantalla */
-    margin-top: 10px;
-}
-.recetas-selectors {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.recetas-selectors select,
-.recetas-selectors input,
-.recetas-selectors button {
-    margin: 2%;
-    padding: auto;
-    width: 200px;
-    /* Puedes ajustar este ancho según tus necesidades */
-}
-
-.recetas-title {
-    text-align: center;
-}
-
-.objetivo-select,
-.comparacion-select,
-.parametro-select,
-.valor-parametro-input {
-    margin-bottom: 10px;
-    padding: 5px;
-    font-size: 16px;
-}
-
-.recetas-table-container {
-    overflow-x: auto;
-}
-
-.recetas-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-.recetas-table th,
-.recetas-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.recetas-table th {
-    background-color: #f2f2f2;
-}
-
-.td-editable input,
-.td-editable select {
-    width: 100%;
-    padding: 5px;
-}
-
-.paginacion {
-    margin: 10% 10% 10% 10%;
-    display: flex;
-    justify-content: center;
-}
-
-.pagination {
-    display: inline-block;
-}
-
-.pagination li {
-    display: inline;
-    margin: 0 5px;
-}
-
-.pagination li button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-.pagination li button:hover {
-    color: blue;
-}
-
-.pagination li.active button {
-    color: blue;
-    font-weight: bold;
-}
-
-.pagina-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-.pagina-button.active {
-    background-color: #45a049;
-}
-
-@media screen and (min-width: 768px) {
-    .recetas-table-container {
-        overflow-x: auto;
-    }
-
-    .recetas-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    .recetas-table th,
-    .recetas-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-
-    .recetas-table th {
-        background-color: #f2f2f2;
-    }
-
-    .td-editable input,
-    .td-editable select {
-        width: 100%;
-        padding: 5px;
-    }
-
-    .paginacion {
-        margin-top: 20px;
-        display: none;
-        /* Ocultar paginación en pantalla grande */
-    }
-}
-
-/* Estilos para pantalla pequeña (tabla vertical) */
-@media screen and (max-width: 767px) {
-    .recetas-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 10px;
-        margin-top: 10px;
-    }
-
-    .recetas-table th,
-    .recetas-table td {
-        padding: 8px;
-        text-align: left;
-        vertical-align: top;
-    }
-
-    .td-label {
-        font-weight: bold;
-        width: 30%;
-    }
-
-    .td-value {
-        width: 70%;
-    }
-
-    .paginacion {
-        margin-top: 20px;
-        display: block;
-        /* Mostrar paginación en pantalla pequeña */
-    }
-}
-
-.editar-receta {
-    display: none;
-    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
     padding: 20px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    background-color: #f8f9fa35;
 }
 
-.editar-receta.visible {
-    display: block;
-    /* Otros estilos específicos para cuando está visible */
+#management-recetas-title {
+    color: seagreen;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-.editar-receta h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.editar-receta form {
-    display: grid;
+#search-container-administrar-recetas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
     gap: 10px;
 }
 
-.editar-receta label {
-    font-weight: bold;
+#search-input-recetas,
+#search-select-recetas,
+#search-comparison-recetas,
+#search-parametro-recetas,
+#search-button-administrar-recetas,
+#reset-button-administrar-recetas {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
 }
 
-.editar-receta input,
-.editar-receta textarea,
-.editar-receta select {
-    width: calc(100% - 20px);
-    padding: 8px;
-    font-size: 14px;
-}
-
-.editar-receta button {
-    background-color: #4CAF50;
+#search-button-administrar-recetas {
+    background-color: seagreen;
     color: white;
     border: none;
+    cursor: pointer;
+}
+
+#reset-button-administrar-recetas {
+    background-color: #e7e7a0;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+
+#management-recetas-table-container {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#management-recetas-table-container::-webkit-scrollbar {
+    height: 12px;
+}
+
+#management-recetas-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#management-recetas-table-container::-webkit-scrollbar-thumb {
+    background: seagreen;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+}
+
+#management-recetas-table-container::-webkit-scrollbar-thumb:hover {
+    background: #1e824c;
+}
+
+#management-recetas-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#management-recetas-table th,
+#management-recetas-table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+#management-recetas-table th {
+    background-color: #eaf2e3;
+    color: seagreen;
+}
+
+#management-recetas-table td.td-editable input,
+#management-recetas-table td.td-editable select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid seagreen;
+    border-radius: 5px;
+}
+
+#management-recetas-table td.td-editable input[type="text"],
+#management-recetas-table td.td-editable select {
+    background-color: #ffffff;
+}
+
+#management-recetas-table td.td-editable input[type="text"]:hover,
+#management-recetas-table td.td-editable select:hover {
+    background-color: #e9ecef;
+}
+
+#management-recetas-table button {
+    color: white;
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-rec-editar {
+    background-color: rgba(46, 139, 86, 0.776);
+}
+
+.btn-rec-eliminar {
+    background-color: #e74d3cbe;
+}
+
+#management-recetas-table .btn-rec-editar:hover {
+    background-color: #1e824c;
+}
+
+#management-recetas-table .btn-rec-eliminar:hover {
+    background-color: #e74c3c;
+}
+
+#management-recetas-table tbody tr:hover {
+    background-color: #b5dab18e;
+}
+
+#management-recetas-table th:nth-child(1),
+#management-recetas-table td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    background-color: #eaf2e3;
+    z-index: 2;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-button-administrar-recetas {
+    margin: 0 5px;
     padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    border: none;
+    cursor: pointer;
+    background-color: #eaf2e3;
+    color: seagreen;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination-button-active {
+    background-color: seagreen;
+    color: white;
+}
+
+.pagination-button:hover {
+    background-color: #b5dab18e;
+}
+
+#sortable-header {
+    cursor: pointer;
+}
+
+#sortable-header:hover {
+    background-color: #b5dab18e;
+}
+
+#editar-receta-form-container {
+    margin-top: 20px;
+}
+
+#editar-receta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#editar-receta-form input,
+#editar-receta-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#editar-receta-form button {
+    padding: 10px 20px;
+    background-color: seagreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
 }
 
-.editar-receta button[type="button"] {
-    background-color: #f44336;
+#editar-receta-form button:hover {
+    background-color: #1e824c;
 }
 
-.editar-receta button[type="submit"] {
-    background-color: #4CAF50;
+#crear-receta-form-container {
+    margin-top: 20px;
 }
 
-.editar-receta button[type="submit"]:hover,
-.editar-receta button[type="button"]:hover {
-    opacity: 0.8;
+#crear-receta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#crear-receta-form input,
+#crear-receta-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#crear-receta-form button {
+    padding: 10px 20px;
+    background-color: seagreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#crear-receta-form button:hover {
+    background-color: #1e824c;
+}
+
+@media (max-width: 768px) {
+    #management-recetas-table {
+        min-width: 600px;
+    }
+
+    #search-select-recetas,
+    #search-comparison-recetas,
+    #search-parametro-recetas,
+    #search-input-recetas,
+    #search-button-administrar-recetas,
+    #reset-button-administrar-recetas {
+        flex: 100%;
+        margin-bottom: 10px;
+    }
+
+    #search-button-administrar-recetas,
+    #reset-button-administrar-recetas {
+        margin-top: 10px;
+    }
 }
